@@ -112,6 +112,8 @@
   <ItemGroup>
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Change.h" />
+    <ClInclude Include="CommandLine.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Sheet.h" />
   </ItemGroup>
