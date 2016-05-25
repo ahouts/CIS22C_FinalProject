@@ -110,11 +110,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BST.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Change.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Refresh.h" />
     <ClInclude Include="Sheet.h" />
   </ItemGroup>
   <ItemGroup>
