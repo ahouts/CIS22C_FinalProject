@@ -26,6 +26,10 @@ public:
 	Cell* getLeft();
 	Cell* getRight();
 	Cell* getBelow();
+	void setAbove(Cell *above);
+	void setLeft(Cell *left);
+	void setRight(Cell *right);
+	void setBelow(Cell *below);
 };
 
 #endif
