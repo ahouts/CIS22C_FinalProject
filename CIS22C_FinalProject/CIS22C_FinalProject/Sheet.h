@@ -8,15 +8,15 @@ using namespace std;
 class Sheet
 {
 private:
-	Cell *headerCell;
+	Cell *headerCell;		// refers to the Cell at (0, 0)
 	int xSize;
 	int ySize;
-	Change changeLog;
 public:
 	Sheet(int xSize, int ySize);
+	~Sheet();
 	Cell* operator()(int x, int y);
-	void refresh();
-	void undo();
+	//void refresh();				refresh and undo should become methods of Change and Refresh to avoid recursive definitions
+	//void undo();					
 	void toFile(string fileName);
 	void fromFile(string fileName);
 	void swapRow(int y1, int y2);
