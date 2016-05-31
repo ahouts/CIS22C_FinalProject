@@ -22,6 +22,8 @@ public:
 	void fromFile(string fileName);
 	void swapRow(int y1, int y2);
 	void swapCol(int x1, int x2);
+	int getXSize();
+	int getYSize();
 protected:
 	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
 	void initializeSheet(int xSize, int ySize);

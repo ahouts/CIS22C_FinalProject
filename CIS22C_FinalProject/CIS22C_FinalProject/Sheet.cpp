@@ -155,6 +155,16 @@ void Sheet::fromFile(string fileName)
 	}
 }
 
+int Sheet::getXSize()
+{
+	return xSize;
+}
+
+int Sheet::getYSize()
+{
+	return ySize;
+}
+
 void Sheet::resizeSheet(int xSize, int ySize)
 {
 	wipeSheet();
