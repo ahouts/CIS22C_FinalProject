@@ -16,12 +16,14 @@ public:
 	Sheet(int xSize, int ySize);
 	~Sheet();
 	Cell* operator()(int x, int y);
-	//void refresh();				refresh and undo should become methods of Change and Refresh to avoid recursive definitions
-	//void undo();					
+	void setCellData(int x, int y, string str);
+	string getCellData(int x, int y);
 	void toFile(string fileName);
 	void fromFile(string fileName);
 	void swapRow(int y1, int y2);
 	void swapCol(int x1, int x2);
+	int getXSize();
+	int getYSize();
 protected:
 	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
 	void initializeSheet(int xSize, int ySize);

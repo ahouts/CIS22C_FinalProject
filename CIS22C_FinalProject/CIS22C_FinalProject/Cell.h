@@ -22,6 +22,8 @@ public:
 	string getData();
 	void setData(string in);
 	Cell();
+	int getXCoord();
+	int getYCoord();
 	Cell* getAbove();
 	Cell* getLeft();
 	Cell* getRight();
