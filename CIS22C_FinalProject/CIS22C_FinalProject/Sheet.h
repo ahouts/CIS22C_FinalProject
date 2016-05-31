@@ -15,9 +15,7 @@ private:
 public:
 	Sheet(int xSize, int ySize);
 	~Sheet();
-	Cell* operator()(int x, int y);
-	//void refresh();				refresh and undo should become methods of Change and Refresh to avoid recursive definitions
-	//void undo();					
+	Cell* operator()(int x, int y);			
 	void toFile(string fileName);
 	void fromFile(string fileName);
 	void swapRow(int y1, int y2);
