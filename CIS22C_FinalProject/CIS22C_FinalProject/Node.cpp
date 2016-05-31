@@ -80,8 +80,24 @@ void Node::rotateLeft()
 
 bool Node::getImbalance()
 {
+	Node* top = this;			// changed it so it didn't require itself to be passed in as a variable
 	bool isItBigger = false;
-	int treeLength = 0;
-	//      :(
+	int leftLength = 0;
+	int rightLength = 0;
+	while (top->leftChild != nullptr) {
+		leftLength++;
+		top = leftChild;
+	}
+	top = this;
+	while (top->rightChild != nullptr) {
+		rightLength++;
+		top = rightChild;
+	}
+	if (rightLength<leftLength + 1) {
+		isItBigger = true;
+	}
+	if (leftLength<rightLength + 1) {
+		isItBigger = true;
+	}
 	return isItBigger;
 }
