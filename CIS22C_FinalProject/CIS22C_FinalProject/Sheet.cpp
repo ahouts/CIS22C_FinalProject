@@ -34,6 +34,16 @@ Cell * Sheet::operator()(int x, int y)
 	return temp;
 }
 
+void Sheet::setCellData(int x, int y, string str)
+{
+	this->operator()(x, y)->setData(str);
+}
+
+string Sheet::getCellData(int x, int y)
+{
+	return this->operator()(x, y)->getData();
+}
+
 void Sheet::toFile(string fileName)
 {
 	const double HASH_TABLE_MULTIPLIER = 1.5;
@@ -153,6 +163,16 @@ void Sheet::fromFile(string fileName)
 	{
 		// how do we read from hashed file?
 	}
+}
+
+int Sheet::getXSize()
+{
+	return xSize;
+}
+
+int Sheet::getYSize()
+{
+	return ySize;
 }
 
 void Sheet::resizeSheet(int xSize, int ySize)

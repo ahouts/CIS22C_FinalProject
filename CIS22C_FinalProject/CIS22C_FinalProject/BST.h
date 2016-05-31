@@ -5,7 +5,7 @@
 #include "Node.h"
 
 using namespace std;
-class BST{
+class BST friend Node{
 
 
 private:
