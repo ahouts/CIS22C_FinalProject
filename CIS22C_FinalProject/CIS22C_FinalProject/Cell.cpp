@@ -19,6 +19,30 @@ Cell::Cell()
 	below = nullptr;
 }
 
+int Cell::getXCoord()
+{
+	int count = 0;
+	Cell *current = this;
+	while (current->getLeft() != nullptr)
+	{
+		count++;
+		current = current->getLeft();
+	}
+	return count;
+}
+
+int Cell::getYCoord()
+{
+	int count = 0;
+	Cell *current = this;
+	while (current->getAbove() != nullptr)
+	{
+		count++;
+		current = current->getAbove();
+	}
+	return count;
+}
+
 Cell * Cell::getAbove()
 {
 	return above;
