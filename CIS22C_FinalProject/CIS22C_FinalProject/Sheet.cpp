@@ -73,8 +73,9 @@ void Sheet::toFile(string fileName)
 	{
 		for (int i = 0; i < xSize; i++)
 		{
-			string cellData = operator()(i, j)->getData();
-			int index = hashCell(cellData, hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
+			int cellX = operator()(i, j)->getXCoord();
+			int cellY = operator()(i, j)->getYCoord();
+			int index = hashCell(cellX, cellY , hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
 			if (hashTable[index] == nullptr)
 			{
 				hashTable[index] = operator()(i, j);
@@ -287,13 +288,9 @@ int Sheet::getPrimeGreaterThan(int number)
 	return count;
 }
 
-int Sheet::hashCell(string cellData, int multiplier, int addition, int hashTableSize)
+int Sheet::hashCell(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
 {
-	int temp = 0;
-	for (int i = 0; i < cellData.length(); i++)
-	{
-		temp += (int)cellData[i];
-	}
+	int temp = cellXIndex * cellYIndex;
 	return (temp * multiplier + addition) % hashTableSize;
 }
 
