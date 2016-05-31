@@ -15,7 +15,9 @@ private:
 public:
 	Sheet(int xSize, int ySize);
 	~Sheet();
-	Cell* operator()(int x, int y);			
+	Cell* operator()(int x, int y);
+	void setCellData(int x, int y, string str);
+	string getCellData(int x, int y);
 	void toFile(string fileName);
 	void fromFile(string fileName);
 	void swapRow(int y1, int y2);
