@@ -69,39 +69,47 @@ void Sheet::toFile(string fileName)
 
 	Cell **hashTable = new Cell*[HASH_TABLE_SIZE];		// create a hash table to store cell pointers in
 
+	for (int i = 0; i < HASH_TABLE_SIZE; i++)			// set all pointers in hash table to null
+	{
+		hashTable[i] = nullptr;
+	}
+
 	for (int j = 0; j < ySize; j++)
 	{
 		for (int i = 0; i < xSize; i++)
 		{
-			int cellX = operator()(i, j)->getXCoord();
-			int cellY = operator()(i, j)->getYCoord();
-			int index = hashCell(cellX, cellY , hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
-			if (hashTable[index] == nullptr)
+			if (getCellData(i, j) != "")
 			{
-				hashTable[index] = operator()(i, j);
-			}
-			else
-			{
-				bool done = false;
-				int count = 0;
-				int maxCount = 10;
-				while (!done && count < maxCount)
+				int cellX = operator()(i, j)->getXCoord();
+				int cellY = operator()(i, j)->getYCoord();
+				int index = hashCell(cellX, cellY, hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
+				if (hashTable[index] == nullptr)
 				{
-					index = quadraticResolution(index, HASH_TABLE_SIZE);
-					if (hashTable[index] == nullptr)
-					{
-						hashTable[index] = operator()(i, j);
-						done == true;
-					}
-					else
-					{
-						count++;
-					}
+					hashTable[index] = operator()(i, j);
 				}
-				if (count == maxCount)
+				else
 				{
-					char error[] = "Hash resolution took too many cycles.\n";
-					throw error;
+					bool done = false;
+					int count = 0;
+					int maxCount = 10;
+					while (!done && count < maxCount)
+					{
+						index = quadraticResolution(index, HASH_TABLE_SIZE);
+						if (hashTable[index] == nullptr)
+						{
+							hashTable[index] = operator()(i, j);
+							done == true;
+						}
+						else
+						{
+							count++;
+						}
+					}
+					if (count == maxCount)
+					{
+						char error[] = "Hash resolution took too many cycles.\n";
+						throw error;
+					}
 				}
 			}
 		}
@@ -125,12 +133,15 @@ void Sheet::toFile(string fileName)
 	{
 		if (hashTable[i] != nullptr)
 		{
+			fout << i << " ";
 			Cell *temp = hashTable[i];
+			fout << temp->getXCoord() << " ";
+			fout << temp->getYCoord() << " ";
 			fout << temp->getData() << endl;
-			fout << temp->getAbove() << endl;
-			fout << temp->getBelow() << endl;
-			fout << temp->getLeft() << endl;
-			fout << temp->getRight() << endl;
+		}
+		else
+		{
+			fout << i << endl;
 		}
 	}
 
@@ -297,4 +308,12 @@ int Sheet::hashCell(int cellXIndex, int cellYIndex , int multiplier, int additio
 int Sheet::quadraticResolution(int index, int hashTableSize)
 {
 	return index * index % hashTableSize;
+}
+
+int main()
+{
+	Sheet a = Sheet(10, 10);
+	a.setCellData(1, 3, "Bananr");
+	a.setCellData(3, 7, "Lawl");
+	a.toFile("C:\Users\ahouts\Desktop\file.txt");
 }
