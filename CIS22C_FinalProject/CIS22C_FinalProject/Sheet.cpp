@@ -82,7 +82,7 @@ void Sheet::toFile(string fileName)
 			{
 				int cellX = operator()(i, j)->getXCoord();
 				int cellY = operator()(i, j)->getYCoord();
-				int index = hashCell(cellX, cellY, hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
+				int index = getHashIndex(cellX, cellY, hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
 				if (hashTable[index] == nullptr)
 				{
 					hashTable[index] = operator()(i, j);
@@ -171,9 +171,44 @@ void Sheet::fromFile(string fileName)
 
 	resizeSheet(xSize, ySize);
 
-	for (int i = 0; i < hashTableSize; i++)
+	for (int j = 0; j < ySize; j++)
 	{
-		// how do we read from hashed file?
+		for (int i = 0; i < xSize; i++)
+		{
+			int index = getHashIndex(i, j, hashTableModifier, hashTableAddition, hashTableSize);
+
+			string *data = getIndexData(fin, index);
+
+			if (data[0] == "")
+			{
+				// do nothing
+			}
+			else if (stoi(data[1]) == i && stoi(data[2]) == j)
+			{
+				setCellData(i, j, data[3]);
+			}
+			else
+			{
+				bool done = false;
+				int maxCount = 0;
+				while (!done && maxCount < 10)
+				{
+					index = quadraticResolution(index, hashTableSize);
+					delete[] data;
+					data = getIndexData(fin, index);
+					if (stoi(data[1]) == i && stoi(data[2]) == j)
+					{
+						setCellData(i, j, data[3]);
+						done = true;
+					}
+					else
+					{
+						maxCount++;
+					}
+				}
+			}
+			delete[] data;
+		}
 	}
 }
 
@@ -299,7 +334,7 @@ int Sheet::getPrimeGreaterThan(int number)
 	return count;
 }
 
-int Sheet::hashCell(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
+int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
 {
 	int temp = cellXIndex * cellYIndex;
 	return (temp * multiplier + addition) % hashTableSize;
@@ -308,6 +343,46 @@ int Sheet::hashCell(int cellXIndex, int cellYIndex , int multiplier, int additio
 int Sheet::quadraticResolution(int index, int hashTableSize)
 {
 	return index * index % hashTableSize;
+}
+
+string * Sheet::getIndexData(ifstream & file, int index)
+{
+	file.clear();
+	file.seekg(0, ios::beg);
+
+	int junk;
+	char junk2;
+	file >> junk >> junk >> junk >> junk >> junk >> junk2;
+
+	string *answer = new string[4];
+	for (int i = 0; i < 4; i++)
+	{
+		answer[i] = "";
+	}
+
+	string info[4];
+	do
+	{
+		string data;
+		getline(file, data);
+
+		stringstream ssin(data);
+		int i = 0;
+		while (ssin.good() && i < 4)
+		{
+			ssin >> info[i];
+			++i;
+		}
+	} while (stoi(info[0]) != index && file.good());
+
+	if (stoi(info[0]) == index)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			answer[i] = info[i];
+		}
+	}
+	return answer;
 }
 
 int main()

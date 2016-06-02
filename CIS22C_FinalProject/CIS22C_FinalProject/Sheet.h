@@ -3,6 +3,8 @@
 
 #include <string>
 #include <fstream>
+#include <limits>
+#include <sstream>
 #include "Cell.h"
 using namespace std;
 
@@ -31,8 +33,9 @@ protected:
 	int index(int x, int y, int width);				// for *arr in the initializer
 	bool isPrime(int number);
 	int getPrimeGreaterThan(int number);
-	int hashCell(int cellXIndex, int cellYIndex, int multiplier, int addition, int hashTableSize);		// generates a hash value for a cell
-	int quadraticResolution(int index, int hashTableSize);								// returns new index for cell
+	int getHashIndex(int cellXIndex, int cellYIndex, int multiplier, int addition, int hashTableSize);		// generates a hash value for a cell
+	int quadraticResolution(int index, int hashTableSize);													// returns new index for cell
+	string * getIndexData(ifstream &file, int index);
 };
 
 #endif
