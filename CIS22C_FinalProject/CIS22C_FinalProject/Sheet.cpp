@@ -385,6 +385,7 @@ string * Sheet::getIndexData(ifstream & file, int index)
 	return answer;
 }
 
+/*
 int main()
 {
 	Sheet a = Sheet(10, 10);
@@ -392,3 +393,4 @@ int main()
 	a.setCellData(3, 7, "Lawl");
 	a.toFile("C:\Users\ahouts\Desktop\file.txt");
 }
+*/
