@@ -1,9 +1,14 @@
 #ifndef COMMAND_LINE_H
 #define COMMAND_LINE_H
 
-#include <iostream>
 #include <string>
+#include <sstream>
+#include <iostream>
+#include <stdio.h>
 #include "Sheet.h"
+#include "Refresh.h"
+#include "Cell.h"
+#include "MainMenu.h"
 using namespace std;
 
 class CommandLine

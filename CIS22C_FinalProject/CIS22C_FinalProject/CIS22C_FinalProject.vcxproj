@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="BST.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Sheet.cpp" />
   </ItemGroup>
