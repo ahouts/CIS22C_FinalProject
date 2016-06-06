@@ -15,78 +15,6 @@ void CommandLine::drawSheet(ostream& out)
 		}
 	}
 }
-
-int CommandLine::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
-{
-	int total = 1;
-	if (xCoord < xCoord1 && yCoord < yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m++)
-		{
-			for (int i = xCoord; i <= xCoord1; i++)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-
-	else if (xCoord > xCoord1 && yCoord < yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m++)
-		{
-			for (int i = xCoord; i <= xCoord1; i--)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-
-	else if (xCoord < xCoord1 && yCoord > yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m--)
-		{
-			for (int i = xCoord; i <= xCoord1; i++)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-
-	else if (xCoord > xCoord1 && yCoord > yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m--)
-		{
-			for (int i = xCoord; i <= xCoord1; i--)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-}
 void CommandLine::mainLoop()
 {
 	
@@ -94,6 +22,9 @@ void CommandLine::mainLoop()
 	cout << "enter the command you wish to do next: ";
 	string masterString;
 	getline(cin, masterString);
+	
+	string masterString("hello world this is andrew speaking");
+
 
 	stringstream iss(masterString);
 
@@ -114,45 +45,9 @@ void CommandLine::mainLoop()
 				if (stoi(word[2]))
 				{
 					int b = stoi(word[2]);
-					if (word[3] == "multiply")
-					{
-						if (stoi(word[4]))
-						{
-							int c = stoi(word[4]);
-							if (stoi(word[5]))
-							{
-								int d = stoi(word[5]);
-								if (stoi(word[6]))
-								{
-									int e = stoi(word[6]);
-									if (stoi(word[7]))
-									{
-										int f = stoi(word[7]);
-										multiply(c, d, e, f);
-										modifyCell(a, b, /*convert multiply() to string and put here)*/);
-									}
-								}
-							}
-						}
-					}
-					else
-					{
-						modifyCell(a, b, word[3]);
-					}
-					}
-				else
-				{
-					cout << "invalid entry";
+					modifyCell(a, b, word[3]);
 				}
 			}
-			else
-			{
-				cout << "invalid entry";
-			}
-		}
-		else
-		{
-			cout << "invalid entry";
 		}
 		
 	}
