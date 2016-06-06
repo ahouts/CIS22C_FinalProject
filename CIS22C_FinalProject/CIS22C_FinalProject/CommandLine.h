@@ -18,6 +18,7 @@ private:
 public:
 	CommandLine(Sheet *sheet);
 	void modifyCell(int xCoord, int yCoord, string data);
+	int multiply(int xCoord, int yCoord, int xCoord1, int yCoord1);
 	void drawSheet(ostream& out);
 	void mainLoop();
 };
