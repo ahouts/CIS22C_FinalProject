@@ -69,38 +69,47 @@ void Sheet::toFile(string fileName)
 
 	Cell **hashTable = new Cell*[HASH_TABLE_SIZE];		// create a hash table to store cell pointers in
 
+	for (int i = 0; i < HASH_TABLE_SIZE; i++)			// set all pointers in hash table to null
+	{
+		hashTable[i] = nullptr;
+	}
+
 	for (int j = 0; j < ySize; j++)
 	{
 		for (int i = 0; i < xSize; i++)
 		{
-			string cellData = operator()(i, j)->getData();
-			int index = hashCell(cellData, hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
-			if (hashTable[index] == nullptr)
+			if (getCellData(i, j) != "")
 			{
-				hashTable[index] = operator()(i, j);
-			}
-			else
-			{
-				bool done = false;
-				int count = 0;
-				int maxCount = 10;
-				while (!done && count < maxCount)
+				int cellX = operator()(i, j)->getXCoord();
+				int cellY = operator()(i, j)->getYCoord();
+				int index = getHashIndex(cellX, cellY, hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
+				if (hashTable[index] == nullptr)
 				{
-					index = quadraticResolution(index, HASH_TABLE_SIZE);
-					if (hashTable[index] == nullptr)
-					{
-						hashTable[index] = operator()(i, j);
-						done == true;
-					}
-					else
-					{
-						count++;
-					}
+					hashTable[index] = operator()(i, j);
 				}
-				if (count == maxCount)
+				else
 				{
-					char error[] = "Hash resolution took too many cycles.\n";
-					throw error;
+					bool done = false;
+					int count = 0;
+					int maxCount = 10;
+					while (!done && count < maxCount)
+					{
+						index = quadraticResolution(index, HASH_TABLE_SIZE);
+						if (hashTable[index] == nullptr)
+						{
+							hashTable[index] = operator()(i, j);
+							done == true;
+						}
+						else
+						{
+							count++;
+						}
+					}
+					if (count == maxCount)
+					{
+						char error[] = "Hash resolution took too many cycles.\n";
+						throw error;
+					}
 				}
 			}
 		}
@@ -124,12 +133,15 @@ void Sheet::toFile(string fileName)
 	{
 		if (hashTable[i] != nullptr)
 		{
+			fout << i << " ";
 			Cell *temp = hashTable[i];
+			fout << temp->getXCoord() << " ";
+			fout << temp->getYCoord() << " ";
 			fout << temp->getData() << endl;
-			fout << temp->getAbove() << endl;
-			fout << temp->getBelow() << endl;
-			fout << temp->getLeft() << endl;
-			fout << temp->getRight() << endl;
+		}
+		else
+		{
+			fout << i << endl;
 		}
 	}
 
@@ -159,9 +171,44 @@ void Sheet::fromFile(string fileName)
 
 	resizeSheet(xSize, ySize);
 
-	for (int i = 0; i < hashTableSize; i++)
+	for (int j = 0; j < ySize; j++)
 	{
-		// how do we read from hashed file?
+		for (int i = 0; i < xSize; i++)
+		{
+			int index = getHashIndex(i, j, hashTableModifier, hashTableAddition, hashTableSize);
+
+			string *data = getIndexData(fin, index);
+
+			if (data[0] == "")
+			{
+				// do nothing
+			}
+			else if (stoi(data[1]) == i && stoi(data[2]) == j)
+			{
+				setCellData(i, j, data[3]);
+			}
+			else
+			{
+				bool done = false;
+				int maxCount = 0;
+				while (!done && maxCount < 10)
+				{
+					index = quadraticResolution(index, hashTableSize);
+					delete[] data;
+					data = getIndexData(fin, index);
+					if (stoi(data[1]) == i && stoi(data[2]) == j)
+					{
+						setCellData(i, j, data[3]);
+						done = true;
+					}
+					else
+					{
+						maxCount++;
+					}
+				}
+			}
+			delete[] data;
+		}
 	}
 }
 
@@ -287,13 +334,9 @@ int Sheet::getPrimeGreaterThan(int number)
 	return count;
 }
 
-int Sheet::hashCell(string cellData, int multiplier, int addition, int hashTableSize)
+int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
 {
-	int temp = 0;
-	for (int i = 0; i < cellData.length(); i++)
-	{
-		temp += (int)cellData[i];
-	}
+	int temp = cellXIndex * cellYIndex;
 	return (temp * multiplier + addition) % hashTableSize;
 }
 
@@ -301,3 +344,53 @@ int Sheet::quadraticResolution(int index, int hashTableSize)
 {
 	return index * index % hashTableSize;
 }
+
+string * Sheet::getIndexData(ifstream & file, int index)
+{
+	file.clear();
+	file.seekg(0, ios::beg);
+
+	int junk;
+	char junk2;
+	file >> junk >> junk >> junk >> junk >> junk >> junk2;
+
+	string *answer = new string[4];
+	for (int i = 0; i < 4; i++)
+	{
+		answer[i] = "";
+	}
+
+	string info[4];
+	do
+	{
+		string data;
+		getline(file, data);
+
+		stringstream ssin(data);
+		int i = 0;
+		while (ssin.good() && i < 4)
+		{
+			ssin >> info[i];
+			++i;
+		}
+	} while (stoi(info[0]) != index && file.good());
+
+	if (stoi(info[0]) == index)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			answer[i] = info[i];
+		}
+	}
+	return answer;
+}
+
+/*
+int main()
+{
+	Sheet a = Sheet(10, 10);
+	a.setCellData(1, 3, "Bananr");
+	a.setCellData(3, 7, "Lawl");
+	a.toFile("C:\Users\ahouts\Desktop\file.txt");
+}
+*/
