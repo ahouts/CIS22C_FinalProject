@@ -128,8 +128,9 @@ void CommandLine::mainLoop()
 									if (stoi(word[7]))
 									{
 										int f = stoi(word[7]);
-										multiply(c, d, e, f);
-										modifyCell(a, b, /*convert multiply() to string and put here)*/);
+										int  g = multiply(c, d, e, f);
+										string i = to_string(g);
+										modifyCell(a + 1, b, i);
 									}
 								}
 							}
