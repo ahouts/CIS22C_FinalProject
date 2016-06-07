@@ -336,7 +336,7 @@ int Sheet::getPrimeGreaterThan(int number)
 
 int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
 {
-	int temp = cellXIndex * cellYIndex;
+	int temp = cellXIndex * cellYIndex + cellXIndex;
 	return (temp * multiplier + addition) % hashTableSize;
 }
 
