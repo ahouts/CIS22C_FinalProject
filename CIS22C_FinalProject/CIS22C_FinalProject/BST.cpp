@@ -1,41 +1,70 @@
 #include "BST.h"
-BST::void addNode(Node newNode) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
+void BST::rotateLeft(Node* target) {
+	Node* holder = target;
+	target = target->getRight();
+	holder->setRight(target->getLeft());
+	target->setLeft(holder);
+}
+
+void BST::rotateRight(Node* target) {
+	Node* holder = target;
+	target = target->getLeft();
+	holder->setLeft(target->getRight());
+	target->setRight(holder);
+}
+
+void BST::addNode(Node newNode) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
 {
 	Node holder = headNode;
 	headNode = newNode;
-	headNode.left = &holder;
-	//headNode.balance(); :(
-}
-BST::void removeNode(Node targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
+	headNode.setLeft(&holder);
+	balance(&headNode);
+};
+
+void BST::removeNode(Node targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
 {
 	while (targetNode.hasRightChild == true) {
 		targetNode.rotateLeft;
 	}
-	targetNode = *targetNode.leftChild;
-	//targetNode.balance(); :(
+	targetNode = *targetNode.getLeft();
+	balance(&targetNode);
 }
-BST::Node* search(string target) //compares value of target to values in me and children, if not found, calls search recursively until no children found
+
+Node* BST::search(string goal, Node* target) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
 {
-	if(this.get)
-	if (this.hasLeftChild == true) {
-		if (this.getLeft()->getMe() == target) {
-			return this.getLeft();
-		}
-		else {
-			if (this.getLeft()->search(target) != null) {
-				return this.getLeft()->search(target);
+	if (target->getMe != goal) {
+		if (target->hasLeftChild() == true) {
+			if (target->getLeft()->getMe() == goal) {
+				return target->getLeft();
+			}
+			else {
+				if (search(goal, target->getLeft()) != NULL) {
+					return search(goal, target->getLeft());
+				}
 			}
 		}
-	}
-	if (this.hasRightChild == true) {
-		if (this.getRight->getMe() == target) {
-			return this.getRight();
-		}
-		else {
-			if (this.getRight()->search(target) != null) {
-				return this.getLeft()->search(target);
+		if (target->hasRightChild() == true) {
+			if (target->getRight->getMe() == goal) {
+				return target->getRight();
+			}
+			else {
+				if (search(goal, target->getRight()) != NULL) {
+					return search(goal, target->getRight());
+				}
 			}
 		}
+		return NULL;
 	}
-	return null;
+}
+
+void BST::balance(Node* target)//completely untested
+{
+	if (target->getLeft() != NULL||target->getLeft()->getLeft()!=NULL||target->getRight()==NULL) {
+		rotateRight(target);
+	}
+	balance(target->getLeft());
+	if (target->getRight() != NULL || target->getRight()->getRight() != NULL || target->getLeft() == NULL) {
+		rotateLeft(target);
+	}
+	balance(target->getRight());
 }

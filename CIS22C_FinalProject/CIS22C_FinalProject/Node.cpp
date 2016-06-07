@@ -41,9 +41,17 @@ void Node::setRight(Cell * in)
 	rightChild->me = in;
 }
 
+void Node::setRight(Node* in) {
+	rightChild = in;
+}
+
 void Node::setLeft(Cell * in)
 {
 	leftChild->me = in;
+}
+
+void Node::setLeft(Node* in) {
+	leftChild = in;
 }
 
 void Node::rotateRight()
