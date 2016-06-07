@@ -1,3 +1,4 @@
+
 #ifndef CHANGE_H
 #define CHANGE_H
 
@@ -21,11 +22,10 @@ public:
 	// This creates the head Change that will be used in other classes
 	Change();
 	// true = openParen, false = closeParen
-	Change(bool openOrClose);
-	Change(int row, int col, string prevData, string newData, Change *prev, Change *next = nullptr);
+	Change(bool blockStart, bool blockEnd);
 	void undo(Sheet *sheet);
 	// we assume that this will only be called on the head Change
-	Change* pushBack(int row, int col, string prevData, string newData);
+	Change* pushBack(int nRow, int nCol, string nPrevData, string nNewData);
 };
 
 #endif
