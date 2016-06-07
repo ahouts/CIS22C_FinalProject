@@ -59,12 +59,16 @@ Node* BST::search(string goal, Node* target) //compares value of goal to values 
 
 void BST::balance(Node* target)//completely untested
 {
-	if (target->getLeft() != NULL||target->getLeft()->getLeft()!=NULL||target->getRight()==NULL) {
-		rotateRight(target);
+	if (target->getLeft() != NULL) {
+		if (target->getLeft()->getLeft() != NULL || target->getRight() == NULL) {
+			rotateRight(target);
+		}
 	}
 	balance(target->getLeft());
-	if (target->getRight() != NULL || target->getRight()->getRight() != NULL || target->getLeft() == NULL) {
-		rotateLeft(target);
+	if (target->getRight() != NULL) {
+		if (|| target->getRight()->getRight() != NULL || target->getLeft() == NULL) {
+			rotateLeft(target);
+		}
 	}
 	balance(target->getRight());
 }
