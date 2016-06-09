@@ -92,7 +92,7 @@ void CommandLine::mainLoop()
 	
 	drawSheet(cout);
 	cout << "enter the command you wish to do next: ";
-	string masterString;
+	string masterString, string1;
 	getline(cin, masterString);
 
 	stringstream iss(masterString);
@@ -116,29 +116,15 @@ void CommandLine::mainLoop()
 					int b = stoi(word[2]);
 					if (word[3] == "multiply")
 					{
-						if (stoi(word[4]))
-						{
-							int c = stoi(word[4]);
-							if (stoi(word[5]))
-							{
-								int d = stoi(word[5]);
-								if (stoi(word[6]))
-								{
-									int e = stoi(word[6]);
-									if (stoi(word[7]))
-									{
-										int f = stoi(word[7]);
-										multiply(c, d, e, f);
-										modifyCell(a, b, /*convert multiply() to string and put here)*/);
-									}
-								}
-							}
-						}
+						cin.ignore();
+						getline(cin, string1);
+						modifyCell(a, b, string1);
 					}
 					else
 					{
 						modifyCell(a, b, word[3]);
 					}
+				else if
 					}
 				else
 				{
