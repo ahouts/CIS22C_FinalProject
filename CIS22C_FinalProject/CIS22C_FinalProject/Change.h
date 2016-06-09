@@ -23,6 +23,7 @@ public:
 	Change();
 	// true = openParen, false = closeParen
 	Change(bool blockStart, bool blockEnd);
+	//
 	void undo(Sheet *sheet);
 	// we assume that this will only be called on the head Change
 	Change* pushBack(int nRow, int nCol, string nPrevData, string nNewData);
