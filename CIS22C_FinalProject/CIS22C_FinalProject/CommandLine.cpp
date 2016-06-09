@@ -49,23 +49,26 @@ void CommandLine::mainLoop()
 						cin.ignore();
 						getline(cin, string1);
 
+
+						change.pushBack(a, b, sheet->getCellData(a, b), string1);
+
 						sheet->setCellData(a, b, string1);
 					}
-					else if (word[0] == "undo")
-					{
-						//This is where undo would go
-					}
-					else if (word[0] == "search")
-					{
-						//this is where search would go
-					}
-					else
-					{
-						cout << "invalid entry\n";
-						system("pause");
-					}
-
 				}
+			}
+			else if (word[0] == "undo")
+			{
+				change.undo(sheet);
+			}
+			else if (word[0] == "search")
+			{
+				
+			}
+			else
+			{
+				cout << "invalid entry\n";
+				system("pause");
+			}
 			}
 		}
 	}

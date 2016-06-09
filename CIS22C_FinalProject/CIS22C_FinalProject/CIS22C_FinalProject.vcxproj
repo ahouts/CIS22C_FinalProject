@@ -125,6 +125,7 @@
     <ClCompile Include="Change.cpp" />
     <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Refresh.cpp" />
     <ClCompile Include="Sheet.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
