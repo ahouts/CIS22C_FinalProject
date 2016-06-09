@@ -84,7 +84,7 @@ void Sheet::generateHashTable()
 					if (hashTable[index] == nullptr)
 					{
 						hashTable[index] = operator()(i, j);
-						done == true;
+						done = true;
 					}
 					else
 					{
@@ -383,12 +383,12 @@ string * Sheet::getIndexData(ifstream & file, int index)
 	return answer;
 }
 
-/*
 int main()
 {
 	Sheet a = Sheet(10, 10);
 	a.setCellData(1, 3, "Bananr");
 	a.setCellData(3, 7, "Lawl");
-	a.toFile("C:\Users\ahouts\Desktop\file.txt");
+	string fileName = "C:\\Users\\ahouts\\Desktop\\file.txt";
+	a.toFile(fileName);
 }
-*/
+
