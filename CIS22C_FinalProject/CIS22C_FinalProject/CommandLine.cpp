@@ -16,130 +16,56 @@ void CommandLine::drawSheet(ostream& out)
 	}
 }
 
-int CommandLine::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
-{
-	int total = 1;
-	if (xCoord < xCoord1 && yCoord < yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m++)
-		{
-			for (int i = xCoord; i <= xCoord1; i++)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-
-	else if (xCoord > xCoord1 && yCoord < yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m++)
-		{
-			for (int i = xCoord; i <= xCoord1; i--)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-
-	else if (xCoord < xCoord1 && yCoord > yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m--)
-		{
-			for (int i = xCoord; i <= xCoord1; i++)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-
-	else if (xCoord > xCoord1 && yCoord > yCoord1)
-	{
-		for (int m = yCoord; m <= yCoord1; m--)
-		{
-			for (int i = xCoord; i <= xCoord1; i--)
-			{
-				if (stoi(sheet->getCellData(i, yCoord)))
-				{
-					int a = stoi(sheet->getCellData(i, yCoord));
-					total *= a;
-
-				}
-			}
-		}
-		return total;
-	}
-}
 void CommandLine::mainLoop()
 {
-	
-	drawSheet(cout);
-	cout << "enter the command you wish to do next: ";
 	string masterString, string1;
-	getline(cin, masterString);
-
-	stringstream iss(masterString);
-
-	while (iss)
+	while (masterString != "exit")
 	{
-		string word[100];
-		for (int i = 0; i < masterString.length(); i++)
-		{
-			iss >> word[i];
-		}
+		drawSheet(cout);
+		cout << "enter the command you wish to do next: ";
+		cin.ignore();
+		getline(cin, masterString);
 
-		// || SET VALUE ||
-		if (word[0] == "set")
+		stringstream iss(masterString);
+
+		while (iss)
 		{
-			if (stoi(word[1]))
+			string word[100];
+			for (int i = 0; i < masterString.length(); i++)
 			{
-				int a = stoi(word[1]);
-				if (stoi(word[2]))
+				iss >> word[i];
+			}
+
+			// || SET VALUE ||
+			if (word[0] == "set")
+			{
+				if (stoi(word[1]))
 				{
-					int b = stoi(word[2]);
-					if (word[3] == "multiply")
+					int a = stoi(word[1]);
+					if (stoi(word[2]))
 					{
+						int b = stoi(word[2]);
+
 						cin.ignore();
 						getline(cin, string1);
-						modifyCell(a, b, string1);
+
+						sheet->setCellData(a, b, string1);
+					}
+					else if (word[0] == "undo")
+					{
+						//This is where undo would go
+					}
+					else if (word[0] == "search")
+					{
+						//this is where search would go
 					}
 					else
 					{
-						modifyCell(a, b, word[3]);
+						cout << "invalid entry\n";
+						system("pause");
 					}
-				else if
-					}
-				else
-				{
-					cout << "invalid entry";
+
 				}
 			}
-			else
-			{
-				cout << "invalid entry";
-			}
 		}
-		else
-		{
-			cout << "invalid entry";
-		}
-		
 	}
-}
