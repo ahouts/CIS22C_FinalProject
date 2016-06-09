@@ -7,9 +7,9 @@ void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 }
 void CommandLine::drawSheet(ostream& out) 
 {
-	for (int x = 0; x < sheet->getXSize; x++)
+	for (int x = 0; x < sheet->getXSize(); x++)
 	{
-		for (int y = 0; y < sheet->getYSize; y++)
+		for (int y = 0; y < sheet->getYSize(); y++)
 		{
 			out << sheet->getCellData(x, y);
 		}

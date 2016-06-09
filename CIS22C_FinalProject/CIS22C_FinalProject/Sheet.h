@@ -14,6 +14,12 @@ private:
 	Cell *headerCell;		// refers to the Cell at (0, 0)
 	int xSize;
 	int ySize;
+	// hash table settings for searching objects and file in & out
+	const double HASH_TABLE_SIZE_MULTIPLIER = 1.5;
+	int hashTableSize;
+	int hashTableMultiplier;
+	int hashTableAddition;
+	Cell **hashTable;
 public:
 	Sheet(int xSize, int ySize);
 	~Sheet();
@@ -27,6 +33,8 @@ public:
 	int getXSize();
 	int getYSize();
 protected:
+	void generateHashTable();
+	Cell* nonHashSearch(int x, int y);
 	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
 	void initializeSheet(int xSize, int ySize);
 	void wipeSheet();								// Deletes all cells in Sheet

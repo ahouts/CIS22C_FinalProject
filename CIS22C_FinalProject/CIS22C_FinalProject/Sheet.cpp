@@ -3,11 +3,13 @@
 Sheet::Sheet(int xSize, int ySize)
 {
 	initializeSheet(xSize, ySize);
+	generateHashTable();
 }
 
 Sheet::~Sheet()
 {
 	wipeSheet();
+	delete[] hashTable;
 }
 
 Cell * Sheet::operator()(int x, int y)
@@ -22,6 +24,95 @@ Cell * Sheet::operator()(int x, int y)
 		char error[] = "Index y is out of bounds.\n";
 		throw error;
 	}
+	int index = getHashIndex(x, y, hashTableMultiplier, hashTableAddition, hashTableSize);
+	Cell *data = hashTable[index];
+	while (!(data->getXCoord() == x && data->getYCoord() == y))
+	{
+		index = quadraticResolution(index, hashTableSize);
+		data = hashTable[index];
+	}
+
+	return data;
+}
+
+void Sheet::generateHashTable()
+{
+	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
+	if (hashTableSize > 500)
+	{
+		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 50);
+	}
+	else
+	{
+		hashTableMultiplier = 13;
+	}
+	if (hashTableSize > 500)
+	{
+		hashTableAddition = getPrimeGreaterThan(hashTableSize / 70);
+	}
+	else
+	{
+		hashTableAddition = 7;
+	}
+
+	hashTable = new Cell*[hashTableSize];		// create a hash table to store cell pointers in
+
+	for (int i = 0; i < hashTableSize; i++)			// set all pointers in hash table to null
+	{
+		hashTable[i] = nullptr;
+	}
+
+	for (int j = 0; j < ySize; j++)
+	{
+		for (int i = 0; i < xSize; i++)
+		{
+			int cellX = nonHashSearch(i, j)->getXCoord();
+			int cellY = nonHashSearch(i, j)->getYCoord();
+			int index = getHashIndex(cellX, cellY, hashTableMultiplier, hashTableAddition, hashTableSize);
+			if (hashTable[index] == nullptr)
+			{
+				hashTable[index] = nonHashSearch(i, j);
+			}
+			else
+			{
+				bool done = false;
+				int count = 0;
+				int maxCount = 10;
+				while (!done && count < maxCount)
+				{
+					index = quadraticResolution(index, hashTableSize);
+					if (hashTable[index] == nullptr)
+					{
+						hashTable[index] = nonHashSearch(i, j);
+						done = true;
+					}
+					else
+					{
+						count++;
+					}
+				}
+				if (count == maxCount)
+				{
+					char error[] = "Hash resolution took too many cycles.\n";
+					throw error;
+				}
+			}
+		}
+	}
+}
+
+Cell * Sheet::nonHashSearch(int x, int y)
+{
+	if (x >= xSize || x < 0)
+	{
+		char error[] = "Sheet passed an index x that is out of bounds.\n";
+		throw error;
+	}
+	if (y >= ySize || y < 0)
+	{
+		char error[] = "Sheet passed an index y that is out of bounds.\n";
+		throw error;
+	}
 	Cell *temp = headerCell;
 	for (int i = 0; i < x; i++)
 	{
@@ -33,6 +124,7 @@ Cell * Sheet::operator()(int x, int y)
 	}
 	return temp;
 }
+
 
 void Sheet::setCellData(int x, int y, string str)
 {
@@ -46,75 +138,6 @@ string Sheet::getCellData(int x, int y)
 
 void Sheet::toFile(string fileName)
 {
-	const double HASH_TABLE_MULTIPLIER = 1.5;
-	const int HASH_TABLE_SIZE = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_MULTIPLIER);
-	int hashTableMultiplier;
-	if (HASH_TABLE_SIZE > 500)
-	{
-		hashTableMultiplier = getPrimeGreaterThan(HASH_TABLE_SIZE / 50);
-	}
-	else
-	{
-		hashTableMultiplier = 13;
-	}
-	int hashTableAddition;
-	if (HASH_TABLE_SIZE > 500)
-	{
-		hashTableAddition = getPrimeGreaterThan(HASH_TABLE_SIZE / 70);
-	}
-	else
-	{
-		hashTableAddition = 7;
-	}
-
-	Cell **hashTable = new Cell*[HASH_TABLE_SIZE];		// create a hash table to store cell pointers in
-
-	for (int i = 0; i < HASH_TABLE_SIZE; i++)			// set all pointers in hash table to null
-	{
-		hashTable[i] = nullptr;
-	}
-
-	for (int j = 0; j < ySize; j++)
-	{
-		for (int i = 0; i < xSize; i++)
-		{
-			if (getCellData(i, j) != "")
-			{
-				int cellX = operator()(i, j)->getXCoord();
-				int cellY = operator()(i, j)->getYCoord();
-				int index = getHashIndex(cellX, cellY, hashTableMultiplier, hashTableAddition, HASH_TABLE_SIZE);
-				if (hashTable[index] == nullptr)
-				{
-					hashTable[index] = operator()(i, j);
-				}
-				else
-				{
-					bool done = false;
-					int count = 0;
-					int maxCount = 10;
-					while (!done && count < maxCount)
-					{
-						index = quadraticResolution(index, HASH_TABLE_SIZE);
-						if (hashTable[index] == nullptr)
-						{
-							hashTable[index] = operator()(i, j);
-							done == true;
-						}
-						else
-						{
-							count++;
-						}
-					}
-					if (count == maxCount)
-					{
-						char error[] = "Hash resolution took too many cycles.\n";
-						throw error;
-					}
-				}
-			}
-		}
-	}
-
 	ofstream fout = ofstream();
 	fout.open(fileName);
 	if (fout.fail())
@@ -125,11 +148,11 @@ void Sheet::toFile(string fileName)
 
 	fout << xSize << endl;
 	fout << ySize << endl;
-	fout << HASH_TABLE_SIZE << endl;
+	fout << hashTableSize << endl;
 	fout << hashTableMultiplier << endl;
 	fout << hashTableAddition << endl;
 
-	for (int i = 0; i < HASH_TABLE_SIZE; i++)
+	for (int i = 0; i < hashTableSize; i++)
 	{
 		if (hashTable[i] != nullptr)
 		{
@@ -146,7 +169,6 @@ void Sheet::toFile(string fileName)
 	}
 
 	fout.close();
-	delete[] hashTable;
 }
 
 void Sheet::fromFile(string fileName)
@@ -336,8 +358,8 @@ int Sheet::getPrimeGreaterThan(int number)
 
 int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
 {
-	int temp = cellXIndex * cellYIndex + cellXIndex;
-	return (temp * multiplier + addition) % hashTableSize;
+	int temp = cellXIndex * cellYIndex * multiplier + cellXIndex + addition;
+	return temp % hashTableSize;
 }
 
 int Sheet::quadraticResolution(int index, int hashTableSize)
@@ -385,12 +407,14 @@ string * Sheet::getIndexData(ifstream & file, int index)
 	return answer;
 }
 
-/*
 int main()
 {
 	Sheet a = Sheet(10, 10);
 	a.setCellData(1, 3, "Bananr");
 	a.setCellData(3, 7, "Lawl");
-	a.toFile("C:\Users\ahouts\Desktop\file.txt");
+	a.getCellData(3, 7);
+	//string fileName = "C:\\Users\\ahouts\\Desktop\\file.txt";
+	//a.toFile(fileName);
+	1 + 1;
 }
-*/
+
