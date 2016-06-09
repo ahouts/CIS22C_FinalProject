@@ -24,6 +24,7 @@ public:
 		row = -1;
 		col = -1;
 		prev = NULL;
+		next = NULL;
 		prevData = "NULL";
 		newData = "NULL";
 	
@@ -37,30 +38,44 @@ public:
 		prevData = "NULL";
 		newData = "NULL";
 		isHead = false;
+		prev = NULL;
+		next = NULL;
 	};
-	void undo(Sheet *sheet) {
-		if (isHead == false && isOpenParen == false && isCloseParen == false) {
-			sheet->setCellData(row, col, prevData);
-			deleteChange();
-		}
-		if (isHead == true) {
-			next->undo(sheet);
-		}
-		if (isCloseParen == true) {
-			while (next->getOpenParen() != true) {
-				next->undo(sheet);
-			}
-			next->deleteChange();
-			deleteChange();
-		}
-	};
-	// we assume that this will only be called on the head Change
 	Change(int nRow, int nCol, string nPrevData, string nNewData) {
 		Change* newOne = new Change;
 		newOne->col = nCol;
 		newOne->row = nRow;
 		newOne->prevData = nPrevData;
 		newOne->newData = nNewData;
+		next = NULL;
+		prev = NULL;
+	};
+	void undo(Sheet *sheet) { // we assume that this will only be called on the head Change
+		if (isHead == false && isOpenParen == false && isCloseParen == false) {
+			sheet->setCellData(row, col, prevData);
+			deleteChange();
+		}
+		if (isHead == true) {
+			if (next != NULL) {
+				next->undo(sheet);
+			} else {
+				char error[] = "Empty Change Log";
+				throw error;
+			}
+		}
+		if (isCloseParen == true) {
+			while (next->getOpenParen() != true && next != NULL) {
+				next->undo(sheet);
+			}
+			if (next != NULL) {
+				next->deleteChange();
+			}
+			deleteChange();
+		}
+		if (isOpenParen == true) {
+			char error[] = "Lose open Paren found";
+			throw error;
+		}
 	};
 	Change* getNext() {
 		return next;
