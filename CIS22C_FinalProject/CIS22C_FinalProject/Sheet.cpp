@@ -37,7 +37,7 @@ Cell * Sheet::operator()(int x, int y)
 
 void Sheet::generateHashTable()
 {
-	hashTableSize = getPrimeGreaterThan(xSize * ySize * hashTableMultiplier);
+	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
 	if (hashTableSize > 500)
 	{
 		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 50);
@@ -66,12 +66,12 @@ void Sheet::generateHashTable()
 	{
 		for (int i = 0; i < xSize; i++)
 		{
-			int cellX = operator()(i, j)->getXCoord();
-			int cellY = operator()(i, j)->getYCoord();
+			int cellX = nonHashSearch(i, j)->getXCoord();
+			int cellY = nonHashSearch(i, j)->getYCoord();
 			int index = getHashIndex(cellX, cellY, hashTableMultiplier, hashTableAddition, hashTableSize);
 			if (hashTable[index] == nullptr)
 			{
-				hashTable[index] = operator()(i, j);
+				hashTable[index] = nonHashSearch(i, j);
 			}
 			else
 			{
@@ -83,7 +83,7 @@ void Sheet::generateHashTable()
 					index = quadraticResolution(index, hashTableSize);
 					if (hashTable[index] == nullptr)
 					{
-						hashTable[index] = operator()(i, j);
+						hashTable[index] = nonHashSearch(i, j);
 						done = true;
 					}
 					else
@@ -99,6 +99,30 @@ void Sheet::generateHashTable()
 			}
 		}
 	}
+}
+
+Cell * Sheet::nonHashSearch(int x, int y)
+{
+	if (x >= xSize || x < 0)
+	{
+		char error[] = "Sheet passed an index x that is out of bounds.\n";
+		throw error;
+	}
+	if (y >= ySize || y < 0)
+	{
+		char error[] = "Sheet passed an index y that is out of bounds.\n";
+		throw error;
+	}
+	Cell *temp = headerCell;
+	for (int i = 0; i < x; i++)
+	{
+		temp = temp->getRight();
+	}
+	for (int i = 0; i < y; i++)
+	{
+		temp = temp->getBelow();
+	}
+	return temp;
 }
 
 
@@ -388,7 +412,9 @@ int main()
 	Sheet a = Sheet(10, 10);
 	a.setCellData(1, 3, "Bananr");
 	a.setCellData(3, 7, "Lawl");
-	string fileName = "C:\\Users\\ahouts\\Desktop\\file.txt";
-	a.toFile(fileName);
+	a.getCellData(3, 7);
+	//string fileName = "C:\\Users\\ahouts\\Desktop\\file.txt";
+	//a.toFile(fileName);
+	1 + 1;
 }
 
