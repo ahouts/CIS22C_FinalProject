@@ -5,12 +5,15 @@ Sheet::Sheet(int xSize, int ySize)
 	initializeSheet(xSize, ySize);
 	generateHashTable();
 	filePath = "./spreadsheet.dat";
+	dummyCell = new Cell();
+	dummyCell->setData("this is the forbidden text");
 }
 
 Sheet::~Sheet()
 {
 	wipeSheet();
 	delete[] hashTable;
+	delete dummyCell;
 }
 
 Cell * Sheet::operator()(int x, int y)
@@ -78,8 +81,7 @@ void Sheet::generateHashTable()
 			{
 				bool done = false;
 				int count = 0;
-				int maxCount = 10;
-				while (!done && count < maxCount)
+				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
 				{
 					index = quadraticResolution(index, hashTableSize);
 					if (hashTable[index] == nullptr)
@@ -92,7 +94,7 @@ void Sheet::generateHashTable()
 						count++;
 					}
 				}
-				if (count == maxCount)
+				if (count == MAX_RESOLUTION_ATTEMPTS)
 				{
 					char error[] = "Hash resolution took too many cycles.\n";
 					throw error;
@@ -129,12 +131,12 @@ Cell * Sheet::nonHashSearch(int x, int y)
 
 void Sheet::setCellData(int x, int y, string str)
 {
-	this->operator()(x, y)->setData(str);
+	operator()(x, y)->setData(str);
 }
 
 string Sheet::getCellData(int x, int y)
 {
-	return this->operator()(x, y)->getData();
+	return operator()(x, y)->getData();
 }
 
 void Sheet::toFile()
@@ -201,38 +203,45 @@ void Sheet::fromFile()
 			int index = getHashIndex(i, j, hashTableModifier, hashTableAddition, hashTableSize);
 
 			string *data = getIndexData(fin, index);
-
-			if (data[0] == "")
+			
+			if (data[3] == "")
 			{
 				// do nothing
 			}
 			else if (stoi(data[1]) == i && stoi(data[2]) == j)
 			{
-				setCellData(i, j, data[3]);
+				nonHashSearch(i, j)->setData(data[3]);
 			}
 			else
 			{
 				bool done = false;
-				int maxCount = 0;
-				while (!done && maxCount < 10)
+				int count = 0;
+				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
 				{
 					index = quadraticResolution(index, hashTableSize);
-					delete[] data;
-					data = getIndexData(fin, index);
-					if (stoi(data[1]) == i && stoi(data[2]) == j)
+					string *data2 = getIndexData(fin, index);
+
+					if (data[3] == "")
+					{
+						done = true;
+					}
+					else if (stoi(data[1]) == i && stoi(data[2]) == j)
 					{
 						setCellData(i, j, data[3]);
 						done = true;
 					}
 					else
 					{
-						maxCount++;
+						count++;
 					}
+					delete[] data2;
 				}
 			}
 			delete[] data;
 		}
 	}
+
+	generateHashTable();
 }
 
 void Sheet::swapRow(int y1, int y2)
@@ -381,7 +390,7 @@ void Sheet::wipeSheet()
 	{
 		if (j < ySize - 1)
 		{
-			nextRow = operator()(0, j + 1);
+			nextRow = currentRow->getBelow();
 		}
 		Cell *nextCell = currentRow;
 		for (int i = 0; i < xSize; i++)
@@ -444,8 +453,7 @@ string * Sheet::getIndexData(ifstream & file, int index)
 	file.seekg(0, ios::beg);
 
 	int junk;
-	char junk2;
-	file >> junk >> junk >> junk >> junk >> junk >> junk2;
+	file >> junk >> junk >> junk >> junk >> junk;
 
 	string *answer = new string[4];
 	for (int i = 0; i < 4; i++)
@@ -453,39 +461,32 @@ string * Sheet::getIndexData(ifstream & file, int index)
 		answer[i] = "";
 	}
 
-	string info[4];
+	file.ignore();
 	do
 	{
 		string data;
 		getline(file, data);
 
+		for (int i = 0; i < 4; i++)
+		{
+			answer[i] = "";
+		}
+
 		stringstream ssin(data);
 		int i = 0;
 		while (ssin.good() && i < 4)
 		{
-			ssin >> info[i];
+			ssin >> answer[i];
 			++i;
 		}
-	} while (stoi(info[0]) != index && file.good());
+	} while (stoi(answer[0]) != index && file.good());
 
-	if (stoi(info[0]) == index)
+	if (stoi(answer[0]) != index)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			answer[i] = info[i];
+			answer[i] = "";
 		}
 	}
 	return answer;
 }
-
-int main()
-{
-	Sheet a = Sheet(10, 10);
-	a.setCellData(1, 3, "Bananr");
-	a.setCellData(3, 7, "Lawl");
-	a.getCellData(3, 7);
-	//string filePath = "C:\\Users\\ahouts\\Desktop\\file.txt";
-	//a.toFile(filePath);
-	1 + 1;
-}
-

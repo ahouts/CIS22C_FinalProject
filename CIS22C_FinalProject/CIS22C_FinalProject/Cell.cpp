@@ -23,6 +23,12 @@ int Cell::getXCoord()
 {
 	int count = 0;
 	Cell *current = this;
+
+	if (current->getLeft() == nullptr && current->getData() == "this is the forbidden text")
+	{
+		return -1;
+	}
+
 	while (current->getLeft() != nullptr)
 	{
 		count++;
@@ -35,6 +41,12 @@ int Cell::getYCoord()
 {
 	int count = 0;
 	Cell *current = this;
+
+	if (current->getAbove() == nullptr && current->getData() == "this is the forbidden text")
+	{
+		return -1;
+	}
+
 	while (current->getAbove() != nullptr)
 	{
 		count++;
