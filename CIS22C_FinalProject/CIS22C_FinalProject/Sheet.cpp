@@ -5,12 +5,15 @@ Sheet::Sheet(int xSize, int ySize)
 	initializeSheet(xSize, ySize);
 	generateHashTable();
 	filePath = "./spreadsheet.dat";
+	dummyCell = new Cell();
+	dummyCell->setData("this is the forbidden text");
 }
 
 Sheet::~Sheet()
 {
 	wipeSheet();
 	delete[] hashTable;
+	delete dummyCell;
 }
 
 Cell * Sheet::operator()(int x, int y)
@@ -78,8 +81,7 @@ void Sheet::generateHashTable()
 			{
 				bool done = false;
 				int count = 0;
-				int maxCount = 10;
-				while (!done && count < maxCount)
+				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
 				{
 					index = quadraticResolution(index, hashTableSize);
 					if (hashTable[index] == nullptr)
@@ -92,7 +94,7 @@ void Sheet::generateHashTable()
 						count++;
 					}
 				}
-				if (count == maxCount)
+				if (count == MAX_RESOLUTION_ATTEMPTS)
 				{
 					char error[] = "Hash resolution took too many cycles.\n";
 					throw error;
@@ -129,12 +131,12 @@ Cell * Sheet::nonHashSearch(int x, int y)
 
 void Sheet::setCellData(int x, int y, string str)
 {
-	this->operator()(x, y)->setData(str);
+	operator()(x, y)->setData(str);
 }
 
 string Sheet::getCellData(int x, int y)
 {
-	return this->operator()(x, y)->getData();
+	return operator()(x, y)->getData();
 }
 
 void Sheet::toFile()
@@ -213,8 +215,8 @@ void Sheet::fromFile()
 			else
 			{
 				bool done = false;
-				int maxCount = 0;
-				while (!done && maxCount < 10)
+				int count = MAX_RESOLUTION_ATTEMPTS;
+				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
 				{
 					index = quadraticResolution(index, hashTableSize);
 					delete[] data;
@@ -226,7 +228,7 @@ void Sheet::fromFile()
 					}
 					else
 					{
-						maxCount++;
+						count++;
 					}
 				}
 			}
@@ -381,7 +383,7 @@ void Sheet::wipeSheet()
 	{
 		if (j < ySize - 1)
 		{
-			nextRow = operator()(0, j + 1);
+			nextRow = currentRow->getBelow();
 		}
 		Cell *nextCell = currentRow;
 		for (int i = 0; i < xSize; i++)
@@ -478,14 +480,18 @@ string * Sheet::getIndexData(ifstream & file, int index)
 	return answer;
 }
 
+#include <iostream>
+
 int main()
 {
 	Sheet a = Sheet(10, 10);
 	a.setCellData(1, 3, "Bananr");
 	a.setCellData(3, 7, "Lawl");
-	a.getCellData(3, 7);
+	cout << a.getCellData(3, 7) << endl;
+	cout << a.getCellData(1, 3) << endl;
+	cout << a.getCellData(9, 9) << endl;
 	//string filePath = "C:\\Users\\ahouts\\Desktop\\file.txt";
 	//a.toFile(filePath);
-	1 + 1;
+	system("PAUSE");
 }
 
