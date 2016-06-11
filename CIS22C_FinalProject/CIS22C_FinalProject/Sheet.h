@@ -14,6 +14,7 @@ private:
 	Cell *headerCell;		// refers to the Cell at (0, 0)
 	int xSize;
 	int ySize;
+	string filePath;
 	// hash table settings for searching objects and file in & out
 	const double HASH_TABLE_SIZE_MULTIPLIER = 1.5;
 	int hashTableSize;
@@ -26,12 +27,14 @@ public:
 	Cell* operator()(int x, int y);
 	void setCellData(int x, int y, string str);
 	string getCellData(int x, int y);
-	void toFile(string fileName);
-	void fromFile(string fileName);
+	void toFile();
+	void fromFile();
 	void swapRow(int y1, int y2);
 	void swapCol(int x1, int x2);
 	int getXSize();
 	int getYSize();
+	string getFilePath();
+	void setFilePath(string filePath);
 protected:
 	void generateHashTable();
 	Cell* nonHashSearch(int x, int y);
