@@ -203,25 +203,29 @@ void Sheet::fromFile()
 			int index = getHashIndex(i, j, hashTableModifier, hashTableAddition, hashTableSize);
 
 			string *data = getIndexData(fin, index);
-
-			if (data[0] == "")
+			
+			if (data[3] == "")
 			{
 				// do nothing
 			}
 			else if (stoi(data[1]) == i && stoi(data[2]) == j)
 			{
-				setCellData(i, j, data[3]);
+				nonHashSearch(i, j)->setData(data[3]);
 			}
 			else
 			{
 				bool done = false;
-				int count = MAX_RESOLUTION_ATTEMPTS;
+				int count = 0;
 				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
 				{
 					index = quadraticResolution(index, hashTableSize);
-					delete[] data;
-					data = getIndexData(fin, index);
-					if (stoi(data[1]) == i && stoi(data[2]) == j)
+					string *data2 = getIndexData(fin, index);
+
+					if (data[3] == "")
+					{
+						done = true;
+					}
+					else if (stoi(data[1]) == i && stoi(data[2]) == j)
 					{
 						setCellData(i, j, data[3]);
 						done = true;
@@ -230,11 +234,14 @@ void Sheet::fromFile()
 					{
 						count++;
 					}
+					delete[] data2;
 				}
 			}
 			delete[] data;
 		}
 	}
+
+	generateHashTable();
 }
 
 void Sheet::swapRow(int y1, int y2)
@@ -446,8 +453,7 @@ string * Sheet::getIndexData(ifstream & file, int index)
 	file.seekg(0, ios::beg);
 
 	int junk;
-	char junk2;
-	file >> junk >> junk >> junk >> junk >> junk >> junk2;
+	file >> junk >> junk >> junk >> junk >> junk;
 
 	string *answer = new string[4];
 	for (int i = 0; i < 4; i++)
@@ -455,43 +461,32 @@ string * Sheet::getIndexData(ifstream & file, int index)
 		answer[i] = "";
 	}
 
-	string info[4];
+	file.ignore();
 	do
 	{
 		string data;
 		getline(file, data);
 
+		for (int i = 0; i < 4; i++)
+		{
+			answer[i] = "";
+		}
+
 		stringstream ssin(data);
 		int i = 0;
 		while (ssin.good() && i < 4)
 		{
-			ssin >> info[i];
+			ssin >> answer[i];
 			++i;
 		}
-	} while (stoi(info[0]) != index && file.good());
+	} while (stoi(answer[0]) != index && file.good());
 
-	if (stoi(info[0]) == index)
+	if (stoi(answer[0]) != index)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			answer[i] = info[i];
+			answer[i] = "";
 		}
 	}
 	return answer;
 }
-
-#include <iostream>
-
-int main()
-{
-	Sheet a = Sheet(10, 10);
-	a.setCellData(1, 3, "Bananr");
-	a.setCellData(3, 7, "Lawl");
-	cout << a.getCellData(3, 7) << endl;
-	cout << a.getCellData(1, 3) << endl;
-	cout << a.getCellData(9, 9) << endl;
-	//string filePath = "C:\\Users\\ahouts\\Desktop\\file.txt";
-	//a.toFile(filePath);
-	system("PAUSE");
-}
-
