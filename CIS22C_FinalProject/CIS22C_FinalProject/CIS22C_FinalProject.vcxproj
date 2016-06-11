@@ -124,6 +124,7 @@
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Change.cpp" />
     <ClCompile Include="CommandLine.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Refresh.cpp" />
     <ClCompile Include="Sheet.cpp" />
