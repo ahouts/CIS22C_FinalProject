@@ -4,6 +4,7 @@ Sheet::Sheet(int xSize, int ySize)
 {
 	initializeSheet(xSize, ySize);
 	generateHashTable();
+	filePath = "./spreadsheet.dat";
 }
 
 Sheet::~Sheet()
@@ -136,10 +137,10 @@ string Sheet::getCellData(int x, int y)
 	return this->operator()(x, y)->getData();
 }
 
-void Sheet::toFile(string fileName)
+void Sheet::toFile()
 {
 	ofstream fout = ofstream();
-	fout.open(fileName);
+	fout.open(filePath);
 	if (fout.fail())
 	{
 		char error[] = "Failed to open file for writing.\n";
@@ -171,10 +172,10 @@ void Sheet::toFile(string fileName)
 	fout.close();
 }
 
-void Sheet::fromFile(string fileName)
+void Sheet::fromFile()
 {
 	ifstream fin = ifstream();
-	fin.open(fileName);
+	fin.open(filePath);
 	if (fin.fail())
 	{
 		char error[] = "Failed to open file for writing.\n";
@@ -234,6 +235,66 @@ void Sheet::fromFile(string fileName)
 	}
 }
 
+void Sheet::swapRow(int y1, int y2)
+{
+	string *row = new string[xSize];
+
+	Cell *temp = operator()(0, y2);
+	for (int i = 0; i < xSize; i++)
+	{
+		row[i] = temp->getData();
+		temp = temp->getRight();
+	}
+
+	temp = operator()(0, y1);
+	Cell *temp2 = operator()(0, y2);
+	for (int i = 0; i < xSize; i++)
+	{
+		setCellData(temp2->getXCoord(), temp2->getYCoord(), temp->getData());
+		temp = temp->getRight();
+		temp2 = temp2->getRight();
+	}
+
+	temp = operator()(0, y1);
+	for (int i = 0; i < xSize; i++)
+	{
+		setCellData(temp->getXCoord(), temp->getYCoord(), row[i]);
+		temp = temp->getRight();
+	}
+
+	delete[] row;
+}
+
+void Sheet::swapCol(int x1, int x2)
+{
+	string *col = new string[ySize];
+
+	Cell *temp = operator()(0, x2);
+	for (int i = 0; i < ySize; i++)
+	{
+		col[i] = temp->getData();
+		temp = temp->getBelow();
+	}
+
+	temp = operator()(0, x1);
+	Cell *temp2 = operator()(0, x2);
+	for (int i = 0; i < ySize; i++)
+	{
+		setCellData(temp2->getXCoord(), temp2->getYCoord(), temp->getData());
+		temp = temp->getBelow();
+		temp2 = temp2->getBelow();
+	}
+
+	temp = operator()(0, x1);
+	for (int i = 0; i < ySize; i++)
+	{
+		setCellData(temp->getXCoord(), temp->getYCoord(), col[i]);
+		temp = temp->getBelow();
+	}
+
+	delete[] col;
+}
+
 int Sheet::getXSize()
 {
 	return xSize;
@@ -242,6 +303,16 @@ int Sheet::getXSize()
 int Sheet::getYSize()
 {
 	return ySize;
+}
+
+string Sheet::getFilePath()
+{
+	return filePath;
+}
+
+void Sheet::setFilePath(string filePath)
+{
+	this->filePath = filePath;
 }
 
 void Sheet::resizeSheet(int xSize, int ySize)
@@ -413,8 +484,8 @@ int main()
 	a.setCellData(1, 3, "Bananr");
 	a.setCellData(3, 7, "Lawl");
 	a.getCellData(3, 7);
-	//string fileName = "C:\\Users\\ahouts\\Desktop\\file.txt";
-	//a.toFile(fileName);
+	//string filePath = "C:\\Users\\ahouts\\Desktop\\file.txt";
+	//a.toFile(filePath);
 	1 + 1;
 }
 
