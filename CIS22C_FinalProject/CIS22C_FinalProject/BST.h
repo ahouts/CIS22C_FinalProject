@@ -12,8 +12,8 @@ protected:
 	Node headNode;
 public:
 	Node getHead();
-	void addNode(Node newNode);
-	void removeNode(Node targetNode);
+	void addNode(Node* newNode, Node* target);
+	void removeNode(Node *targetNode);
 	void balance(Node* target);
 	Node* search(string goal, Node* target);
 	void rotateLeft(Node* target);

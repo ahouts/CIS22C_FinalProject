@@ -16,6 +16,9 @@ void BST::rotateRight(Node* target)
 	target->setRight(holder);
 }
 
+<<<<<<< HEAD
+void BST::addNode(Node* newNode,Node* target) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
+=======
 void BST::generateTree(Sheet &sheet)
 {
 	clearTree();
@@ -36,20 +39,19 @@ void BST::clearTree()
 }
 
 void BST::addNode(Node newNode) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
+>>>>>>> origin/master
 {
-	Node holder = headNode;
-	headNode = newNode;
-	headNode.setLeft(&holder);
+	Node* holder = target;
+	target = newNode;
+	target->setLeft(holder);
 	balance(&headNode);
 }
 
-void BST::removeNode(Node targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
+void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
 {
-	while (targetNode.hasRightChild() == true) {
-		targetNode.rotateLeft();
-	}
-	targetNode = *targetNode.getLeft();
-	balance(&targetNode);
+	Node* holder = targetNode;
+	addNode(targetNode->getRight(), targetNode->getLeft());
+	delete holder;
 }
 
 Node* BST::search(string goal, Node* target) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
