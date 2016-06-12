@@ -21,6 +21,7 @@ private:
 public:
 	// This creates the head Change that will be used in other classes
 	Change();
+	~Change();
 	// true = openParen, false = closeParen
 	Change(bool blockStart, bool blockEnd);
 	//

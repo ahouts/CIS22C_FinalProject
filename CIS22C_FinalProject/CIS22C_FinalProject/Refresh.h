@@ -5,11 +5,7 @@
 class Refresh
 {
 private:
-<<<<<<< HEAD
 	Sheet* sheet;
-=======
-	Sheet *sheet;
->>>>>>> origin/master
 public:
 	Refresh(Sheet *sheet);
 	void findfunctions();
