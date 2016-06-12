@@ -17,6 +17,8 @@ class CommandLine
 private:
 	Sheet *sheet;
 	Change change;
+	Refresh refresh;
+	BST bst;
 public:
 	CommandLine(Sheet *sheet);
 	void modifyCell(int xCoord, int yCoord, string data);

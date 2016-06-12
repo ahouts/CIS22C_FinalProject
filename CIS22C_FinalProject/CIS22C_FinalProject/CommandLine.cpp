@@ -1,6 +1,13 @@
 #include "CommandLine.h"
 
 
+CommandLine::CommandLine(Sheet * sheet)
+{
+	this->sheet = sheet;
+	change = Change();
+	refresh = Refresh(sheet);
+}
+
 void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 {
 	sheet->setCellData(xCoord, yCoord, data);
