@@ -1,8 +1,6 @@
 #include "Refresh.h"
-<<<<<<< HEAD
 #include "Sheet.h"
-=======
->>>>>>> origin/master
+
 
 double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
@@ -117,6 +115,11 @@ Refresh::Refresh(Sheet *sheet)
 
 void Refresh::findfunctions()
 {
+	string calc = getHead().getMe();
+	int goThrough = 0;
+	while (calc[goThrough] != '+' || calc[goThrough] != '-' || calc[goThrough] != '/' || calc[goThrough] != '*') {
+
+	}
 }
 
 double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
@@ -225,13 +228,8 @@ double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
 		return total;
 	}
 }
-<<<<<<< HEAD
 
-=======
-double Refresh::subtract(int x1, int x2, int y1, int y2)
-{
-	return 0.0;
-}
+
 double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
 
