@@ -73,7 +73,7 @@ void CommandLine::mainLoop()
 				string searchstring;
 				cin.ignore();
 				getline(cin, searchstring);
-				BST.search(searchstring, &BST.getHead());
+				bst.search(searchstring, &bst.getHead());
 			}
 			else
 			{
