@@ -16,32 +16,9 @@ void BST::rotateRight(Node* target)
 	target->setRight(holder);
 }
 
-void BST::addNode(Node* newNode, Node* target) {
-	if (target->hasLeftChild() == false && target->hasRightChild() == false) {
-		if (target->getMe > newNode->getMe()) {
-			target->setRight(newNode);
-		}
-		else {
-			target->setLeft(newNode);
-		}
-	}
-	if (target->hasLeftChild == true) {
-		if (newNode->getMe() < target->getMe()) {
-			addNode(newNode, target->getLeft());
-		}
-		else {
-			target->setRight(newNode);
-		}
-	}
-	if (target->hasRightChild == true) {
-		if (newNode->getMe() > target->getMe()) {
-			addNode(newNode, target->getRight());
-		}
-		else {
-			target->setLeft(newNode);
-		}
-	}
-}
+<<<<<<< HEAD
+void BST::addNode(Node* newNode,Node* target) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
+=======
 void BST::generateTree(Sheet &sheet)
 {
 	clearTree();
