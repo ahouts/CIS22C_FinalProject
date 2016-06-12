@@ -5,7 +5,7 @@
 class Refresh
 {
 private:
-	Sheet newsheet;
+	Sheet* sheet;
 public:
 	Refresh::Refresh();
 	void findfunctions();
