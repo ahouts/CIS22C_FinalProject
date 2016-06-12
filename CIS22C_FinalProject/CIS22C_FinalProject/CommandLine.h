@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iostream>
 #include <stdio.h>
+#include "BST.h"
 #include "Change.h"
 #include "Sheet.h"
 #include "Refresh.h"
