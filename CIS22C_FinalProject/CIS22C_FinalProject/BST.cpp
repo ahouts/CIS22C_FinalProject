@@ -32,7 +32,10 @@ void BST::generateTree(Sheet &sheet)
 
 void BST::clearTree()
 {
-	// deletes all nodes in the tree
+	Node* target = &headNode;
+	while (target != NULL) {
+		removeNode(target);
+	}
 }
 
 void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
@@ -93,14 +96,14 @@ Node BST::getHead()
 
 void BST::addNode(Node* newNode, Node* target) {
 	if (target->hasLeftChild() == false && target->hasRightChild() == false) {
-		if (target->getMe > newNode->getMe()) {
+		if (target->getMe() > newNode->getMe()) {
 			target->setRight(newNode);
 		}
 		else {
 			target->setLeft(newNode);
 		}
 	}
-	if (target->hasLeftChild == true) {
+	if (target->hasLeftChild() == true) {
 		if (newNode->getMe() < target->getMe()) {
 			addNode(newNode, target->getLeft());
 		}
@@ -108,7 +111,7 @@ void BST::addNode(Node* newNode, Node* target) {
 			target->setRight(newNode);
 		}
 	}
-	if (target->hasRightChild == true) {
+	if (target->hasRightChild() == true) {
 		if (newNode->getMe() > target->getMe()) {
 			addNode(newNode, target->getRight());
 		}
