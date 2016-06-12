@@ -328,6 +328,7 @@ void Sheet::resizeSheet(int xSize, int ySize)
 {
 	wipeSheet();
 	initializeSheet(xSize, ySize);
+	generateHashTable();
 };
 
 void Sheet::initializeSheet(int xSize, int ySize)
