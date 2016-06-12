@@ -1,5 +1,5 @@
 #include "CommandLine.h"
-
+#include "BST.h"
 
 CommandLine::CommandLine(Sheet * sheet)
 {
@@ -70,7 +70,10 @@ void CommandLine::mainLoop()
 			}
 			else if (word[0] == "search")
 			{
-				
+				string searchstring;
+				cin.ignore();
+				getline(cin, searchstring);
+				BST.search(searchstring, BST.getNode());
 			}
 			else
 			{

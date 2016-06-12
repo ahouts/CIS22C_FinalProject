@@ -8,7 +8,7 @@ using namespace std;
 
 class BST /*friend Node*/{
 
-private:
+protected:
 	Node headNode;
 public:
 	void addNode(Node newNode);
@@ -17,5 +17,6 @@ public:
 	Node* search(string goal, Node* target);
 	void rotateLeft(Node* target);
 	void rotateRight(Node* target);
+
 }
 #endif

@@ -16,6 +16,7 @@ using namespace std;
 class CommandLine
 {
 private:
+	BST BST;
 	Sheet *sheet;
 	Change change;
 	Refresh refresh;

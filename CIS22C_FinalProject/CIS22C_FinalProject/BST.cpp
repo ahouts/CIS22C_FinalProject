@@ -67,7 +67,7 @@ void BST::balance(Node* target)//completely untested
 	}
 	balance(target->getLeft());
 	if (target->getRight() != NULL) {
-		if (|| target->getRight()->getRight() != NULL || target->getLeft() == NULL) {
+		if (target->getRight()->getRight() != NULL || target->getLeft() == NULL) {
 			rotateLeft(target);
 		}
 	}
