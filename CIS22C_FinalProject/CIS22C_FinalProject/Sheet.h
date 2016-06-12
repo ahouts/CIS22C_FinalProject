@@ -29,6 +29,7 @@ public:
 	Cell* operator()(int x, int y);
 	void setCellData(int x, int y, string str);
 	string getCellData(int x, int y);
+	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
 	void toFile();
 	void fromFile();
 	void swapRow(int y1, int y2);
@@ -40,7 +41,6 @@ public:
 protected:
 	void generateHashTable();
 	Cell* nonHashSearch(int x, int y);
-	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
 	void initializeSheet(int xSize, int ySize);
 	void wipeSheet();								// Deletes all cells in Sheet
 	int index(int x, int y, int width);				// for *arr in the initializer
