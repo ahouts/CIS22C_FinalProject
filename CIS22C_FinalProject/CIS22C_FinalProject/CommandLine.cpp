@@ -6,6 +6,7 @@ CommandLine::CommandLine(Sheet * sheet)
 	this->sheet = sheet;
 	change = Change();
 	refresh = Refresh(sheet);
+	bst = BST();
 }
 
 void CommandLine::modifyCell(int xCoord, int yCoord, string data)
