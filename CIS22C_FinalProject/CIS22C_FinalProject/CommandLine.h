@@ -10,13 +10,11 @@
 #include "Sheet.h"
 #include "Refresh.h"
 #include "Cell.h"
-#include "BST.h"
 using namespace std;
 
 class CommandLine
 {
 private:
-	BST BST;
 	Sheet *sheet;
 	Change change;
 	Refresh refresh;
