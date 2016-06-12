@@ -2,19 +2,23 @@
 #define MAIN_MENU_H
 
 #include <string>
+#include <stdio.h>
+#include <iostream>
 #include "Sheet.h"
+#include "CommandLine.h"
 using namespace std;
 
 class MainMenu
 {
 private:
 	Sheet *sheet;
+	CommandLine commandLine;
 public:
 	MainMenu(Sheet *sheet);
 	void showMainMenu();
-	void createSheet(string path);
-	void openSheet(string path);
-	void deleteSheet(string path);
+	void createSheet();
+	void openSheet();
+	void deleteSheet();
 };
 
 #endif
