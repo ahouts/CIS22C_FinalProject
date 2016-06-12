@@ -5,9 +5,13 @@
 class Refresh
 {
 private:
-	Sheet newsheet;
+<<<<<<< HEAD
+	Sheet* sheet;
+=======
+	Sheet *sheet;
+>>>>>>> origin/master
 public:
-	Refresh::Refresh();
+	Refresh(Sheet *sheet);
 	void findfunctions();
 	double add(int x1, int x2, int y1, int y2);
 	double subtract(int x1, int x2, int y1, int y2);

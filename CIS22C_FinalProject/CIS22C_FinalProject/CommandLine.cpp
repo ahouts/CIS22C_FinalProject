@@ -1,15 +1,23 @@
 #include "CommandLine.h"
 #include "BST.h"
 
+CommandLine::CommandLine(Sheet * sheet)
+{
+	this->sheet = sheet;
+	change = Change();
+	refresh = Refresh(sheet);
+	bst = BST();
+}
+
 void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 {
 	sheet->setCellData(xCoord, yCoord, data);
 }
 void CommandLine::drawSheet(ostream& out) 
 {
-	for (int x = 0; x < sheet->getXSize; x++)
+	for (int x = 0; x < sheet->getXSize(); x++)
 	{
-		for (int y = 0; y < sheet->getYSize; y++)
+		for (int y = 0; y < sheet->getYSize(); y++)
 		{
 			out << sheet->getCellData(x, y);
 		}

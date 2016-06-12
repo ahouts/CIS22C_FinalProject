@@ -14,20 +14,33 @@ private:
 	Cell *headerCell;		// refers to the Cell at (0, 0)
 	int xSize;
 	int ySize;
+	string filePath;
+	// hash table settings for searching objects and file in & out
+	const double HASH_TABLE_SIZE_MULTIPLIER = 3;
+	const int MAX_RESOLUTION_ATTEMPTS = 20;
+	int hashTableSize;
+	int hashTableMultiplier;
+	int hashTableAddition;
+	Cell **hashTable;
+	Cell *dummyCell;
 public:
 	Sheet(int xSize, int ySize);
 	~Sheet();
 	Cell* operator()(int x, int y);
 	void setCellData(int x, int y, string str);
 	string getCellData(int x, int y);
-	void toFile(string fileName);
-	void fromFile(string fileName);
+	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
+	void toFile();
+	void fromFile();
 	void swapRow(int y1, int y2);
 	void swapCol(int x1, int x2);
 	int getXSize();
 	int getYSize();
+	string getFilePath();
+	void setFilePath(string filePath);
 protected:
-	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
+	void generateHashTable();
+	Cell* nonHashSearch(int x, int y);
 	void initializeSheet(int xSize, int ySize);
 	void wipeSheet();								// Deletes all cells in Sheet
 	int index(int x, int y, int width);				// for *arr in the initializer
