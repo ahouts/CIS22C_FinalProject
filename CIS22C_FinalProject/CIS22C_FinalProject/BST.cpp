@@ -1,4 +1,5 @@
 #include "BST.h"
+
 void BST::rotateLeft(Node* target) {
 	Node* holder = target;
 	target = target->getRight();
