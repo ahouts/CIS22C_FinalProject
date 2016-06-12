@@ -11,6 +11,7 @@ class BST /*friend Node*/{
 protected:
 	Node headNode;
 public:
+	Node getHead();
 	void addNode(Node newNode);
 	void removeNode(Node targetNode);
 	void balance(Node* target);

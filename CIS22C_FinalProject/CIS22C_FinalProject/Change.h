@@ -3,7 +3,8 @@
 #define CHANGE_H
 
 #include <string>
-#include "Sheet.h";
+#include "Sheet.h"
+;
 using namespace std;
 
 class Change
@@ -21,6 +22,7 @@ private:
 public:
 	// This creates the head Change that will be used in other classes
 	Change();
+	~Change();
 	// true = openParen, false = closeParen
 	Change(bool blockStart, bool blockEnd);
 	//

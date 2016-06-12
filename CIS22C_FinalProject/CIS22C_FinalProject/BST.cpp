@@ -24,8 +24,8 @@ void BST::addNode(Node newNode) //stores node to be added in holder, appends exi
 
 void BST::removeNode(Node targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
 {
-	while (targetNode.hasRightChild == true) {
-		targetNode.rotateLeft;
+	while (targetNode.hasRightChild() == true) {
+		targetNode.rotateLeft();
 	}
 	targetNode = *targetNode.getLeft();
 	balance(&targetNode);
@@ -33,9 +33,9 @@ void BST::removeNode(Node targetNode) //moves all branches from node to left, as
 
 Node* BST::search(string goal, Node* target) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
 {
-	if (target->getMe != goal) {
+	if (target->getNode() != goal) {
 		if (target->hasLeftChild() == true) {
-			if (target->getLeft()->getMe() == goal) {
+			if (target->getLeft()->getNode() == goal) {
 				return target->getLeft();
 			}
 			else {
@@ -45,7 +45,7 @@ Node* BST::search(string goal, Node* target) //compares value of goal to values 
 			}
 		}
 		if (target->hasRightChild() == true) {
-			if (target->getRight->getMe() == goal) {
+			if (target->getRight->getNode() == goal) {
 				return target->getRight();
 			}
 			else {
@@ -72,4 +72,8 @@ void BST::balance(Node* target)//completely untested
 		}
 	}
 	balance(target->getRight());
+}
+Node BST::getHead()
+{
+	return headNode;
 }

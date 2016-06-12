@@ -1,6 +1,9 @@
 #include "Refresh.h"
+<<<<<<< HEAD
 #include "Sheet.h"
 
+=======
+>>>>>>> origin/master
 
 double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
@@ -229,7 +232,10 @@ double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
 	}
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
 
@@ -330,7 +336,6 @@ double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 		return total;
 	}
 }
-
 
 double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
@@ -437,5 +442,4 @@ double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 		return total;
 	}
 }
-
 
