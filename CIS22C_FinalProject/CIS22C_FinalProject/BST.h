@@ -21,4 +21,5 @@ public:
 	void generateTree(Sheet &sheet);
 	void clearTree();
 };
+
 #endif

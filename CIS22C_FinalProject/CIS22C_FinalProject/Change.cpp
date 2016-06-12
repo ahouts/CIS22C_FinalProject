@@ -14,7 +14,12 @@ Change::Change() {
 	prevData = "NULL";
 	newData = "NULL";
 
-};
+}
+Change::~Change()
+{
+
+}
+;
 // true = openParen, false = closeParen
 Change::Change(bool blockStart, bool blockEnd) {
 	isOpenParen = blockStart;
