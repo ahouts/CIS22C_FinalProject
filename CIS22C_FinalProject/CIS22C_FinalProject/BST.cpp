@@ -93,7 +93,6 @@ Node BST::getHead()
 	return headNode;
 }
 
-
 void BST::addNode(Node* newNode, Node* target) {
 	if (target->hasLeftChild() == false && target->hasRightChild() == false) {
 		if (target->getMe() > newNode->getMe()) {
