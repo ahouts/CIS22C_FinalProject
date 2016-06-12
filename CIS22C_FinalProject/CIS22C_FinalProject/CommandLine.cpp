@@ -1,7 +1,7 @@
 #include "CommandLine.h"
 #include "BST.h"
 
-CommandLine::CommandLine(Sheet * sheet)
+CommandLine::CommandLine(Sheet *sheet)
 {
 	this->sheet = sheet;
 	change = Change();
@@ -47,15 +47,15 @@ void CommandLine::mainLoop()
 			// || SET VALUE ||
 			if (word[0] == "set")
 			{
-				if (stoi(word[1]))
+				if (stoi(word[1]))   //if the second word is convertable to an int, do so, and continue, otherwise gve an error
 				{
 					int a = stoi(word[1]);
-					if (stoi(word[2]))
+					if (stoi(word[2]))    //if the third word is convertable to an int, do so, and continue, otherwise gve an error
 					{
 						int b = stoi(word[2]);
 
-						cin.ignore();
-						getline(cin, string1);
+						cin.ignore(); 
+						getline(cin, string1);  //takes a string of what to add into the correct cell
 
 
 						change.pushBack(a, b, sheet->getCellData(a, b), string1);
@@ -74,6 +74,10 @@ void CommandLine::mainLoop()
 				cin.ignore();
 				getline(cin, searchstring);
 				bst.search(searchstring, &bst.getHead());
+			}
+			else if (word[0] == "save")
+			{
+				sheet->toFile();
 			}
 			else
 			{

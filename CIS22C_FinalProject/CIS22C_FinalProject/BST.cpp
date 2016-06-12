@@ -1,17 +1,38 @@
 #include "BST.h"
 
-void BST::rotateLeft(Node* target) {
+void BST::rotateLeft(Node* target) 
+{
 	Node* holder = target;
 	target = target->getRight();
 	holder->setRight(target->getLeft());
 	target->setLeft(holder);
 }
 
-void BST::rotateRight(Node* target) {
+void BST::rotateRight(Node* target) 
+{
 	Node* holder = target;
 	target = target->getLeft();
 	holder->setLeft(target->getRight());
 	target->setRight(holder);
+}
+
+void BST::generateTree(Sheet &sheet)
+{
+	clearTree();
+	for (int j = 0; j < sheet.getYSize(); j++)
+	{
+		for (int i = 0; i < sheet.getXSize(); i++)
+		{
+			Node temp = Node();
+			temp.setMe(sheet(i, j));
+			addNode(temp);
+		}
+	}
+}
+
+void BST::clearTree()
+{
+	// deletes all nodes in the tree
 }
 
 void BST::addNode(Node newNode) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
@@ -20,7 +41,7 @@ void BST::addNode(Node newNode) //stores node to be added in holder, appends exi
 	headNode = newNode;
 	headNode.setLeft(&holder);
 	balance(&headNode);
-};
+}
 
 void BST::removeNode(Node targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
 {
@@ -33,9 +54,9 @@ void BST::removeNode(Node targetNode) //moves all branches from node to left, as
 
 Node* BST::search(string goal, Node* target) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
 {
-	if (target->getNode() != goal) {
+	if (target->getMe() != goal) {
 		if (target->hasLeftChild() == true) {
-			if (target->getLeft()->getNode() == goal) {
+			if (target->getLeft()->getMe() == goal) {
 				return target->getLeft();
 			}
 			else {
@@ -45,7 +66,7 @@ Node* BST::search(string goal, Node* target) //compares value of goal to values 
 			}
 		}
 		if (target->hasRightChild() == true) {
-			if (target->getRight->getNode() == goal) {
+			if (target->getRight->getMe() == goal) {
 				return target->getRight();
 			}
 			else {
