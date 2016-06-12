@@ -1,5 +1,5 @@
 #include "CommandLine.h"
-
+#include "BST.h"
 
 void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 {
@@ -62,7 +62,10 @@ void CommandLine::mainLoop()
 			}
 			else if (word[0] == "search")
 			{
-				
+				string searchstring;
+				cin.ignore();
+				getline(cin, searchstring);
+				BST.search(searchstring, BST.getNode());
 			}
 			else
 			{

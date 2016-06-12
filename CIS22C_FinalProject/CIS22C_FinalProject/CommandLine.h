@@ -4,7 +4,8 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include <stdio.h>'
+#include <stdio.h>
+#include "BST.h"
 #include "Change.h"
 #include "Sheet.h"
 #include "Refresh.h"
@@ -15,6 +16,7 @@ using namespace std;
 class CommandLine
 {
 private:
+	BST BST;
 	Sheet *sheet;
 	Change change;
 public:
