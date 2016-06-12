@@ -16,6 +16,25 @@ void BST::rotateRight(Node* target)
 	target->setRight(holder);
 }
 
+void BST::generateTree(Sheet &sheet)
+{
+	clearTree();
+	for (int j = 0; j < sheet.getYSize(); j++)
+	{
+		for (int i = 0; i < sheet.getXSize(); i++)
+		{
+			Node temp = Node();
+			temp.setMe(sheet(i, j));
+			addNode(temp);
+		}
+	}
+}
+
+void BST::clearTree()
+{
+	// deletes all nodes in the tree
+}
+
 void BST::addNode(Node newNode) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
 {
 	Node holder = headNode;

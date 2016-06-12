@@ -75,6 +75,10 @@ void CommandLine::mainLoop()
 				getline(cin, searchstring);
 				bst.search(searchstring, &bst.getHead());
 			}
+			else if (word[0] == "save")
+			{
+				sheet->toFile();
+			}
 			else
 			{
 				cout << "invalid entry\n";

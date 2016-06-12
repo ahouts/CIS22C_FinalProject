@@ -18,6 +18,7 @@ public:
 	Node* search(string goal, Node* target);
 	void rotateLeft(Node* target);
 	void rotateRight(Node* target);
-
+	void generateTree(Sheet &sheet);
+	void clearTree();
 };
 #endif
