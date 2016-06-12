@@ -1,6 +1,6 @@
 #include "MainMenu.h"
 
-MainMenu::MainMenu(Sheet * sheet)
+MainMenu::MainMenu(Sheet *sheet)
 {
 	this->sheet = sheet;
 	commandLine = CommandLine(sheet);

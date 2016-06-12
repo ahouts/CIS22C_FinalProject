@@ -17,14 +17,6 @@ public:
 	void sortRow(int x1, int x2);
 	void sortCol(int y1, int y2);
 	double average(int x1, int x2, int y1, int y2);
-	
-
-
-
-
-
-
-
 };
 
 #endif

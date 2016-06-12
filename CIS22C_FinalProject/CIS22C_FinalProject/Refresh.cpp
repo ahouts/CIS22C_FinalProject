@@ -1,5 +1,6 @@
 #include "Refresh.h"
-#include "BST.h"
+
+
 double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
 	int itterations = 0;
