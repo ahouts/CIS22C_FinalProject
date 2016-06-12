@@ -1,6 +1,5 @@
 #include "Refresh.h"
 
-
 double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
 	int itterations = 0;
@@ -105,6 +104,15 @@ double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 		}
 		return (total / itterations);
 	}
+}
+
+Refresh::Refresh(Sheet *sheet)
+{
+	this->sheet = sheet;
+}
+
+void Refresh::findfunctions()
+{
 }
 
 double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
@@ -213,6 +221,10 @@ double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
 		return total;
 	}
 }
+double Refresh::subtract(int x1, int x2, int y1, int y2)
+{
+	return 0.0;
+}
 double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
 
@@ -312,4 +324,17 @@ double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 		}
 		return total;
 	}
+}
+
+double Refresh::divide(int x1, int x2, int y1, int y2)
+{
+	return 0.0;
+}
+
+void Refresh::sortRow(int x1, int x2)
+{
+}
+
+void Refresh::sortCol(int y1, int y2)
+{
 }
