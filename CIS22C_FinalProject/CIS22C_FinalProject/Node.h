@@ -19,6 +19,7 @@ class Node {
 	Node* leftChild;
 	Node* rightChild;
 public:
+	Node getNode();
 	bool hasLeftChild();
 	bool hasRightChild();
 	Node* getRight();

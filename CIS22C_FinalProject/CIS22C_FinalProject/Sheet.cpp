@@ -7,14 +7,14 @@ Sheet::Sheet(int xSize, int ySize)
 	filePath = "./spreadsheet.dat";
 	dummyCell = new Cell();
 	dummyCell->setData("this is the forbidden text");
-}
+};
 
 Sheet::~Sheet()
 {
 	wipeSheet();
 	delete[] hashTable;
 	delete dummyCell;
-}
+};
 
 Cell * Sheet::operator()(int x, int y)
 {
@@ -37,7 +37,7 @@ Cell * Sheet::operator()(int x, int y)
 	}
 
 	return data;
-}
+};
 
 void Sheet::generateHashTable()
 {
@@ -102,7 +102,7 @@ void Sheet::generateHashTable()
 			}
 		}
 	}
-}
+};
 
 Cell * Sheet::nonHashSearch(int x, int y)
 {
@@ -126,18 +126,18 @@ Cell * Sheet::nonHashSearch(int x, int y)
 		temp = temp->getBelow();
 	}
 	return temp;
-}
+};
 
 
 void Sheet::setCellData(int x, int y, string str)
 {
 	operator()(x, y)->setData(str);
-}
+};
 
 string Sheet::getCellData(int x, int y)
 {
 	return operator()(x, y)->getData();
-}
+};
 
 void Sheet::toFile()
 {
@@ -172,7 +172,7 @@ void Sheet::toFile()
 	}
 
 	fout.close();
-}
+};
 
 void Sheet::fromFile()
 {
@@ -242,7 +242,7 @@ void Sheet::fromFile()
 	}
 
 	generateHashTable();
-}
+};
 
 void Sheet::swapRow(int y1, int y2)
 {
@@ -272,7 +272,7 @@ void Sheet::swapRow(int y1, int y2)
 	}
 
 	delete[] row;
-}
+};
 
 void Sheet::swapCol(int x1, int x2)
 {
@@ -302,33 +302,33 @@ void Sheet::swapCol(int x1, int x2)
 	}
 
 	delete[] col;
-}
+};
 
 int Sheet::getXSize()
 {
 	return xSize;
-}
+};
 
 int Sheet::getYSize()
 {
 	return ySize;
-}
+};
 
 string Sheet::getFilePath()
 {
 	return filePath;
-}
+};
 
 void Sheet::setFilePath(string filePath)
 {
 	this->filePath = filePath;
-}
+};
 
 void Sheet::resizeSheet(int xSize, int ySize)
 {
 	wipeSheet();
 	initializeSheet(xSize, ySize);
-}
+};
 
 void Sheet::initializeSheet(int xSize, int ySize)
 {
@@ -380,7 +380,7 @@ void Sheet::initializeSheet(int xSize, int ySize)
 	headerCell = arr[0];
 	// delete the array of pointers
 	delete[] arr;
-}
+};
 
 void Sheet::wipeSheet()
 {
@@ -401,12 +401,12 @@ void Sheet::wipeSheet()
 		}
 		currentRow = nextRow;
 	}
-}
+};
 
 int Sheet::index(int x, int y, int width)
 {
 	return x + width * y;
-}
+};
 
 bool Sheet::isPrime(int number)
 {
@@ -419,7 +419,7 @@ bool Sheet::isPrime(int number)
 		}
 	}
 	return !flag;
-}
+};
 
 int Sheet::getPrimeGreaterThan(int number)
 {
@@ -434,18 +434,18 @@ int Sheet::getPrimeGreaterThan(int number)
 		count++;
 	}
 	return count;
-}
+};
 
 int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
 {
 	int temp = cellXIndex * cellYIndex * multiplier + cellXIndex + addition;
 	return temp % hashTableSize;
-}
+};
 
 int Sheet::quadraticResolution(int index, int hashTableSize)
 {
 	return index * index % hashTableSize;
-}
+};
 
 string * Sheet::getIndexData(ifstream & file, int index)
 {
@@ -489,4 +489,4 @@ string * Sheet::getIndexData(ifstream & file, int index)
 		}
 	}
 	return answer;
-}
+};

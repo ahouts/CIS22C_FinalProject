@@ -50,5 +50,4 @@ protected:
 	int quadraticResolution(int index, int hashTableSize);													// returns new index for cell
 	string * getIndexData(ifstream &file, int index);
 };
-
 #endif
