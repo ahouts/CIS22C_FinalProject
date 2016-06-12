@@ -36,6 +36,7 @@ public:
 	void pushBack(Change* newChange);
 	void deleteChange();
 	bool getOpenParen();
+	void pushBack(int nRow, int nCol, string nPrevData, string nNewData);
 };
 
 #endif
