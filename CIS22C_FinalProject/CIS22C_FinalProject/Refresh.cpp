@@ -114,14 +114,6 @@ Refresh::Refresh(Sheet *sheet)
 
 void Refresh::findfunctions()
 {
-	string calc = getHead().getMe();
-	/*char * numbers = new char[calc.length() + 1];
-	std::strcpy(numbers, calc.c_str());
-
-	char * numberArray = std::strtok(numbers, "-" || "+" || "/" || "/"||"("||")");
-	char * operators = new char[calc.length() + 1];
-	std::strcpy(operators, calc.c_str());
-	char */
 
 }
 
