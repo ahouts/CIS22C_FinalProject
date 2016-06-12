@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include <stdio.h>'
+#include <stdio.h>
 #include "Change.h"
 #include "Sheet.h"
 #include "Refresh.h"
@@ -17,6 +17,8 @@ class CommandLine
 private:
 	Sheet *sheet;
 	Change change;
+	Refresh refresh;
+	BST bst;
 public:
 	CommandLine(Sheet *sheet);
 	void modifyCell(int xCoord, int yCoord, string data);
