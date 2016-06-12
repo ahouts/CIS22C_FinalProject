@@ -25,7 +25,7 @@ void BST::generateTree(Sheet &sheet)
 		{
 			Node temp = Node();
 			temp.setMe(sheet(i, j));
-			addNode(temp);
+			// addNode(temp, );
 		}
 	}
 }
