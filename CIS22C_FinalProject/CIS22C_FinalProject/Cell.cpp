@@ -3,12 +3,12 @@
 string Cell::getData()
 {
 	return contents;
-}
+};
 
 void Cell::setData(string in)
 {
 	contents = in;
-}
+};
 
 Cell::Cell()
 {
@@ -17,7 +17,7 @@ Cell::Cell()
 	left = nullptr;
 	right = nullptr;
 	below = nullptr;
-}
+};
 
 int Cell::getXCoord()
 {
@@ -35,7 +35,7 @@ int Cell::getXCoord()
 		current = current->getLeft();
 	}
 	return count;
-}
+};
 
 int Cell::getYCoord()
 {
@@ -53,44 +53,44 @@ int Cell::getYCoord()
 		current = current->getAbove();
 	}
 	return count;
-}
+};
 
 Cell * Cell::getAbove()
 {
 	return above;
-}
+};
 
 Cell * Cell::getLeft()
 {
 	return left;
-}
+};
 
 Cell * Cell::getRight()
 {
 	return right;
-}
+};
 
 Cell * Cell::getBelow()
 {
 	return below;
-}
+};
 
 void Cell::setAbove(Cell * above)
 {
 	this->above = above;
-}
+};
 
 void Cell::setLeft(Cell * left)
 {
 	this->left = left;
-}
+};
 
 void Cell::setRight(Cell * right)
 {
 	this->right = right;
-}
+};
 
 void Cell::setBelow(Cell * below)
 {
 	this->below = below;
-}
+};

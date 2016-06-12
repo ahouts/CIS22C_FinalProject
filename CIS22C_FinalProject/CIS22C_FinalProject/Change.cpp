@@ -90,3 +90,7 @@ void Change::deleteChange() {
 bool Change::getOpenParen() {
 	return isOpenParen;
 };
+void Change::pushBack(int nRow, int nCol, string nPrevData, string nNewData) {
+	Change* disChange = new Change(nRow, nCol, nPrevData, nNewData);
+	pushBack(disChange);
+};
