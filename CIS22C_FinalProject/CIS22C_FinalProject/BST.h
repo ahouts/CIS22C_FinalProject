@@ -19,5 +19,5 @@ public:
 	void rotateLeft(Node* target);
 	void rotateRight(Node* target);
 
-}
+};
 #endif
