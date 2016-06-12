@@ -35,7 +35,7 @@ Node* BST::search(string goal, Node* target) //compares value of goal to values 
 {
 	if (target->getMe() != goal) {
 		if (target->hasLeftChild() == true) {
-			if (target->getLeft()->getMe() == goal) {
+			if (target->getLeft()->getNode() == goal) {
 				return target->getLeft();
 			}
 			else {
@@ -72,4 +72,8 @@ void BST::balance(Node* target)//completely untested
 		}
 	}
 	balance(target->getRight());
+}
+Node BST::getHead()
+{
+	return headNode;
 }

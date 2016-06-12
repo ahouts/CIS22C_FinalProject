@@ -1,5 +1,8 @@
 #include "Node.h"
-
+Node Node::getNode()
+{
+	return *this;
+}
 bool Node::hasLeftChild()
 {
 	if (leftChild != nullptr) {
