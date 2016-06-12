@@ -1,7 +1,7 @@
 #include "CommandLine.h"
 #include "BST.h"
 
-CommandLine::CommandLine(Sheet * sheet)
+CommandLine::CommandLine(Sheet *sheet)
 {
 	this->sheet = sheet;
 	change = Change();
