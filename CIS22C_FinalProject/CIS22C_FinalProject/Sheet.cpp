@@ -350,9 +350,9 @@ void Sheet::initializeSheet(int xSize, int ySize)
 		arr[i] = new Cell();
 	}
 
-	for (int i = 0; i < ySize; i++)
+	for (int j = 0; j < ySize; j++)
 	{
-		for (int j = 0; j < xSize; j++)
+		for (int i = 0; i < xSize; i++)
 		{
 			// go through and form 2 way linkage between every cell above and to the left of the current cell
 			if (i > 0 && j > 0)
