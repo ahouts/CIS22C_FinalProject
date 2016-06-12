@@ -1,11 +1,9 @@
 #include "CommandLine.h"
-#include "BST.h"
 
-CommandLine::CommandLine(Sheet *sheet)
+CommandLine::CommandLine(Sheet *sheet) : refresh(sheet)
 {
 	this->sheet = sheet;
 	change = Change();
-	refresh = Refresh(sheet);
 	bst = BST();
 }
 

@@ -1,5 +1,5 @@
 #include "BST.h"
-
+;
 void BST::rotateLeft(Node* target) 
 {
 	Node* holder = target;
@@ -66,7 +66,7 @@ Node* BST::search(string goal, Node* target) //compares value of goal to values 
 			}
 		}
 		if (target->hasRightChild() == true) {
-			if (target->getRight->getMe() == goal) {
+			if (target->getRight()->getMe() == goal) {
 				return target->getRight();
 			}
 			else {

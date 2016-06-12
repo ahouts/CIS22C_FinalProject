@@ -114,7 +114,7 @@ Refresh::Refresh(Sheet *sheet)
 
 void Refresh::findfunctions()
 {
-	string calc = getHead().getMe();
+	//string calc = getHead().getMe();
 	/*char * numbers = new char[calc.length() + 1];
 	std::strcpy(numbers, calc.c_str());
 
