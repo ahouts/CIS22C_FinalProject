@@ -20,6 +20,6 @@ public:
 	void rotateRight(Node* target);
 	void generateTree(Sheet &sheet);
 	void clearTree();
-}
+};
 
 #endif
