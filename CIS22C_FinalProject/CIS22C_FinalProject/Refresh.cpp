@@ -232,7 +232,6 @@ double Refresh::subtract(int x1, int x2, int y1, int y2)
 {
 	return 0.0;
 }
->>>>>>> origin/master
 double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
 
@@ -415,8 +414,7 @@ double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 
 		}
 		return total;
-	}
-
+	} 
 	else if (xCoord >= xCoord1 && yCoord >= yCoord1)
 	{
 		for (int m = yCoord; m <= yCoord1; m--)
