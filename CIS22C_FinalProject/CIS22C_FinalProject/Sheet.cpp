@@ -41,7 +41,7 @@ Cell * Sheet::operator()(int x, int y)
 
 void Sheet::generateHashTable()
 {
-	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
+ 	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
 	if (hashTableSize > 500)
 	{
 		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 50);
