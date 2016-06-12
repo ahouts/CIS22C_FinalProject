@@ -84,11 +84,36 @@ void BST::balance(Node* target)//completely untested
 	}
 	balance(target->getRight());
 }
+
 Node BST::getHead()
 {
 	return headNode;
 }
 
-void BST::addNode(Node * newNode, Node * target)
-{
+
+void BST::addNode(Node* newNode, Node* target) {
+	if (target->hasLeftChild() == false && target->hasRightChild() == false) {
+		if (target->getMe > newNode->getMe()) {
+			target->setRight(newNode);
+		}
+		else {
+			target->setLeft(newNode);
+		}
+	}
+	if (target->hasLeftChild == true) {
+		if (newNode->getMe() < target->getMe()) {
+			addNode(newNode, target->getLeft());
+		}
+		else {
+			target->setRight(newNode);
+		}
+	}
+	if (target->hasRightChild == true) {
+		if (newNode->getMe() > target->getMe()) {
+			addNode(newNode, target->getRight());
+		}
+		else {
+			target->setLeft(newNode);
+		}
+	}
 }

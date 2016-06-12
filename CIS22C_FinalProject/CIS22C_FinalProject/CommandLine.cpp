@@ -18,7 +18,9 @@ void CommandLine::drawSheet(ostream& out)
 		for (int y = 0; y < sheet->getYSize(); y++)
 		{
 			out << sheet->getCellData(x, y);
+			out << " ";
 		}
+		out << endl;
 	}
 }
 
