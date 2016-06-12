@@ -403,8 +403,7 @@ double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 
 		}
 		return total;
-	}
-
+	} 
 	else if (xCoord >= xCoord1 && yCoord >= yCoord1)
 	{
 		for (int m = yCoord; m <= yCoord1; m--)
