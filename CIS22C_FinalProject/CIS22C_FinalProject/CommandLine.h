@@ -9,7 +9,6 @@
 #include "Sheet.h"
 #include "Refresh.h"
 #include "BST.h"
-;
 using namespace std;
 
 class CommandLine
