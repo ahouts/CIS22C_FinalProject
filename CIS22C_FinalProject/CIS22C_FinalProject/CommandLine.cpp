@@ -65,7 +65,6 @@ void CommandLine::mainLoop()
 				string searchstring;
 				cin.ignore();
 				getline(cin, searchstring);
-				BST.search(searchstring, BST.getNode());
 			}
 			else
 			{

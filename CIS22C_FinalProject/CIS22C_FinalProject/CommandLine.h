@@ -16,6 +16,7 @@ using namespace std;
 class CommandLine
 {
 private:
+	Node *Node;
 	BST BST;
 	Sheet *sheet;
 	Change change;

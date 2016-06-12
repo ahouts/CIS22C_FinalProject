@@ -3,7 +3,7 @@
 #define CHANGE_H
 
 #include <string>
-#include "Sheet.h";
+#include "Sheet.h"
 using namespace std;
 
 class Change
