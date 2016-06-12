@@ -32,7 +32,10 @@ void BST::generateTree(Sheet &sheet)
 
 void BST::clearTree()
 {
-	// deletes all nodes in the tree
+	Node* target = &headNode;
+	while (target != NULL) {
+		removeNode(target);
+	}
 }
 
 void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
