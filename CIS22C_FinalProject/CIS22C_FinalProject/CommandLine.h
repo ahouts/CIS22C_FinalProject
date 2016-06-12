@@ -22,7 +22,7 @@ public:
 	CommandLine(Sheet *sheet);
 	void modifyCell(int xCoord, int yCoord, string data);
 	void drawSheet(ostream& out);
-	void mainLoop();
+	void mainLoop(ostream& out, istream &in);
 };
 
 #endif

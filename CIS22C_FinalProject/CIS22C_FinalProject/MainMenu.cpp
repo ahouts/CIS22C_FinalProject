@@ -58,7 +58,7 @@ void MainMenu::createSheet()
 	cin >> x >> y;
 	sheet->resizeSheet(x, y);
 	cout << "Sheet successfully created.\n";
-	commandLine.mainLoop();
+	commandLine.mainLoop(cout, cin);
 }
 
 void MainMenu::openSheet()
@@ -70,7 +70,7 @@ void MainMenu::openSheet()
 	sheet->setFilePath(response);
 	sheet->fromFile();
 	cout << "Sheet successfully loaded.\n";
-	commandLine.mainLoop();
+	commandLine.mainLoop(cout, cin);
 }
 
 void MainMenu::deleteSheet()
