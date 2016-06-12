@@ -1,5 +1,4 @@
 #include "Refresh.h"
-#include "Sheet.h"
 
 
 double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)

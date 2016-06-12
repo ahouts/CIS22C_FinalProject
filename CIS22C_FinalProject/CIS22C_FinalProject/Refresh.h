@@ -2,6 +2,7 @@
 #define REFRESH_H
 #include "Sheet.h"
 
+
 class Refresh
 {
 private:
@@ -18,4 +19,4 @@ public:
 	double average(int x1, int x2, int y1, int y2);
 };
 
-#endif	 REFRESH_H
+#endif
