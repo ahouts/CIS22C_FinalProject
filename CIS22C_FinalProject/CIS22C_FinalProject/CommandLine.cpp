@@ -18,29 +18,41 @@ void CommandLine::drawSheet(ostream& out)
 		for (int y = 0; y < sheet->getYSize(); y++)
 		{
 			out << sheet->getCellData(x, y);
+			out << " ";
 		}
+		out << endl;
 	}
 }
 
-void CommandLine::mainLoop()
+void CommandLine::mainLoop(ostream &out, istream &in)
 {
-	string masterString, string1;
+	string masterString = "", string1 = "";
 	while (masterString != "exit")
 	{
 		drawSheet(cout);
-		cout << "enter the command you wish to do next: ";
-		cin.ignore();
+		out << "enter the command you wish to do next: ";
+		cin.ignore(1000, '\n');
+
 		getline(cin, masterString);
 
 		stringstream iss(masterString);
 
 		while (iss)
 		{
-			string word[100];
+			int count = 0;
 			for (int i = 0; i < masterString.length(); i++)
+			{
+				if (masterString[i] == ' ')
+				{
+					count++;
+				}
+			}
+			string *word = new string[count];
+			for (int i = 0; i < count; i++)
 			{
 				iss >> word[i];
 			}
+			delete[] word;
 
 			// || SET VALUE ||
 			if (word[0] == "set")
@@ -80,7 +92,10 @@ void CommandLine::mainLoop()
 			else
 			{
 				cout << "invalid entry\n";
-				system("pause");
+				
+				cout << "enter the command you wish to do next: ";
+				cin.ignore(1000, '\n');
+				getline(cin, masterString);
 			}
 			}
 		}

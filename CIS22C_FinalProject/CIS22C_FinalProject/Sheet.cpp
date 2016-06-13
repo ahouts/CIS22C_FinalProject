@@ -41,7 +41,7 @@ Cell * Sheet::operator()(int x, int y)
 
 void Sheet::generateHashTable()
 {
-	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
+ 	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
 	if (hashTableSize > 500)
 	{
 		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 50);
@@ -328,6 +328,7 @@ void Sheet::resizeSheet(int xSize, int ySize)
 {
 	wipeSheet();
 	initializeSheet(xSize, ySize);
+	generateHashTable();
 };
 
 void Sheet::initializeSheet(int xSize, int ySize)
@@ -349,9 +350,9 @@ void Sheet::initializeSheet(int xSize, int ySize)
 		arr[i] = new Cell();
 	}
 
-	for (int i = 0; i < ySize; i++)
+	for (int j = 0; j < ySize; j++)
 	{
-		for (int j = 0; j < xSize; j++)
+		for (int i = 0; i < xSize; i++)
 		{
 			// go through and form 2 way linkage between every cell above and to the left of the current cell
 			if (i > 0 && j > 0)

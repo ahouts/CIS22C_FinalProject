@@ -21,7 +21,7 @@ private:
 public:
 	// This creates the head Change that will be used in other classes
 	Change();
-	~Change();
+	~Change(); //deletes the entire chain of changes. 
 	// true = openParen, false = closeParen
 	Change(bool blockStart, bool blockEnd);
 	//
@@ -36,6 +36,7 @@ public:
 	void deleteChange();
 	bool getOpenParen();
 	void pushBack(int nRow, int nCol, string nPrevData, string nNewData);
+	void deleteStack();
 };
 
 #endif
