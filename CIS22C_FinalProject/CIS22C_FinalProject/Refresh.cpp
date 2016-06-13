@@ -1,5 +1,5 @@
 #include "Refresh.h"
-
+#include "BST.h"
 
 double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
@@ -114,7 +114,13 @@ Refresh::Refresh(Sheet *sheet)
 
 void Refresh::findfunctions()
 {
+	BST tokens;
+	Node* target = &tokens.getHead();
+	for (int i = 0; i < sheet->getXSize; i++) {
+		for (int p = 0; p < sheet->getYSize; p++) {
 
+		}
+	}
 }
 
 double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
@@ -140,9 +146,40 @@ double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 	double c = a - b;
 	return c;
 }
+
 double Refresh::divide(int xCoord, int yCoord, int xCoord1, int yCoord1) {
 	double a = stoi(sheet->getCellData(xCoord, yCoord));
 	double b = stoi(sheet->getCellData(xCoord1, yCoord1));
 	double c = a / b;
 	return c;
+}
+
+void Refresh::sortRow(int x1, int x2, int y) {
+	string* sorter;
+	sorter = new string[x2 - x1];
+	for (int i = 0; i < (x2 - x1); i++) {
+		sorter[i] = sheet->getCellData(i, y);
+	}
+	for (int i = 0; i < (x2 - x1); i++) {
+		for (int p = 0; p < i; p++) {
+			if (sorter[i] > sorter[p]) {
+				sheet->swapCol(i, p);
+			}
+		}
+	}
+}
+
+void Refresh::sortCol(int y1, int y2, int x) {
+	string* sorter;
+	sorter = new string[y2 - y1];
+	for (int i = 0; i < (y2 - y1); i++) {
+		sorter[i] = sheet->getCellData(i, x);
+	}
+	for (int i = 0; i < (y2 - y1); i++) {
+		for (int p = 0; p < i; p++) {
+			if (sorter[i] > sorter[p]) {
+				sheet->swapRow(i, p);
+			}
+		}
+	}
 }
