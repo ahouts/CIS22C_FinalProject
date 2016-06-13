@@ -13,6 +13,7 @@ void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 }
 void CommandLine::drawSheet(ostream& out) 
 {
+	system("CLS");
 	for (int x = 0; x < sheet->getXSize(); x++)
 	{
 		for (int y = 0; y < sheet->getYSize(); y++)
