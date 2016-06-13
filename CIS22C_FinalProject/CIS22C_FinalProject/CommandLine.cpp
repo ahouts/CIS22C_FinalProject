@@ -31,72 +31,52 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 	{
 		drawSheet(cout);
 		out << "enter the command you wish to do next: ";
-		cin.ignore(1000, '\n');
+		string word1;
+		cin >> word1;
 
-		getline(cin, masterString);
-
-		stringstream iss(masterString);
-
-		while (iss)
+		if (word1 == "set")
 		{
-			int count = 0;
-			for (int i = 0; i < masterString.length(); i++)
+			string word2, word3;
+			cin >> word2 >> word3;
+			if (stoi(word2))   //if the second word is convertable to an int, do so, and continue, otherwise gve an error
 			{
-				if (masterString[i] == ' ')
+				int a = stoi(word2);
+				if (stoi(word3))    //if the third word is convertable to an int, do so, and continue, otherwise gve an error
 				{
-					count++;
+					int b = stoi(word3);
+
+					cin.ignore(); 
+					getline(cin, string1);  //takes a string of what to add into the correct cell
+
+
+					change.pushBack(a, b, sheet->getCellData(a, b), string1);
+
+					sheet->setCellData(a, b, string1);
 				}
-			}
-			string *word = new string[count];
-			for (int i = 0; i < count; i++)
-			{
-				iss >> word[i];
-			}
-			delete[] word;
-
-			// || SET VALUE ||
-			if (word[0] == "set")
-			{
-				if (stoi(word[1]))   //if the second word is convertable to an int, do so, and continue, otherwise gve an error
-				{
-					int a = stoi(word[1]);
-					if (stoi(word[2]))    //if the third word is convertable to an int, do so, and continue, otherwise gve an error
-					{
-						int b = stoi(word[2]);
-
-						cin.ignore(); 
-						getline(cin, string1);  //takes a string of what to add into the correct cell
-
-
-						change.pushBack(a, b, sheet->getCellData(a, b), string1);
-
-						sheet->setCellData(a, b, string1);
-					}
-				}
-			}
-			else if (word[0] == "undo")
-			{
-				change.undo(sheet);
-			}
-			else if (word[0] == "search")
-			{
-				string searchstring;
-				cin.ignore();
-				getline(cin, searchstring);
-				bst.search(searchstring, &bst.getHead());
-			}
-			else if (word[0] == "save")
-			{
-				sheet->toFile();
-			}
-			else
-			{
-				cout << "invalid entry\n";
-				
-				cout << "enter the command you wish to do next: ";
-				cin.ignore(1000, '\n');
-				getline(cin, masterString);
-			}
 			}
 		}
+		else if (word1 == "undo")
+		{
+			change.undo(sheet);
+		}
+		else if (word1 == "search")
+		{
+			string searchstring;
+			cin.ignore();
+			getline(cin, searchstring);
+			bst.search(searchstring, &bst.getHead());
+		}
+		else if (word1 == "save")
+		{
+			sheet->toFile();
+		}
+		else
+		{
+			cout << "invalid entry\n";
+			
+			cout << "enter the command you wish to do next: ";
+			cin.ignore(1000, '\n');
+			getline(cin, masterString);
+		}
 	}
+}
