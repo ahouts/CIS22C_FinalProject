@@ -111,18 +111,22 @@ Refresh::Refresh(Sheet *sheet)
 {
 	this->sheet = sheet;
 }
-
+/*
 void Refresh::findfunctions()
 {
+	string holder;
+	Cell temp;
 	BST tokens;
 	Node* target = &tokens.getHead();
 	for (int i = 0; i < sheet->getXSize; i++) {
 		for (int p = 0; p < sheet->getYSize; p++) {
-
+			holder=sheet->getCellData(i, p);
+			temp.setData(strtok(holder, " "));
+			
 		}
 	}
 }
-
+*/
 double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
 	int a = stoi(sheet->getCellData(xCoord, yCoord));
