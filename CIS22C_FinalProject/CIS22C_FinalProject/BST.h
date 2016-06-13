@@ -15,7 +15,7 @@ public:
 	void addNode(Node* newNode, Node* target);
 	void removeNode(Node *targetNode);
 	void balance(Node* target);
-	Node* search(string goal, Node* target);
+	Node* search(string goal, Node* target, Sheet *sht);
 	void rotateLeft(Node* target);
 	void rotateRight(Node* target);
 	void generateTree(Sheet &sheet);

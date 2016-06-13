@@ -45,16 +45,17 @@ void BST::removeNode(Node *targetNode) //moves all branches from node to left, a
 	delete holder;
 }
 
-Node* BST::search(string goal, Node* target) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
+Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
 {
+	generateTree(*sht);
 	if (target->getMe() != goal) {
 		if (target->hasLeftChild() == true) {
 			if (target->getLeft()->getMe() == goal) {
 				return target->getLeft();
 			}
 			else {
-				if (search(goal, target->getLeft()) != NULL) {
-					return search(goal, target->getLeft());
+				if (search(goal, target->getLeft(), sht) != NULL) {
+					return search(goal, target->getLeft(), sht);
 				}
 			}
 		}
@@ -63,8 +64,8 @@ Node* BST::search(string goal, Node* target) //compares value of goal to values 
 				return target->getRight();
 			}
 			else {
-				if (search(goal, target->getRight()) != NULL) {
-					return search(goal, target->getRight());
+				if (search(goal, target->getRight(), sht) != NULL) {
+					return search(goal, target->getRight(), sht);
 				}
 			}
 		}
