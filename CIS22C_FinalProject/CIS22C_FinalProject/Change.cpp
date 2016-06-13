@@ -83,9 +83,11 @@ void Change::setPrev(Change* newPrev) {
 };
 void Change::pushBack(Change* newChange) {
 	newChange->setPrev(this);
-	newChange->setNext(next);
-	this->next->setPrev(newChange);
-	next = newChange;
+	newChange->setNext(this->next);
+	if (next != NULL) {
+		this->next->setPrev(newChange);
+	}
+	this -> next = newChange;
 };
 void Change::deleteChange() {
 	prev->setNext(next);
