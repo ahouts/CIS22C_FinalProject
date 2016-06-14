@@ -37,6 +37,7 @@ public:
 	bool getOpenParen();
 	void pushBack(int nRow, int nCol, string nPrevData, string nNewData);
 	void deleteStack();
+	void pushBack(bool blockStart, bool blockEnd);
 };
 
 #endif

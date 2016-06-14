@@ -14,12 +14,12 @@ void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 void CommandLine::drawSheet(ostream& out) 
 {
 	system("CLS");
-	for (int x = 0; x < sheet->getXSize(); x++)
+	for (int y = 0; y < sheet->getYSize(); y++)
 	{
-		for (int y = 0; y < sheet->getYSize(); y++)
+		for (int x = 0; x < sheet->getXSize(); x++)
 		{
-			out << sheet->getCellData(x, y);
-			out << " ";
+			out << right << setw(8) << sheet->getCellData(x, y).substr(0,8);
+			out << "|";
 		}
 		out << endl;
 	}
@@ -50,13 +50,14 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 					getline(cin, string1);  //takes a string of what to add into the correct cell
 
 
-					change.pushBack(a, b, sheet->getCellData(a, b), string1);
+					
 					if (a >= sheet->getXSize() || b >= sheet->getYSize() )
 					{
 						cout << "one or more values are out of bounds.";
 					}
 					else
 					{
+						change.pushBack(a, b, sheet->getCellData(a, b), string1);
 						sheet->setCellData(a, b, string1);
 					}
 				}
@@ -64,7 +65,15 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		}
 		else if (word1 == "undo")
 		{
-			change.undo(sheet);
+			try
+			{
+				change.undo(sheet);
+				// successfully undone
+			}
+			catch (char e[])
+			{
+				// changelog is empty
+			}
 		}
 		else if (word1 == "search")
 		{
@@ -85,4 +94,5 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			
 		}
 	}
+	change.deleteStack();
 }
