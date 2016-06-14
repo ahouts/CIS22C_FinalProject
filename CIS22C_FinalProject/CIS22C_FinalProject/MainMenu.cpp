@@ -37,7 +37,7 @@ void MainMenu::showMainMenu()
 		default:
 			system("CLS");
 			cout << "You gave an invalid response.\n";
-			cout << "[Press return to continue]";
+			system("pause");
 			string temp;
 			cin >> temp;
 			break;
@@ -68,9 +68,17 @@ void MainMenu::openSheet()
 	string response = "./default";
 	cin >> response;
 	sheet->setFilePath(response);
-	sheet->fromFile();
-	cout << "Sheet successfully loaded.\n";
-	commandLine.mainLoop(cout, cin);
+	try
+	{
+		sheet->fromFile();
+		cout << "Sheet successfully loaded.\n";
+		commandLine.mainLoop(cout, cin);
+	}
+	catch (char e[])
+	{
+		cout << e;
+		system("pause");
+	}
 }
 
 void MainMenu::deleteSheet()
@@ -82,15 +90,35 @@ void MainMenu::deleteSheet()
 	if (remove(response.c_str()) != 0)
 	{
 		cout << "Error deleting file.\n";
+		system("pause");
 	}
 	else
 	{
 		cout << "File successfully deleted.\n";
+		system("pause");
 	}
+}
+
+void SetWindow(int Width, int Height)
+{
+	_COORD coord;
+	coord.X = Width;
+	coord.Y = Height;
+
+	_SMALL_RECT Rect;
+	Rect.Top = 0;
+	Rect.Left = 0;
+	Rect.Bottom = Height - 1;
+	Rect.Right = Width - 1;
+
+	HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
+	SetConsoleScreenBufferSize(Handle, coord);            // Set Buffer Size 
+	SetConsoleWindowInfo(Handle, TRUE, &Rect);            // Set Window Size 
 }
 
 int main()
 {
+	SetWindow(300, 200);
 	Sheet *sheet = new Sheet(1, 1);
 	MainMenu menu = MainMenu(sheet);
 	menu.showMainMenu();
