@@ -58,7 +58,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		}
 		else if (word1 == "undo")
 		{
-			change.undo(sheet);
+			change.undo(this->sheet);
 		}
 		else if (word1 == "search")
 		{

@@ -13,6 +13,7 @@
 using namespace std;
 
 class Cell {
+protected:
 	string contents;
 	Cell* above;
 	Cell* left;

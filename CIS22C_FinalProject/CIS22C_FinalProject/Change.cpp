@@ -33,13 +33,15 @@ Change::Change(bool blockStart, bool blockEnd) {
 	next = NULL;
 };
 Change::Change(int nRow, int nCol, string nPrevData, string nNewData) {
-	Change* newOne = new Change;
-	newOne->col = nCol;
-	newOne->row = nRow;
-	newOne->prevData = nPrevData;
-	newOne->newData = nNewData;
-	next = NULL;
+	col = nCol;
+	row = nRow;
+	prevData = nPrevData;
+	newData = nNewData;
 	prev = NULL;
+	next = NULL;
+	isHead = false;
+	isCloseParen = false;
+	isOpenParen = false;
 };
 void Change::undo(Sheet *sheet) { // we assume that this will only be called on the head Change
 	if (isHead == false && isOpenParen == false && isCloseParen == false) {
@@ -49,10 +51,10 @@ void Change::undo(Sheet *sheet) { // we assume that this will only be called on 
 	if (isHead == true) {
 		if (next != NULL) {
 			next->undo(sheet);
-		}
-		else {
+		} else {
 			char error[] = "Empty Change Log";
 			throw error;
+
 		}
 	}
 	if (isCloseParen == true) {
@@ -91,15 +93,20 @@ void Change::pushBack(Change* newChange) {
 	this->next = newChange;
 };
 void Change::deleteChange() {
-	prev->setNext(next);
-	next->setPrev(prev);
+	if (prev != NULL) {
+		prev->setNext(next);
+	}
+	if (next != NULL) {
+		next->setPrev(prev);
+	}
 	delete this;
 };
 bool Change::getOpenParen() {
 	return isOpenParen;
 };
 void Change::pushBack(int nRow, int nCol, string nPrevData, string nNewData) {
-	Change* disChange = new Change(nRow, nCol, nPrevData, nNewData);
+	Change* disChange;
+	disChange = new Change(nRow, nCol, nPrevData, nNewData);
 	pushBack(disChange);
 };
 void Change::deleteStack() {
@@ -110,4 +117,8 @@ void Change::deleteStack() {
 		prev->deleteChange();
 	}
 	delete this;
+};
+void Change::pushBack(bool blockStart, bool blockEnd) {
+	Change* disChange = new Change(blockStart, blockEnd);
+	pushBack(disChange);
 };
