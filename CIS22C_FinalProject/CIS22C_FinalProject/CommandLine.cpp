@@ -94,4 +94,5 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			getline(cin, masterString);
 		}
 	}
+	change.deleteStack();
 }
