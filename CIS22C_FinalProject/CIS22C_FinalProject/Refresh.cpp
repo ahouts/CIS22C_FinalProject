@@ -138,6 +138,12 @@ void Refresh::findfunctions()
 			if (answer[0] == "average") {
 				sheet->setCellData(i, p, to_string(average(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
 			}
+			if (answer[0] == "subtract") {
+				sheet->setCellData(i, p, to_string(subtract(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
+			}
+			if (answer[0] == "divide") {
+				sheet->setCellData(i, p, to_string(divide(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
+			}
 		}
 	}
 }
