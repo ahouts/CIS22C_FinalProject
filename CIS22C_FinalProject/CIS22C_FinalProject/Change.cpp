@@ -116,7 +116,6 @@ void Change::deleteStack() {
 	while (prev != NULL) {
 		prev->deleteChange();
 	}
-	delete this;
 };
 void Change::pushBack(bool blockStart, bool blockEnd) {
 	Change* disChange = new Change(blockStart, blockEnd);
