@@ -209,6 +209,9 @@ void Sheet::fromFile()
 			ssin >> answer[count];
 			count++;
 		}
+
+		ssin.ignore(1);
+
 		string data;
 		getline(ssin, data);
 
