@@ -130,44 +130,179 @@ void Refresh::findfunctions()
 				count++;
 			}
 			if (answer[0] == "add") {
-				sheet->setCellData(i, p, to_string(add(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
+				sheet->setCellData(i, p, to_string(add(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 			}
 			if (answer[0] == "multiply") {
-				sheet->setCellData(i, p, to_string(multiply(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
+				sheet->setCellData(i, p, to_string(multiply(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 			}
 			if (answer[0] == "average") {
-				sheet->setCellData(i, p, to_string(average(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
+				sheet->setCellData(i, p, to_string(average(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 			}
 			if (answer[0] == "subtract") {
-				sheet->setCellData(i, p, to_string(subtract(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
+				sheet->setCellData(i, p, to_string(subtract(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 			}
 			if (answer[0] == "divide") {
-				sheet->setCellData(i, p, to_string(divide(stoi(answer[1]), stoi(answer[2]), stoi(answer[3]), stoi(answer[4]))));
+				sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 			}
+			if (answer[0] == "sum") {
+				sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+			}
+		}
+	}
+}
+
+double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
+{
+	double total = 0;
+	if (xCoord <= xCoord1 && yCoord <= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
+		}
+	}
+
+	else if (xCoord >= xCoord1 && yCoord <= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
+		}
+	}
+
+	else if (xCoord <= xCoord1 && yCoord >= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
+		}
+	}
+
+	else if (xCoord >= xCoord1 && yCoord >= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
 		}
 	}
 }
 
 double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	int a = stoi(sheet->getCellData(xCoord, yCoord));
-	int b = stoi(sheet->getCellData(xCoord1, yCoord1));
+	double a = stod(sheet->getCellData(xCoord, yCoord));
+	double b = stod(sheet->getCellData(xCoord1, yCoord1));
 	double c = a + b;
 	return c;
 }
 
 double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	int a = stoi(sheet->getCellData(xCoord, yCoord));
-	int b = stoi(sheet->getCellData(xCoord1, yCoord1));
+	double a = stod(sheet->getCellData(xCoord, yCoord));
+	double b = stod(sheet->getCellData(xCoord1, yCoord1));
 	double c = a * b;
 	return c;
 }
 
 double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	int a = stoi(sheet->getCellData(xCoord, yCoord));
-	int b = stoi(sheet->getCellData(xCoord1, yCoord1));
+	double a = stod(sheet->getCellData(xCoord, yCoord));
+	double b = stod(sheet->getCellData(xCoord1, yCoord1));
 	double c = a - b;
 	return c;
 }

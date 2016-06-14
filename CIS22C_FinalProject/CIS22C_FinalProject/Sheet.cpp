@@ -124,6 +124,7 @@ void Sheet::setCellData(int x, int y, string str)
 
 string Sheet::getCellData(int x, int y)
 {
+	//if()
 	return operator()(x, y)->getData();
 };
 

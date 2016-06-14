@@ -2,11 +2,12 @@
 
 string Cell::getData()
 {
-	return contents;
+	return contents.length() == 0 ? "0" : contents;
 };
 
 void Cell::setData(string in)
 {
+	empty = false;
 	contents = in;
 };
 
