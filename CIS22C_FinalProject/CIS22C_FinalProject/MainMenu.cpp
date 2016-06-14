@@ -42,6 +42,8 @@ void MainMenu::showMainMenu()
 			cin >> temp;
 			break;
 		}
+		cin.clear();
+		cin.ignore();
 	}
 }
 
