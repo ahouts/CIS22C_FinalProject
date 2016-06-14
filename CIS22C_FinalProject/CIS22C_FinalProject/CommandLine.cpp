@@ -14,9 +14,9 @@ void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 void CommandLine::drawSheet(ostream& out) 
 {
 	system("CLS");
-	for (int x = 0; x < sheet->getXSize(); x++)
+	for (int y = 0; y < sheet->getYSize(); y++)
 	{
-		for (int y = 0; y < sheet->getYSize(); y++)
+		for (int x = 0; x < sheet->getXSize(); x++)
 		{
 			out << right << setw(8) << sheet->getCellData(x, y).substr(0,8);
 			out << "|";
@@ -65,7 +65,15 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		}
 		else if (word1 == "undo")
 		{
-			change.undo(this->sheet);
+			try
+			{
+				change.undo(sheet);
+				// successfully undone
+			}
+			catch (char e[])
+			{
+				// changelog is empty
+			}
 		}
 		else if (word1 == "search")
 		{
