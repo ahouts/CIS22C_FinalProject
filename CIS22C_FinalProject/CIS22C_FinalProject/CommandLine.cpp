@@ -18,7 +18,7 @@ void CommandLine::drawSheet(ostream& out)
 	{
 		for (int x = 0; x < sheet->getXSize(); x++)
 		{
-			out << right << setw(8) << sheet->getCellData(x, y).substr(0, 8);
+			out << right << setw(8) << fixed << setprecision(3) << sheet->getCellData(x, y).substr(0, 8);
 			out << "|";
 		}
 		out << endl;
@@ -27,12 +27,12 @@ void CommandLine::drawSheet(ostream& out)
 
 void CommandLine::mainLoop(ostream &out, istream &in)
 {
-	string masterString = "", string1 = "";
-	while (masterString != "exit")
+	string word1, string1;
+	while (word1 != "exit")
 	{
+		refresh.findfunctions();
 		drawSheet(cout);
 		out << "enter the command you wish to do next: ";
-		string word1;
 		cin >> word1;
 
 		if (word1 == "set")
@@ -61,7 +61,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 						change.pushBack(a, b, sheet->getCellData(a, b), string1);
 						sheet->setCellData(a, b, string1);
 					}
-				}
+				}	
 			}
 		}
 		else if (word1 == "undo")
@@ -71,9 +71,11 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 				change.undo(sheet);
 				// successfully undone
 			}
-			catch (char e[])
+  			catch (char e[])
 			{
-				// changelog is empty
+				cout << "\nChange Log Empty\n";
+				cin.ignore(1000, '\n');
+				system("pause");
 			}
 		}
 		else if (word1 == "search")
@@ -87,11 +89,15 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		{
 			sheet->toFile();
 		}
+		else if (word1 == "exit")
+		{
+			// do nothing
+		}
 		else
 		{
 			cout << "\ninvalid entry\n";
 			cin.ignore(1000, '\n');
-			getline(cin, masterString);
+			system("pause");
 		}
 	}
 	change.deleteStack();
