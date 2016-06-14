@@ -68,9 +68,17 @@ void MainMenu::openSheet()
 	string response = "./default";
 	cin >> response;
 	sheet->setFilePath(response);
-	sheet->fromFile();
-	cout << "Sheet successfully loaded.\n";
-	commandLine.mainLoop(cout, cin);
+	try
+	{
+		sheet->fromFile();
+		cout << "Sheet successfully loaded.\n";
+		commandLine.mainLoop(cout, cin);
+	}
+	catch (char e[])
+	{
+		cout << e;
+		system("pause");
+	}
 }
 
 void MainMenu::deleteSheet()

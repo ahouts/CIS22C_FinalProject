@@ -176,13 +176,21 @@ void Sheet::fromFile()
 	fin.open(filePath);
 	if (fin.fail())
 	{
-		char error[] = "Failed to open file for writing.\n";
+		char error[] = "Failed to open file for writing.\n\0";
 		throw error;
 	}
 	int newXSize;
 	int newYSize;
-	fin >> newXSize;
-	fin >> newYSize;
+	try
+	{
+		fin >> newXSize;
+		fin >> newYSize;
+	}
+	catch (...)
+	{
+		char error[] = "Invalid file given.\n\0";
+		throw error;
+	}
 
 	resizeSheet(newXSize, newYSize);
 
