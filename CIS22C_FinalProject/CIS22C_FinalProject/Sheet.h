@@ -16,8 +16,8 @@ private:
 	int ySize;
 	string filePath;
 	// hash table settings for searching objects and file in & out
-	const double HASH_TABLE_SIZE_MULTIPLIER = 3;
-	const int MAX_RESOLUTION_ATTEMPTS = 20;
+	double hashTableSizeMultiplier;
+	int maxResolutionAttempts;
 	int hashTableSize;
 	int hashTableMultiplier;
 	int hashTableAddition;
