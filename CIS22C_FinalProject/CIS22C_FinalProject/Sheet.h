@@ -48,6 +48,5 @@ protected:
 	int getPrimeGreaterThan(int number);
 	int getHashIndex(int cellXIndex, int cellYIndex, int multiplier, int addition, int hashTableSize);		// generates a hash value for a cell
 	int quadraticResolution(int index, int hashTableSize);													// returns new index for cell
-	string * getIndexData(ifstream &file, int index);
 };
 #endif
