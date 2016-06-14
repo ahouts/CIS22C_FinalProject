@@ -144,6 +144,141 @@ void Refresh::findfunctions()
 			if (answer[0] == "divide") {
 				sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 			}
+			if (answer[0] == "sum") {
+				sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+			}
+		}
+	}
+}
+
+double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
+{
+	double total = 0;
+	if (xCoord <= xCoord1 && yCoord <= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
+		}
+	}
+
+	else if (xCoord >= xCoord1 && yCoord <= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
+		}
+	}
+
+	else if (xCoord <= xCoord1 && yCoord >= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
+		}
+	}
+
+	else if (xCoord >= xCoord1 && yCoord >= yCoord1)
+	{
+		for (int m = yCoord; m <= yCoord1; m--)
+		{
+			for (int i = xCoord; i <= xCoord1; i++)
+			{
+				try
+				{
+					if (stoi(sheet->getCellData(i, m)))
+					{
+						try
+						{
+							int a = stoi(sheet->getCellData(i, m));
+							total += a;
+						}
+						catch (char e[])
+						{
+							//does nothing if it is out of bounds
+						}
+
+					}
+
+				}
+				catch (char e[])
+				{
+					//does nothing if it is out of bounds
+				}
+			}
+			return (total);
 		}
 	}
 }

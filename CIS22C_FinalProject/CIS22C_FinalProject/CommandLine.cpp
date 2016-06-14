@@ -61,7 +61,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 						change.pushBack(a, b, sheet->getCellData(a, b), string1);
 						sheet->setCellData(a, b, string1);
 					}
-				}
+				}	
 			}
 		}
 		else if (word1 == "undo")

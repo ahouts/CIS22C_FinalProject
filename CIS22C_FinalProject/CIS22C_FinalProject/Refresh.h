@@ -10,6 +10,7 @@ private:
 public:
 	Refresh(Sheet *sheet);
 	void findfunctions();
+	double sum(int x1, int x2, int y1, int y2);
 	double add(int x1, int x2, int y1, int y2);
 	double subtract(int x1, int x2, int y1, int y2);
 	double multiply(int x1, int x2, int y1, int y2);
