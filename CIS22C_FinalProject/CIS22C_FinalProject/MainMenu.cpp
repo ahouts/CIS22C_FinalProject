@@ -95,4 +95,5 @@ int main()
 	MainMenu menu = MainMenu(sheet);
 	menu.showMainMenu();
 	delete sheet;
+	return 0;
 }
