@@ -42,6 +42,8 @@ void MainMenu::showMainMenu()
 			cin >> temp;
 			break;
 		}
+		cin.clear();
+		cin.ignore();
 	}
 }
 
@@ -59,14 +61,14 @@ void MainMenu::createSheet()
 	try
 	{
 		sheet->resizeSheet(x, y);
+		cout << "Sheet successfully created.\n";
+		commandLine.mainLoop(cout, cin);
 	}
 	catch (char e[])
 	{
 		cout << e << endl;
 		system("pause");
 	}
-	cout << "Sheet successfully created.\n";
-	commandLine.mainLoop(cout, cin);
 }
 
 void MainMenu::openSheet()
