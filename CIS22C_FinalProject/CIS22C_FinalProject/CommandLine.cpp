@@ -112,6 +112,16 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		{
 			// do nothing
 		}
+		else if (word1 == "sortrow") {
+			int x1, x2, y;
+			cin >> x1 >> x2 >> y;
+			refresh.sortRow(x1, x2, y);
+		}
+		else if (word1 == "sortcol") {
+			int x1, x2, y;
+			cin >> x1 >> x2 >> y;
+			refresh.sortCol(x1, x2, y);
+		}
 		else
 		{
 			cout << "\ninvalid entry\n";
