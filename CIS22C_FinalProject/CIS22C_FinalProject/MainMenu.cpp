@@ -37,7 +37,7 @@ void MainMenu::showMainMenu()
 		default:
 			system("CLS");
 			cout << "You gave an invalid response.\n";
-			cout << "[Press return to continue]";
+			system("pause");
 			string temp;
 			cin >> temp;
 			break;
@@ -90,10 +90,12 @@ void MainMenu::deleteSheet()
 	if (remove(response.c_str()) != 0)
 	{
 		cout << "Error deleting file.\n";
+		system("pause");
 	}
 	else
 	{
 		cout << "File successfully deleted.\n";
+		system("pause");
 	}
 }
 
