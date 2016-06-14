@@ -84,7 +84,7 @@ void Sheet::generateHashTable()
 				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
 				{
 					index = quadraticResolution(index, hashTableSize);
-					if (hashTable[index] == nullptr)
+ 					if (hashTable[index] == nullptr)
 					{
 						hashTable[index] = nonHashSearch(i, j);
 						done = true;
