@@ -80,6 +80,8 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		else
 		{
 			cout << "invalid entry\n";
+			cin.ignore(1000, '\n');
+			getline(cin, masterString);
 			
 		}
 	}
