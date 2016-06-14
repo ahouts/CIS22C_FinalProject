@@ -7,6 +7,7 @@ string Cell::getData()
 
 void Cell::setData(string in)
 {
+	empty = false;
 	contents = in;
 };
 
