@@ -5,11 +5,11 @@
 #include <sstream>
 #include <iostream>
 #include <stdio.h>
-#include "BST.h"
+#include <iomanip>
 #include "Change.h"
 #include "Sheet.h"
 #include "Refresh.h"
-#include "Cell.h"
+#include "BST.h"
 using namespace std;
 
 class CommandLine
@@ -23,7 +23,7 @@ public:
 	CommandLine(Sheet *sheet);
 	void modifyCell(int xCoord, int yCoord, string data);
 	void drawSheet(ostream& out);
-	void mainLoop();
+	void mainLoop(ostream& out, istream &in);
 };
 
 #endif

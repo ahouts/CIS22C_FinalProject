@@ -7,14 +7,14 @@ Sheet::Sheet(int xSize, int ySize)
 	filePath = "./spreadsheet.dat";
 	dummyCell = new Cell();
 	dummyCell->setData("this is the forbidden text");
-}
+};
 
 Sheet::~Sheet()
 {
 	wipeSheet();
 	delete[] hashTable;
 	delete dummyCell;
-}
+};
 
 Cell * Sheet::operator()(int x, int y)
 {
@@ -37,14 +37,14 @@ Cell * Sheet::operator()(int x, int y)
 	}
 
 	return data;
-}
+};
 
 void Sheet::generateHashTable()
 {
-	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
+ 	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
 	if (hashTableSize > 500)
 	{
-		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 50);
+		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 20);
 	}
 	else
 	{
@@ -52,7 +52,7 @@ void Sheet::generateHashTable()
 	}
 	if (hashTableSize > 500)
 	{
-		hashTableAddition = getPrimeGreaterThan(hashTableSize / 70);
+		hashTableAddition = getPrimeGreaterThan(hashTableSize / 30);
 	}
 	else
 	{
@@ -84,7 +84,7 @@ void Sheet::generateHashTable()
 				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
 				{
 					index = quadraticResolution(index, hashTableSize);
-					if (hashTable[index] == nullptr)
+ 					if (hashTable[index] == nullptr)
 					{
 						hashTable[index] = nonHashSearch(i, j);
 						done = true;
@@ -102,7 +102,7 @@ void Sheet::generateHashTable()
 			}
 		}
 	}
-}
+};
 
 Cell * Sheet::nonHashSearch(int x, int y)
 {
@@ -126,18 +126,19 @@ Cell * Sheet::nonHashSearch(int x, int y)
 		temp = temp->getBelow();
 	}
 	return temp;
-}
+};
 
 
 void Sheet::setCellData(int x, int y, string str)
 {
 	operator()(x, y)->setData(str);
-}
+};
 
 string Sheet::getCellData(int x, int y)
 {
+	//if()
 	return operator()(x, y)->getData();
-}
+};
 
 void Sheet::toFile()
 {
@@ -151,15 +152,11 @@ void Sheet::toFile()
 
 	fout << xSize << endl;
 	fout << ySize << endl;
-	fout << hashTableSize << endl;
-	fout << hashTableMultiplier << endl;
-	fout << hashTableAddition << endl;
 
 	for (int i = 0; i < hashTableSize; i++)
 	{
 		if (hashTable[i] != nullptr)
 		{
-			fout << i << " ";
 			Cell *temp = hashTable[i];
 			fout << temp->getXCoord() << " ";
 			fout << temp->getYCoord() << " ";
@@ -167,12 +164,12 @@ void Sheet::toFile()
 		}
 		else
 		{
-			fout << i << endl;
+			fout << endl;
 		}
 	}
 
 	fout.close();
-}
+};
 
 void Sheet::fromFile()
 {
@@ -180,69 +177,62 @@ void Sheet::fromFile()
 	fin.open(filePath);
 	if (fin.fail())
 	{
-		char error[] = "Failed to open file for writing.\n";
+		char error[] = "Failed to open file for writing.\n\0";
 		throw error;
 	}
-	int xSize;
-	int ySize;
-	int hashTableSize;
-	int hashTableModifier;
-	int hashTableAddition;
-	fin >> xSize;
-	fin >> ySize;
-	fin >> hashTableSize;
-	fin >> hashTableModifier;
-	fin >> hashTableAddition;
-
-	resizeSheet(xSize, ySize);
-
-	for (int j = 0; j < ySize; j++)
+	int newXSize;
+	int newYSize;
+	try
 	{
-		for (int i = 0; i < xSize; i++)
+		fin >> newXSize;
+		fin >> newYSize;
+	}
+	catch (...)
+	{
+		char error[] = "Invalid file given.\n\0";
+		throw error;
+	}
+
+	resizeSheet(newXSize, newYSize);
+
+	string *fileData = new string[hashTableSize];
+
+	for (int i = 0; i < hashTableSize; i++)
+	{
+		string line;
+		getline(fin, line);
+		fileData[i] = line;
+	}
+
+	for (int i = 0; i < hashTableSize; i++)
+	{
+		string *answer = new string[2];
+
+		for (int i = 0; i < 2; i++)
 		{
-			int index = getHashIndex(i, j, hashTableModifier, hashTableAddition, hashTableSize);
-
-			string *data = getIndexData(fin, index);
-			
-			if (data[3] == "")
-			{
-				// do nothing
-			}
-			else if (stoi(data[1]) == i && stoi(data[2]) == j)
-			{
-				nonHashSearch(i, j)->setData(data[3]);
-			}
-			else
-			{
-				bool done = false;
-				int count = 0;
-				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
-				{
-					index = quadraticResolution(index, hashTableSize);
-					string *data2 = getIndexData(fin, index);
-
-					if (data[3] == "")
-					{
-						done = true;
-					}
-					else if (stoi(data[1]) == i && stoi(data[2]) == j)
-					{
-						setCellData(i, j, data[3]);
-						done = true;
-					}
-					else
-					{
-						count++;
-					}
-					delete[] data2;
-				}
-			}
-			delete[] data;
+			answer[i] = "";
 		}
+
+		string line = fileData[i];
+		stringstream ssin(line);
+		int count = 0;
+		while (ssin.good() && count < 2)
+		{
+			ssin >> answer[count];
+			count++;
+		}
+		string data;
+		getline(ssin, data);
+
+		if (count == 2 && (stoi(answer[0]) || stoi(answer[0]) == 0) && (stoi(answer[1]) || stoi(answer[1]) == 0))
+		{
+			nonHashSearch(stoi(answer[0]), stoi(answer[1]))->setData(data);
+		}
+		delete[] answer;
 	}
 
 	generateHashTable();
-}
+};
 
 void Sheet::swapRow(int y1, int y2)
 {
@@ -272,7 +262,7 @@ void Sheet::swapRow(int y1, int y2)
 	}
 
 	delete[] row;
-}
+};
 
 void Sheet::swapCol(int x1, int x2)
 {
@@ -302,33 +292,34 @@ void Sheet::swapCol(int x1, int x2)
 	}
 
 	delete[] col;
-}
+};
 
 int Sheet::getXSize()
 {
 	return xSize;
-}
+};
 
 int Sheet::getYSize()
 {
 	return ySize;
-}
+};
 
 string Sheet::getFilePath()
 {
 	return filePath;
-}
+};
 
 void Sheet::setFilePath(string filePath)
 {
 	this->filePath = filePath;
-}
+};
 
 void Sheet::resizeSheet(int xSize, int ySize)
 {
 	wipeSheet();
 	initializeSheet(xSize, ySize);
-}
+	generateHashTable();
+};
 
 void Sheet::initializeSheet(int xSize, int ySize)
 {
@@ -337,8 +328,16 @@ void Sheet::initializeSheet(int xSize, int ySize)
 		char error[] = "Invalid size chosen for Sheet.\n";
 		throw error;
 	}
-	this->xSize = xSize;
-	this->ySize = ySize;
+	try
+	{
+		this->xSize = xSize;
+		this->ySize = ySize;
+	}
+	catch (...)
+	{
+		char error[] = "Error initalizing sheet.\n\0";
+		throw error;
+	}
 
 	// create a dynamically allocated array of pointers
 	Cell **arr = new Cell*[xSize * ySize];
@@ -349,9 +348,9 @@ void Sheet::initializeSheet(int xSize, int ySize)
 		arr[i] = new Cell();
 	}
 
-	for (int i = 0; i < ySize; i++)
+	for (int j = 0; j < ySize; j++)
 	{
-		for (int j = 0; j < xSize; j++)
+		for (int i = 0; i < xSize; i++)
 		{
 			// go through and form 2 way linkage between every cell above and to the left of the current cell
 			if (i > 0 && j > 0)
@@ -380,7 +379,7 @@ void Sheet::initializeSheet(int xSize, int ySize)
 	headerCell = arr[0];
 	// delete the array of pointers
 	delete[] arr;
-}
+};
 
 void Sheet::wipeSheet()
 {
@@ -401,12 +400,12 @@ void Sheet::wipeSheet()
 		}
 		currentRow = nextRow;
 	}
-}
+};
 
 int Sheet::index(int x, int y, int width)
 {
 	return x + width * y;
-}
+};
 
 bool Sheet::isPrime(int number)
 {
@@ -419,7 +418,7 @@ bool Sheet::isPrime(int number)
 		}
 	}
 	return !flag;
-}
+};
 
 int Sheet::getPrimeGreaterThan(int number)
 {
@@ -434,59 +433,16 @@ int Sheet::getPrimeGreaterThan(int number)
 		count++;
 	}
 	return count;
-}
+};
 
 int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int addition, int hashTableSize)
 {
-	int temp = cellXIndex * cellYIndex * multiplier + cellXIndex + addition;
+	int temp = abs((cellXIndex + addition * cellYIndex - multiplier) * multiplier + addition);
 	return temp % hashTableSize;
-}
+};
 
 int Sheet::quadraticResolution(int index, int hashTableSize)
 {
-	return index * index % hashTableSize;
-}
-
-string * Sheet::getIndexData(ifstream & file, int index)
-{
-	file.clear();
-	file.seekg(0, ios::beg);
-
-	int junk;
-	file >> junk >> junk >> junk >> junk >> junk;
-
-	string *answer = new string[4];
-	for (int i = 0; i < 4; i++)
-	{
-		answer[i] = "";
-	}
-
-	file.ignore();
-	do
-	{
-		string data;
-		getline(file, data);
-
-		for (int i = 0; i < 4; i++)
-		{
-			answer[i] = "";
-		}
-
-		stringstream ssin(data);
-		int i = 0;
-		while (ssin.good() && i < 4)
-		{
-			ssin >> answer[i];
-			++i;
-		}
-	} while (stoi(answer[0]) != index && file.good());
-
-	if (stoi(answer[0]) != index)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			answer[i] = "";
-		}
-	}
-	return answer;
-}
+	double temp = index * index;
+	return ((int)temp) % hashTableSize;
+};

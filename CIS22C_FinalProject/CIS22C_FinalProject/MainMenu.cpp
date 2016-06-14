@@ -1,9 +1,8 @@
 #include "MainMenu.h"
 
-MainMenu::MainMenu(Sheet * sheet)
+MainMenu::MainMenu(Sheet *sheet) : commandLine(sheet)
 {
 	this->sheet = sheet;
-	commandLine = CommandLine(sheet);
 }
 
 void MainMenu::showMainMenu()
@@ -38,11 +37,13 @@ void MainMenu::showMainMenu()
 		default:
 			system("CLS");
 			cout << "You gave an invalid response.\n";
-			cout << "[Press return to continue]";
+			system("pause");
 			string temp;
 			cin >> temp;
 			break;
 		}
+		cin.clear();
+		cin.ignore();
 	}
 }
 
@@ -57,9 +58,17 @@ void MainMenu::createSheet()
 	cout << "=> ";
 	unsigned int x, y;
 	cin >> x >> y;
-	sheet->resizeSheet(x, y);
-	cout << "Sheet successfully created.\n";
-	commandLine.mainLoop();
+	try
+	{
+		sheet->resizeSheet(x, y);
+		cout << "Sheet successfully created.\n";
+		commandLine.mainLoop(cout, cin);
+	}
+	catch (char e[])
+	{
+		cout << e << endl;
+		system("pause");
+	}
 }
 
 void MainMenu::openSheet()
@@ -69,9 +78,17 @@ void MainMenu::openSheet()
 	string response = "./default";
 	cin >> response;
 	sheet->setFilePath(response);
-	sheet->fromFile();
-	cout << "Sheet successfully loaded.\n";
-	commandLine.mainLoop();
+	try
+	{
+		sheet->fromFile();
+		cout << "Sheet successfully loaded.\n";
+		commandLine.mainLoop(cout, cin);
+	}
+	catch (char e[])
+	{
+		cout << e;
+		system("pause");
+	}
 }
 
 void MainMenu::deleteSheet()
@@ -83,17 +100,22 @@ void MainMenu::deleteSheet()
 	if (remove(response.c_str()) != 0)
 	{
 		cout << "Error deleting file.\n";
+		system("pause");
 	}
 	else
 	{
 		cout << "File successfully deleted.\n";
+		system("pause");
 	}
 }
 
 int main()
 {
+	HWND hwnd = GetConsoleWindow();
+	if (hwnd != NULL) { MoveWindow(hwnd, 0, 0, 1280, 800, TRUE); }
 	Sheet *sheet = new Sheet(1, 1);
 	MainMenu menu = MainMenu(sheet);
 	menu.showMainMenu();
 	delete sheet;
+	return 0;
 }

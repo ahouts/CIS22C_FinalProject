@@ -1,46 +1,61 @@
 #include "BST.h"
-
-void BST::rotateLeft(Node* target) {
+;
+void BST::rotateLeft(Node* target) 
+{
 	Node* holder = target;
 	target = target->getRight();
 	holder->setRight(target->getLeft());
 	target->setLeft(holder);
 }
 
-void BST::rotateRight(Node* target) {
+void BST::rotateRight(Node* target) 
+{
 	Node* holder = target;
 	target = target->getLeft();
 	holder->setLeft(target->getRight());
 	target->setRight(holder);
 }
 
-void BST::addNode(Node newNode) //stores node to be added in holder, appends existing tree to holder, assigns value of headNode to holder address, balances tree
+void BST::generateTree(Sheet &sheet)
 {
-	Node holder = headNode;
-	headNode = newNode;
-	headNode.setLeft(&holder);
-	balance(&headNode);
-};
-
-void BST::removeNode(Node targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
-{
-	while (targetNode.hasRightChild() == true) {
-		targetNode.rotateLeft();
+	clearTree();
+	for (int j = 0; j < sheet.getYSize(); j++)
+	{
+		for (int i = 0; i < sheet.getXSize(); i++)
+		{
+			Node temp = Node();
+			temp.setMe(sheet(i, j));
+			// addNode(temp, );
+		}
 	}
-	targetNode = *targetNode.getLeft();
-	balance(&targetNode);
 }
 
-Node* BST::search(string goal, Node* target) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
+void BST::clearTree()
 {
+	Node* target = &headNode;
+	while (target != NULL) {
+		removeNode(target);
+	}
+}
+
+void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
+{
+	Node* holder = targetNode;
+	addNode(targetNode->getRight(), targetNode->getLeft());
+	delete holder;
+}
+
+Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
+{
+	generateTree(*sht);
 	if (target->getMe() != goal) {
 		if (target->hasLeftChild() == true) {
-			if (target->getLeft()->getNode() == goal) {
+			if (target->getLeft()->getMe() == goal) {
 				return target->getLeft();
 			}
 			else {
-				if (search(goal, target->getLeft()) != NULL) {
-					return search(goal, target->getLeft());
+				if (search(goal, target->getLeft(), sht) != NULL) {
+					return search(goal, target->getLeft(), sht);
 				}
 			}
 		}
@@ -49,8 +64,8 @@ Node* BST::search(string goal, Node* target) //compares value of goal to values 
 				return target->getRight();
 			}
 			else {
-				if (search(goal, target->getRight()) != NULL) {
-					return search(goal, target->getRight());
+				if (search(goal, target->getRight(), sht) != NULL) {
+					return search(goal, target->getRight(), sht);
 				}
 			}
 		}
@@ -73,7 +88,35 @@ void BST::balance(Node* target)//completely untested
 	}
 	balance(target->getRight());
 }
+
 Node BST::getHead()
 {
 	return headNode;
+}
+
+void BST::addNode(Node* newNode, Node* target) {
+	if (target->hasLeftChild() == false && target->hasRightChild() == false) {
+		if (target->getMe() > newNode->getMe()) {
+			target->setRight(newNode);
+		}
+		else {
+			target->setLeft(newNode);
+		}
+	}
+	if (target->hasLeftChild() == true) {
+		if (newNode->getMe() < target->getMe()) {
+			addNode(newNode, target->getLeft());
+		}
+		else {
+			target->setRight(newNode);
+		}
+	}
+	if (target->hasRightChild() == true) {
+		if (newNode->getMe() > target->getMe()) {
+			addNode(newNode, target->getRight());
+		}
+		else {
+			target->setLeft(newNode);
+		}
+	}
 }

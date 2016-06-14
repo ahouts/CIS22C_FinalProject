@@ -1,106 +1,123 @@
-#include <string>
-#include "Sheet.h"
-#include "Change.h"
-using namespace std;
 
-class Change
+#include "Change.h"
+
+
+// This creates the head Change that will be used in other classes
+Change::Change() {
+	isOpenParen = false;
+	isCloseParen = false;
+	isHead = true;
+	row = -1;
+	col = -1;
+	prev = NULL;
+	next = NULL;
+	prevData = "NULL";
+	newData = "NULL";
+
+}
+Change::~Change()
 {
-private:
-	Change *prev;
-	Change *next;
-	int row;
-	int col;
-	string prevData;
-	string newData;
-	bool isOpenParen;
-	bool isCloseParen;
-	bool isHead;		// if it is the head Change, don't undo it
-public:
-	// This creates the head Change that will be used in other classes
-	Change() {
-		isOpenParen = false;
-		isCloseParen = false;
-		isHead = true;
-		row = -1;
-		col = -1;
-		prev = NULL;
-		next = NULL;
-		prevData = "NULL";
-		newData = "NULL";
-	
-	};
-	// true = openParen, false = closeParen
-	Change(bool blockStart, bool blockEnd) {
-		isOpenParen = blockStart;
-		isCloseParen = blockEnd;
-		row = -1;
-		col = -1;
-		prevData = "NULL";
-		newData = "NULL";
-		isHead = false;
-		prev = NULL;
-		next = NULL;
-	};
-	Change(int nRow, int nCol, string nPrevData, string nNewData) {
-		Change* newOne = new Change;
-		newOne->col = nCol;
-		newOne->row = nRow;
-		newOne->prevData = nPrevData;
-		newOne->newData = nNewData;
-		next = NULL;
-		prev = NULL;
-	};
-	void undo(Sheet *sheet) { // we assume that this will only be called on the head Change
-		if (isHead == false && isOpenParen == false && isCloseParen == false) {
-			sheet->setCellData(row, col, prevData);
-			deleteChange();
-		}
-		if (isHead == true) {
-			if (next != NULL) {
-				next->undo(sheet);
-			} else {
-				char error[] = "Empty Change Log";
-				throw error;
-			}
-		}
-		if (isCloseParen == true) {
-			while (next->getOpenParen() != true && next != NULL) {
-				next->undo(sheet);
-			}
-			if (next != NULL) {
-				next->deleteChange();
-			}
-			deleteChange();
-		}
-		if (isOpenParen == true) {
-			char error[] = "Lose open Paren found";
+
+}
+;
+// true = openParen, false = closeParen
+Change::Change(bool blockStart, bool blockEnd) {
+	isOpenParen = blockStart;
+	isCloseParen = blockEnd;
+	row = -1;
+	col = -1;
+	prevData = "NULL";
+	newData = "NULL";
+	isHead = false;
+	prev = NULL;
+	next = NULL;
+};
+Change::Change(int nRow, int nCol, string nPrevData, string nNewData) {
+	col = nCol;
+	row = nRow;
+	prevData = nPrevData;
+	newData = nNewData;
+	prev = NULL;
+	next = NULL;
+	isHead = false;
+	isCloseParen = false;
+	isOpenParen = false;
+};
+void Change::undo(Sheet *sheet) { // we assume that this will only be called on the head Change
+	if (isHead == false && isOpenParen == false && isCloseParen == false) {
+		sheet->setCellData(row, col, prevData);
+		deleteChange();
+	}
+	if (isHead == true) {
+		if (next != NULL) {
+			next->undo(sheet);
+		} else {
+			char error[] = "Empty Change Log";
 			throw error;
+
 		}
-	};
-	Change* getNext() {
-		return next;
 	}
-	Change* getPrev() {
-		return prev;
+	if (isCloseParen == true) {
+		while (next->getOpenParen() != true && next != NULL) {
+			next->undo(sheet);
+		}
+		if (next != NULL) {
+			next->deleteChange();
+		}
+		deleteChange();
 	}
-	void setNext(Change* newNext) {
-		next = newNext;
+	if (isOpenParen == true) {
+		char error[] = "Lose open Paren found";
+		throw error;
 	}
-	void setPrev(Change* newPrev) {
-		prev = newPrev;
-	}
-	void pushBack(Change* newChange) {
-		newChange->setPrev(this);
-		newChange->setNext(next);
+};
+Change* Change::getNext() {
+	return next;
+};
+Change* Change::getPrev() {
+	return prev;
+};
+void Change::setNext(Change* newNext) {
+	next = newNext;
+};
+void Change::setPrev(Change* newPrev) {
+	prev = newPrev;
+};
+void Change::pushBack(Change* newChange) {
+	newChange->setPrev(this);
+	newChange->setNext(this->next);
+	if (next != nullptr)
+	{
 		this->next->setPrev(newChange);
-		next = newChange;
 	}
-	void deleteChange() {
+	this->next = newChange;
+};
+void Change::deleteChange() {
+	if (prev != NULL) {
 		prev->setNext(next);
+	}
+	if (next != NULL) {
 		next->setPrev(prev);
-		delete this;
 	}
-	bool getOpenParen() {
-		return isOpenParen;
+	delete this;
+};
+bool Change::getOpenParen() {
+	return isOpenParen;
+};
+void Change::pushBack(int nRow, int nCol, string nPrevData, string nNewData) {
+	Change* disChange;
+	disChange = new Change(nRow, nCol, nPrevData, nNewData);
+	pushBack(disChange);
+};
+void Change::deleteStack() {
+	while (next != NULL) {
+		next->deleteChange();
 	}
+	while (prev != NULL) {
+		prev->deleteChange();
+	}
+};
+void Change::pushBack(bool blockStart, bool blockEnd) {
+	Change* disChange = new Change(blockStart, blockEnd);
+	pushBack(disChange);
 };
