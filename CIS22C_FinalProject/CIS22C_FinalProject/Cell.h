@@ -19,6 +19,7 @@ protected:
 	Cell* left;
 	Cell* right;
 	Cell* below;
+	bool empty = true;
 public:
 	string getData();
 	void setData(string in);
