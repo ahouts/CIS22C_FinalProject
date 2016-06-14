@@ -51,8 +51,14 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 
 
 					change.pushBack(a, b, sheet->getCellData(a, b), string1);
-
-					sheet->setCellData(a, b, string1);
+					if (a >= sheet->getXSize() || b >= sheet->getYSize() )
+					{
+						cout << "one or more values are out of bounds.";
+					}
+					else
+					{
+						sheet->setCellData(a, b, string1);
+					}
 				}
 			}
 		}
@@ -71,9 +77,9 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		else if (word1 == "search")
 		{
 			string searchstring;
-			cin.ignore();
-			getline(cin, searchstring);
-			bst.search(searchstring, &bst.getHead());
+			
+			cin >> searchstring;
+			bst.search(searchstring, &bst.getHead(), sheet);
 		}
 		else if (word1 == "save")
 		{
@@ -82,10 +88,9 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		else
 		{
 			cout << "invalid entry\n";
-			
-			cout << "enter the command you wish to do next: ";
 			cin.ignore(1000, '\n');
 			getline(cin, masterString);
+			
 		}
 	}
 }
