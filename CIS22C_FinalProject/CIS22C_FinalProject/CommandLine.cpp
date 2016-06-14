@@ -50,13 +50,14 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 					getline(cin, string1);  //takes a string of what to add into the correct cell
 
 
-					change.pushBack(a, b, sheet->getCellData(a, b), string1);
+					
 					if (a >= sheet->getXSize() || b >= sheet->getYSize() )
 					{
 						cout << "one or more values are out of bounds.";
 					}
 					else
 					{
+						change.pushBack(a, b, sheet->getCellData(a, b), string1);
 						sheet->setCellData(a, b, string1);
 					}
 				}
