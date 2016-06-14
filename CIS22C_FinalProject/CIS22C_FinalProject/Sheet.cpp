@@ -205,9 +205,9 @@ void Sheet::fromFile()
 
 	for (int i = 0; i < hashTableSize; i++)
 	{
-		string *answer = new string[3];
+		string *answer = new string[2];
 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			answer[i] = "";
 		}
@@ -215,15 +215,17 @@ void Sheet::fromFile()
 		string line = fileData[i];
 		stringstream ssin(line);
 		int count = 0;
-		while (ssin.good() && count < 3)
+		while (ssin.good() && count < 2)
 		{
 			ssin >> answer[count];
 			count++;
 		}
+		string data;
+		getline(ssin, data);
 
-		if (count == 3 && stoi(answer[0]) && stoi(answer[1]))
+		if (count == 2 && (stoi(answer[0]) || stoi(answer[0]) == 0) && (stoi(answer[1]) || stoi(answer[1]) == 0))
 		{
-			nonHashSearch(stoi(answer[0]), stoi(answer[1]))->setData(answer[2]);
+			nonHashSearch(stoi(answer[0]), stoi(answer[1]))->setData(data);
 		}
 		delete[] answer;
 	}
@@ -325,8 +327,16 @@ void Sheet::initializeSheet(int xSize, int ySize)
 		char error[] = "Invalid size chosen for Sheet.\n";
 		throw error;
 	}
-	this->xSize = xSize;
-	this->ySize = ySize;
+	try
+	{
+		this->xSize = xSize;
+		this->ySize = ySize;
+	}
+	catch (...)
+	{
+		char error[] = "Error initalizing sheet.\n\0";
+		throw error;
+	}
 
 	// create a dynamically allocated array of pointers
 	Cell **arr = new Cell*[xSize * ySize];

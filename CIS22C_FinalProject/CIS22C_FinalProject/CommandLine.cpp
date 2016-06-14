@@ -27,10 +27,10 @@ void CommandLine::drawSheet(ostream& out)
 
 void CommandLine::mainLoop(ostream &out, istream &in)
 {
-	refresh.findfunctions();
 	string word1, string1;
 	while (word1 != "exit")
 	{
+		refresh.findfunctions();
 		drawSheet(cout);
 		out << "enter the command you wish to do next: ";
 		cin >> word1;
@@ -95,7 +95,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		{
 			cout << "\ninvalid entry\n";
 			cin.ignore(1000, '\n');
-			getline(cin, string1);
+			system("pause");
 		}
 	}
 	change.deleteStack();

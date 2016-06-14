@@ -56,7 +56,15 @@ void MainMenu::createSheet()
 	cout << "=> ";
 	unsigned int x, y;
 	cin >> x >> y;
-	sheet->resizeSheet(x, y);
+	try
+	{
+		sheet->resizeSheet(x, y);
+	}
+	catch (char e[])
+	{
+		cout << e << endl;
+		system("pause");
+	}
 	cout << "Sheet successfully created.\n";
 	commandLine.mainLoop(cout, cin);
 }
