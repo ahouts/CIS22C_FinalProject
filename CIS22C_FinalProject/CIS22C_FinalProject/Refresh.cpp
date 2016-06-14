@@ -150,24 +150,24 @@ void Refresh::findfunctions()
 
 double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	int a = stoi(sheet->getCellData(xCoord, yCoord));
-	int b = stoi(sheet->getCellData(xCoord1, yCoord1));
+	double a = stod(sheet->getCellData(xCoord, yCoord));
+	double b = stod(sheet->getCellData(xCoord1, yCoord1));
 	double c = a + b;
 	return c;
 }
 
 double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	int a = stoi(sheet->getCellData(xCoord, yCoord));
-	int b = stoi(sheet->getCellData(xCoord1, yCoord1));
+	double a = stod(sheet->getCellData(xCoord, yCoord));
+	double b = stod(sheet->getCellData(xCoord1, yCoord1));
 	double c = a * b;
 	return c;
 }
 
 double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	int a = stoi(sheet->getCellData(xCoord, yCoord));
-	int b = stoi(sheet->getCellData(xCoord1, yCoord1));
+	double a = stod(sheet->getCellData(xCoord, yCoord));
+	double b = stod(sheet->getCellData(xCoord1, yCoord1));
 	double c = a - b;
 	return c;
 }
