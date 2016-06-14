@@ -186,48 +186,36 @@ void Sheet::fromFile()
 
 	resizeSheet(newXSize, newYSize);
 
-	for (int j = 0; j < ySize; j++)
+	string *fileData = new string[hashTableSize];
+
+	for (int i = 0; i < hashTableSize; i++)
 	{
-		for (int i = 0; i < xSize; i++)
+		string line;
+		getline(fin, line);
+		fileData[i] = line;
+	}
+
+	for (int i = 0; i < hashTableSize; i++)
+	{
+		string *answer = new string[3];
+
+		for (int i = 0; i < 3; i++)
 		{
-			int index = getHashIndex(i, j, hashTableMultiplier, hashTableAddition, hashTableSize);
+			answer[i] = "";
+		}
 
-			string *data = getIndexData(fin, index);
-			
-			if (data[3] == "")
-			{
-				// do nothing
-			}
-			else if (stoi(data[1]) == i && stoi(data[2]) == j)
-			{
-				nonHashSearch(i, j)->setData(data[3]);
-			}
-			else
-			{
-				bool done = false;
-				int count = 0;
-				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
-				{
-					index = quadraticResolution(index, hashTableSize);
-					string *data2 = getIndexData(fin, index);
+		string line = fileData[i];
+		stringstream ssin(line);
+		int count = 0;
+		while (ssin.good() && count < 3)
+		{
+			ssin >> answer[count];
+			count++;
+		}
 
-					if (data[3] == "")
-					{
-						done = true;
-					}
-					else if (stoi(data[1]) == i && stoi(data[2]) == j)
-					{
-						setCellData(i, j, data[3]);
-						done = true;
-					}
-					else
-					{
-						count++;
-					}
-					delete[] data2;
-				}
-			}
-			delete[] data;
+		if (count == 3 && stoi(answer[0]) && stoi(answer[1]))
+		{
+			nonHashSearch(stoi(answer[0]), stoi(answer[1]))->setData(answer[2]);
 		}
 	}
 
@@ -437,39 +425,4 @@ int Sheet::quadraticResolution(int index, int hashTableSize)
 {
 	double temp = index * index;
 	return ((int)temp) % hashTableSize;
-};
-
-string * Sheet::getIndexData(ifstream & file, int index)
-{
-	file.clear();
-	file.seekg(0, ios::beg);
-
-	int junk;
-	file >> junk >> junk;
-	file.ignore();
-
-	string *answer = new string[4];
-
-	for (int i = 0; i < 4; i++)
-	{
-		answer[i] = "";
-	}
-
-	string data;
-	for (int i = 0; i <= index; i++)
-	{
-		getline(file, data);
-	}
-
-	stringstream ssin(data);
-	int i = 1;
-	while (ssin.good() && i < 4)
-	{
-		ssin >> answer[i];
-		++i;
-	}
-
-	answer[0] = index;
-	
-	return answer;
 };
