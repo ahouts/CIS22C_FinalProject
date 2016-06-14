@@ -225,6 +225,7 @@ void Sheet::fromFile()
 		{
 			nonHashSearch(stoi(answer[0]), stoi(answer[1]))->setData(answer[2]);
 		}
+		delete[] answer;
 	}
 
 	generateHashTable();
