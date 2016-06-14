@@ -37,9 +37,8 @@ void MainMenu::showMainMenu()
 		default:
 			system("CLS");
 			cout << "You gave an invalid response.\n";
+			cin.clear();
 			system("pause");
-			string temp;
-			cin >> temp;
 			break;
 		}
 		cin.clear();
