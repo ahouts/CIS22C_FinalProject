@@ -44,7 +44,7 @@ void Sheet::generateHashTable()
  	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
 	if (hashTableSize > 500)
 	{
-		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 50);
+		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 20);
 	}
 	else
 	{
@@ -52,7 +52,7 @@ void Sheet::generateHashTable()
 	}
 	if (hashTableSize > 500)
 	{
-		hashTableAddition = getPrimeGreaterThan(hashTableSize / 70);
+		hashTableAddition = getPrimeGreaterThan(hashTableSize / 30);
 	}
 	else
 	{
@@ -151,15 +151,11 @@ void Sheet::toFile()
 
 	fout << xSize << endl;
 	fout << ySize << endl;
-	fout << hashTableSize << endl;
-	fout << hashTableMultiplier << endl;
-	fout << hashTableAddition << endl;
 
 	for (int i = 0; i < hashTableSize; i++)
 	{
 		if (hashTable[i] != nullptr)
 		{
-			fout << i << " ";
 			Cell *temp = hashTable[i];
 			fout << temp->getXCoord() << " ";
 			fout << temp->getYCoord() << " ";
@@ -167,7 +163,7 @@ void Sheet::toFile()
 		}
 		else
 		{
-			fout << i << endl;
+			fout << endl;
 		}
 	}
 
@@ -183,24 +179,18 @@ void Sheet::fromFile()
 		char error[] = "Failed to open file for writing.\n";
 		throw error;
 	}
-	int xSize;
-	int ySize;
-	int hashTableSize;
-	int hashTableModifier;
-	int hashTableAddition;
-	fin >> xSize;
-	fin >> ySize;
-	fin >> hashTableSize;
-	fin >> hashTableModifier;
-	fin >> hashTableAddition;
+	int newXSize;
+	int newYSize;
+	fin >> newXSize;
+	fin >> newYSize;
 
-	resizeSheet(xSize, ySize);
+	resizeSheet(newXSize, newYSize);
 
 	for (int j = 0; j < ySize; j++)
 	{
 		for (int i = 0; i < xSize; i++)
 		{
-			int index = getHashIndex(i, j, hashTableModifier, hashTableAddition, hashTableSize);
+			int index = getHashIndex(i, j, hashTableMultiplier, hashTableAddition, hashTableSize);
 
 			string *data = getIndexData(fin, index);
 			
@@ -445,7 +435,8 @@ int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int add
 
 int Sheet::quadraticResolution(int index, int hashTableSize)
 {
-	return index * index % hashTableSize;
+	double temp = index * index;
+	return ((int)temp) % hashTableSize;
 };
 
 string * Sheet::getIndexData(ifstream & file, int index)
@@ -454,40 +445,31 @@ string * Sheet::getIndexData(ifstream & file, int index)
 	file.seekg(0, ios::beg);
 
 	int junk;
-	file >> junk >> junk >> junk >> junk >> junk;
+	file >> junk >> junk;
+	file.ignore();
 
 	string *answer = new string[4];
+
 	for (int i = 0; i < 4; i++)
 	{
 		answer[i] = "";
 	}
 
-	file.ignore();
-	do
+	string data;
+	for (int i = 0; i <= index; i++)
 	{
-		string data;
 		getline(file, data);
-
-		for (int i = 0; i < 4; i++)
-		{
-			answer[i] = "";
-		}
-
-		stringstream ssin(data);
-		int i = 0;
-		while (ssin.good() && i < 4)
-		{
-			ssin >> answer[i];
-			++i;
-		}
-	} while (stoi(answer[0]) != index && file.good());
-
-	if (stoi(answer[0]) != index)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			answer[i] = "";
-		}
 	}
+
+	stringstream ssin(data);
+	int i = 1;
+	while (ssin.good() && i < 4)
+	{
+		ssin >> answer[i];
+		++i;
+	}
+
+	answer[0] = index;
+	
 	return answer;
 };
