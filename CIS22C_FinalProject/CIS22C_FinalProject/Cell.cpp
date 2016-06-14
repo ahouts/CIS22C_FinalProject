@@ -2,11 +2,15 @@
 
 string Cell::getData()
 {
+	if (empty == true){
+		return " ";
+	}
 	return contents;
 };
 
 void Cell::setData(string in)
 {
+	empty = false;
 	contents = in;
 };
 
