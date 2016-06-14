@@ -27,12 +27,12 @@ void CommandLine::drawSheet(ostream& out)
 
 void CommandLine::mainLoop(ostream &out, istream &in)
 {
-	string masterString = "", string1 = "";
-	while (masterString != "exit")
+	refresh.findfunctions();
+	string word1, string1;
+	while (word1 != "exit")
 	{
 		drawSheet(cout);
 		out << "enter the command you wish to do next: ";
-		string word1;
 		cin >> word1;
 
 		if (word1 == "set")
@@ -87,11 +87,15 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		{
 			sheet->toFile();
 		}
+		else if (word1 == "exit")
+		{
+			// do nothing
+		}
 		else
 		{
 			cout << "\ninvalid entry\n";
 			cin.ignore(1000, '\n');
-			getline(cin, masterString);
+			getline(cin, string1);
 		}
 	}
 	change.deleteStack();
