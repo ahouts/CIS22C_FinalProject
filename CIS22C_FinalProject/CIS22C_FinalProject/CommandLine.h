@@ -19,6 +19,10 @@ private:
 	Change change;
 	Refresh refresh;
 	BST bst;
+	// options for displaying sheet
+	unsigned int CELL_WIDTH;
+	unsigned int COUNT_WIDTH;
+	unsigned int CELLS_TO_DISPLAY_X;
 public:
 	CommandLine(Sheet *sheet);
 	void modifyCell(int xCoord, int yCoord, string data);
