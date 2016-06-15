@@ -45,35 +45,27 @@ void BST::clearTree()
 void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
 {
 	Node* holder = targetNode;
-	addNode(targetNode->getRight(), targetNode->getLeft());
+	addNode(targetNode->getRight(), &headNode);
+	addNode(targetNode->getLeft(), &headNode);
 	delete holder;
 }
 
 Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
 {
-	if (target->getMe() != goal) {
-		if (target->hasLeftChild() == true) {
-			if (target->getLeft()->getMe() == goal) {
-				return target->getLeft();
-			}
-			else {
-				if (search(goal, target->getLeft(), sht) != NULL) {
-					return search(goal, target->getLeft(), sht);
-				}
-			}
-		}
-		if (target->hasRightChild() == true) {
-			if (target->getRight()->getMe() == goal) {
-				return target->getRight();
-			}
-			else {
-				if (search(goal, target->getRight(), sht) != NULL) {
-					return search(goal, target->getRight(), sht);
-				}
-			}
-		}
-		return NULL;
+	if (target->getMe() == goal) {
+		return target;
 	}
+	else if (goal <= target->getMe()) {
+		if (target->getLeft() != NULL) {
+			return search(goal, target->getLeft(), sht);
+		}
+	}
+	else if (goal > target->getMe()) {
+		if (target->getRight() != NULL) {
+			return search(goal, target->getRight(), sht);
+		}
+	}
+	return NULL;
 }
 
 void BST::balance(Node* target)//completely untested
@@ -98,28 +90,43 @@ Node BST::getHead()
 }
 
 void BST::addNode(Node* newNode, Node* target) {
+	if (target == &headNode) {
+		addNode(newNode, target->getRight());
+	}
 	if (target->hasLeftChild() == false && target->hasRightChild() == false) {
-		if (target->getMe() > newNode->getMe()) {
-			target->setRight(newNode);
+		if (newNode->getMe() <= target->getMe()) {
+			target->setLeft(newNode);
+			newNode->setParent(target);
 		}
 		else {
-			target->setLeft(newNode);
+			target->setRight(newNode);
+			newNode->setParent(target);
 		}
 	}
-	if (target->hasLeftChild() == true) {
-		if (newNode->getMe() < target->getMe()) {
+	if (target->hasLeftChild() == true && target->hasRightChild() == true) {
+		if (newNode->getMe() <= target->getMe()) {
+			addNode(newNode, target->getLeft());
+		}
+		else {
+			addNode(newNode, target->getRight());
+		}
+	}
+	if (target->hasLeftChild() == true && target->hasRightChild() == false) {
+		if (newNode->getMe() <= target->getMe()) {
 			addNode(newNode, target->getLeft());
 		}
 		else {
 			target->setRight(newNode);
+			newNode->setParent(target);
 		}
 	}
-	if (target->hasRightChild() == true) {
+	if (target->hasRightChild() == true && target->hasRightChild() == false) {
 		if (newNode->getMe() > target->getMe()) {
 			addNode(newNode, target->getRight());
 		}
 		else {
 			target->setLeft(newNode);
+			newNode->setParent(target);
 		}
 	}
 }
