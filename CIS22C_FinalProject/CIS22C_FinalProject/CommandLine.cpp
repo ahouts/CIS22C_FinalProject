@@ -66,12 +66,16 @@ void CommandLine::drawSheet(ostream& out)
 
 void CommandLine::mainLoop(ostream &out, istream &in)
 {
+	CELL_WIDTH = 12;
+	COUNT_WIDTH = 4;
+	CELLS_TO_DISPLAY_X = 12;
+
 	string word1, string1;
 	while (word1 != "exit")
 	{
 		refresh.findfunctions();
 		drawSheet(cout);
-		out << "enter the command you wish to do next: ";
+		out << "=> ";
 		cin >> word1;
 
 		if (word1 == "set")
@@ -228,9 +232,25 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			cin >> x1 >> x2 >> y;
 			refresh.sortCol(x1, x2, y);
 		}
+		else if (word1 == "help")
+		{
+			system("cls");
+			cout << "Commands:\n";
+			cout << "set [int] [int] [string/int/double]\n";
+			cout << "search [string/int/double]\n";
+			cout << "sortrow [xCoord1] [xCoord2] [yCoord]\n";
+			cout << "sortcol [yCoord1] [yCoord2] [xCoord]\n";
+			cout << "undo\n";
+			cout << "setfilepath [newFilePath]\n";
+			cout << "cellstodisplay [int]\n";
+			cout << "charstodisplay [int]\n";
+			cout << "save\n";
+			cout << "exit\n";
+			system("pause");
+		}
 		else
 		{
-			cout << "\ninvalid entry\n";
+			cout << "\nInvalid entry (type help for a list of commands)\n";
 			cin.ignore(1000, '\n');
 			system("pause");
 		}
