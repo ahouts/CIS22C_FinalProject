@@ -9,6 +9,7 @@ CommandLine::CommandLine(Sheet *sheet) : refresh(sheet)
 	CELL_WIDTH = 12;
 	COUNT_WIDTH = 4;
 	CELLS_TO_DISPLAY_X = 12;
+	CELLS_TO_DISPLAY_Y = 40;
 }
 
 void CommandLine::modifyCell(int xCoord, int yCoord, string data)
@@ -24,6 +25,11 @@ void CommandLine::drawSheet(ostream& out)
 	if (CELLS_TO_DISPLAY_X > sheet->getXSize())
 	{
 		CELLS_TO_DISPLAY_X = sheet->getXSize();
+	}
+
+	if (CELLS_TO_DISPLAY_Y > sheet->getYSize())
+	{
+		CELLS_TO_DISPLAY_Y = sheet->getYSize();
 	}
 
 	for (int countWidth = 0; countWidth <= COUNT_WIDTH; countWidth++)
@@ -52,7 +58,7 @@ void CommandLine::drawSheet(ostream& out)
 	}
 	out << endl;
 
-	for (int y = 0; y < sheet->getYSize(); y++)
+	for (int y = 0; y < CELLS_TO_DISPLAY_Y; y++)
 	{
 		out << left << setw(COUNT_WIDTH) << fixed << y << "|";
 		for (int x = 0; x < CELLS_TO_DISPLAY_X; x++)
@@ -66,12 +72,17 @@ void CommandLine::drawSheet(ostream& out)
 
 void CommandLine::mainLoop(ostream &out, istream &in)
 {
+	CELL_WIDTH = 12;
+	COUNT_WIDTH = 4;
+	CELLS_TO_DISPLAY_X = 12;
+	CELLS_TO_DISPLAY_Y = 40;
+
 	string word1, string1;
 	while (word1 != "exit")
 	{
 		refresh.findfunctions();
 		drawSheet(cout);
-		out << "enter the command you wish to do next: ";
+		out << "=> ";
 		cin >> word1;
 
 		if (word1 == "set")
@@ -168,7 +179,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 				system("pause");
 			}
 		}
-		else if (word1 == "cellstodisplay")
+		else if (word1 == "cellstodisplayx")
 		{
 			unsigned int toDisplay;
 			cin >> toDisplay;
@@ -176,6 +187,22 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			{
 				CELLS_TO_DISPLAY_X = toDisplay;
 				cout << "X Axis cells to display set to " << toDisplay << ".\n";
+				system("pause");
+			}
+			else
+			{
+				cout << "An invalid number of cells to display was given.\n";
+				system("pause");
+			}
+		}
+		else if (word1 == "cellstodisplayy")
+		{
+			unsigned int toDisplay;
+			cin >> toDisplay;
+			if (toDisplay <= sheet->getYSize() && toDisplay > 0)
+			{
+				CELLS_TO_DISPLAY_Y = toDisplay;
+				cout << "Y Axis cells to display set to " << toDisplay << ".\n";
 				system("pause");
 			}
 			else
@@ -228,9 +255,26 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			cin >> x1 >> x2 >> y;
 			refresh.sortCol(x1, x2, y);
 		}
+		else if (word1 == "help")
+		{
+			system("cls");
+			cout << "Commands:\n";
+			cout << "set [int] [int] [string/int/double]\n";
+			cout << "search [string/int/double]\n";
+			cout << "sortrow [xCoord1] [xCoord2] [yCoord]\n";
+			cout << "sortcol [yCoord1] [yCoord2] [xCoord]\n";
+			cout << "undo\n";
+			cout << "setfilepath [newFilePath]\n";
+			cout << "cellstodisplayx [int]\n";
+			cout << "cellstodisplayy [int]\n";
+			cout << "charstodisplay [int]\n";
+			cout << "save\n";
+			cout << "exit\n";
+			system("pause");
+		}
 		else
 		{
-			cout << "\ninvalid entry\n";
+			cout << "\nInvalid entry (type help for a list of commands)\n";
 			cin.ignore(1000, '\n');
 			system("pause");
 		}
