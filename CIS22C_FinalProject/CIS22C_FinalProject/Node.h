@@ -14,6 +14,7 @@
 using namespace std;
 
 class Node {
+protected:
 	Cell* me;
 	Node* parent;
 	Node* leftChild;
@@ -33,6 +34,8 @@ public:
 	void rotateRight();
 	void rotateLeft();
 	bool getImbalance();
+	int getMeX();
+	int getMeY();
 };
 
 #endif
