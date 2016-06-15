@@ -2,6 +2,8 @@
 
 Sheet::Sheet(int xSize, int ySize)
 {
+	hashTableSizeMultiplier = 25;
+	maxResolutionAttempts = 3;
 	initializeSheet(xSize, ySize);
 	generateHashTable();
 	filePath = "./spreadsheet.dat";
@@ -41,23 +43,9 @@ Cell * Sheet::operator()(int x, int y)
 
 void Sheet::generateHashTable()
 {
- 	hashTableSize = getPrimeGreaterThan(xSize * ySize * HASH_TABLE_SIZE_MULTIPLIER);
-	if (hashTableSize > 500)
-	{
-		hashTableMultiplier = getPrimeGreaterThan(hashTableSize / 20);
-	}
-	else
-	{
-		hashTableMultiplier = 13;
-	}
-	if (hashTableSize > 500)
-	{
-		hashTableAddition = getPrimeGreaterThan(hashTableSize / 30);
-	}
-	else
-	{
-		hashTableAddition = 7;
-	}
+ 	hashTableSize = getPrimeGreaterThan(xSize * ySize * hashTableSizeMultiplier);
+	hashTableMultiplier = getPrimeGreaterThan(100);
+	hashTableAddition = getPrimeGreaterThan(130);
 
 	hashTable = new Cell*[hashTableSize];		// create a hash table to store cell pointers in
 
@@ -81,7 +69,7 @@ void Sheet::generateHashTable()
 			{
 				bool done = false;
 				int count = 0;
-				while (!done && count < MAX_RESOLUTION_ATTEMPTS)
+				while (!done && count < maxResolutionAttempts)
 				{
 					index = quadraticResolution(index, hashTableSize);
  					if (hashTable[index] == nullptr)
@@ -94,7 +82,7 @@ void Sheet::generateHashTable()
 						count++;
 					}
 				}
-				if (count == MAX_RESOLUTION_ATTEMPTS)
+				if (count == maxResolutionAttempts)
 				{
 					char error[] = "Hash resolution took too many cycles.\n";
 					throw error;
@@ -221,6 +209,9 @@ void Sheet::fromFile()
 			ssin >> answer[count];
 			count++;
 		}
+
+		ssin.ignore(1);
+
 		string data;
 		getline(ssin, data);
 

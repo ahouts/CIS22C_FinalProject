@@ -14,8 +14,25 @@ void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 void CommandLine::drawSheet(ostream& out)
 {
 	system("CLS");
+
+
+	out << "     ";
+	for (int i = 0; i < sheet->getXSize(); i++)
+	{
+		out << right << setw(8) << fixed << setprecision(3) << i << "|";
+	}
+	out << endl;
+
+	out << "     ";
+	for (int i = 0; i < sheet->getXSize(); i++) 
+	{
+		out << "---------";
+	}
+	out << endl;
+
 	for (int y = 0; y < sheet->getYSize(); y++)
 	{
+		out << left << setw(4) << fixed << y << "|";
 		for (int x = 0; x < sheet->getXSize(); x++)
 		{
 			out << right << setw(8) << fixed << setprecision(3) << sheet->getCellData(x, y).substr(0, 8);
@@ -111,6 +128,16 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		else if (word1 == "exit")
 		{
 			// do nothing
+		}
+		else if (word1 == "sortrow") {
+			int x1, x2, y;
+			cin >> x1 >> x2 >> y;
+			refresh.sortRow(x1, x2, y);
+		}
+		else if (word1 == "sortcol") {
+			int x1, x2, y;
+			cin >> x1 >> x2 >> y;
+			refresh.sortCol(x1, x2, y);
 		}
 		else
 		{
