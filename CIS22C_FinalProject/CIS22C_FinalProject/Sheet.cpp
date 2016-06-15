@@ -165,7 +165,7 @@ void Sheet::fromFile()
 	fin.open(filePath);
 	if (fin.fail())
 	{
-		char error[] = "Failed to open file for writing.\n\0";
+		char error[] = "Failed to open file for reading.\n\0";
 		throw error;
 	}
 	int newXSize;
@@ -217,7 +217,7 @@ void Sheet::fromFile()
 
 		if (count == 2 && (stoi(answer[0]) || stoi(answer[0]) == 0) && (stoi(answer[1]) || stoi(answer[1]) == 0))
 		{
-			nonHashSearch(stoi(answer[0]), stoi(answer[1]))->setData(data);
+			operator()(stoi(answer[0]), stoi(answer[1]))->setData(data);
 		}
 		delete[] answer;
 	}
