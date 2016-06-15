@@ -217,7 +217,7 @@ void Sheet::fromFile()
 
 		if (count == 2 && (stoi(answer[0]) || stoi(answer[0]) == 0) && (stoi(answer[1]) || stoi(answer[1]) == 0))
 		{
-			nonHashSearch(stoi(answer[0]), stoi(answer[1]))->setData(data);
+			operator()(stoi(answer[0]), stoi(answer[1]))->setData(data);
 		}
 		delete[] answer;
 	}
