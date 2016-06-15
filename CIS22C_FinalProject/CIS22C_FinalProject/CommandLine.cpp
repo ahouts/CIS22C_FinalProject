@@ -21,6 +21,11 @@ void CommandLine::drawSheet(ostream& out)
 
 	system("CLS");
 
+	if (CELLS_TO_DISPLAY_X > sheet->getXSize())
+	{
+		CELLS_TO_DISPLAY_X = sheet->getXSize();
+	}
+
 	for (int countWidth = 0; countWidth <= COUNT_WIDTH; countWidth++)
 	{
 		out << " ";
