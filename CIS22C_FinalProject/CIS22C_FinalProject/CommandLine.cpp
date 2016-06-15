@@ -164,17 +164,33 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		{
 			unsigned int toDisplay;
 			cin >> toDisplay;
-			CELLS_TO_DISPLAY_X = toDisplay;
-			cout << "X Axis cells to display set to " << toDisplay << ".\n";
-			system("pause");
+			if (toDisplay <= sheet->getXSize() && toDisplay > 0)
+			{
+				CELLS_TO_DISPLAY_X = toDisplay;
+				cout << "X Axis cells to display set to " << toDisplay << ".\n";
+				system("pause");
+			}
+			else
+			{
+				cout << "An invalid number of cells to display was given.\n";
+				system("pause");
+			}
 		}
 		else if (word1 == "charstodisplay")
 		{
 			unsigned int toDisplay;
 			cin >> toDisplay;
-			CELL_WIDTH = toDisplay;
-			cout << "Now displaying " << toDisplay << " characters for each cell.\n";
-			system("pause");
+			if (toDisplay <= 40 && toDisplay > 1)
+			{
+				CELL_WIDTH = toDisplay;
+				cout << "Now displaying " << toDisplay << " characters for each cell.\n";
+				system("pause");
+			}
+			else
+			{
+				cout << "An invalid number of characters was provided.\n";
+				system("pause");
+			}
 		}
 		else if (word1 == "save")
 		{
