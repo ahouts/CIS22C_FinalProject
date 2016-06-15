@@ -22,7 +22,6 @@ private:
 	int hashTableMultiplier;
 	int hashTableAddition;
 	Cell **hashTable;
-	Cell *dummyCell;
 public:
 	Sheet(int xSize, int ySize);
 	~Sheet();
