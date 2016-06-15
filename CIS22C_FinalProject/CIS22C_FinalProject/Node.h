@@ -33,6 +33,8 @@ public:
 	void rotateRight();
 	void rotateLeft();
 	bool getImbalance();
+	int getMeX();
+	int getMeY();
 };
 
 #endif

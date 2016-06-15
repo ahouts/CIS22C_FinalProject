@@ -112,3 +112,10 @@ bool Node::getImbalance()
 	}
 	return isItBigger;
 }
+int Node::getMeX() {
+	return me->getXCoord();
+}
+int Node::getMeY() {
+	return me->getYCoord();
+}
+
