@@ -14,6 +14,7 @@
 using namespace std;
 
 class Node {
+protected:
 	Cell* me;
 	Node* parent;
 	Node* leftChild;
@@ -35,6 +36,7 @@ public:
 	bool getImbalance();
 	int getMeX();
 	int getMeY();
+	void clearTree();
 };
 
 #endif

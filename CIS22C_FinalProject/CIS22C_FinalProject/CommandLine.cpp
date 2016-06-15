@@ -123,6 +123,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			Node* targetNode;
 
 			cin >> searchstring;
+			bst.generateTree(*sheet);
 			targetNode =  bst.search(searchstring, &bst.getHead(), sheet);
 			if (targetNode == NULL) {
 				cout << "Target not found" << endl;
