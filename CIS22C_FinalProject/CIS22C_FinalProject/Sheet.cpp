@@ -165,7 +165,7 @@ void Sheet::fromFile()
 	fin.open(filePath);
 	if (fin.fail())
 	{
-		char error[] = "Failed to open file for writing.\n\0";
+		char error[] = "Failed to open file for reading.\n\0";
 		throw error;
 	}
 	int newXSize;
