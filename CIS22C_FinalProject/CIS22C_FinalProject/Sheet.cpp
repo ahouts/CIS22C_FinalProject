@@ -1,3 +1,4 @@
+using namespace std;
 #include "Sheet.h"
 
 Sheet::Sheet(int xSize, int ySize)

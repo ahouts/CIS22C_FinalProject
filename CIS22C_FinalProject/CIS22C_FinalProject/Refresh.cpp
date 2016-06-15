@@ -315,30 +315,20 @@ double Refresh::divide(int xCoord, int yCoord, int xCoord1, int yCoord1) {
 }
 
 void Refresh::sortRow(int x1, int x2, int y) {
-	string* sorter;
-	sorter = new string[x2 - x1];
-	for (int i = 0; i < (x2 - x1); i++) {
-		sorter[i] = sheet->getCellData(i, y);
-	}
-	for (int i = 0; i < (x2 - x1); i++) {
-		for (int p = 0; p < i; p++) {
-			if (sorter[i] > sorter[p]) {
-				sheet->swapCol(i, p);
+	for (int i = 0; i < x2 - x1; i++) {
+		for (int j = 0; j < x2 - x1; j++) {
+			if (sheet->getCellData(i, y) > sheet->getCellData(j, y)) {
+				sheet->swapRow(i, j);
 			}
 		}
 	}
 }
 
 void Refresh::sortCol(int y1, int y2, int x) {
-	string* sorter;
-	sorter = new string[y2 - y1];
-	for (int i = 0; i < (y2 - y1); i++) {
-		sorter[i] = sheet->getCellData(i, x);
-	}
-	for (int i = 0; i < (y2 - y1); i++) {
-		for (int p = 0; p < i; p++) {
-			if (sorter[i] > sorter[p]) {
-				sheet->swapRow(i, p);
+	for (int i = 0; i < y2 - y1; i++) {
+		for (int j = 0; j < y2 - y1; j++) {
+			if (sheet->getCellData(x, i) > sheet->getCellData(x, j)) {
+				sheet->swapRow(i, j);
 			}
 		}
 	}
