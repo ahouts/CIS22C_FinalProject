@@ -150,16 +150,20 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		else if (word1 == "search")
 		{
 			string searchstring;
-			Node* targetNode;
+			Node* targetNode = NULL;
 
 			cin >> searchstring;
 			bst.generateTree(*sheet);
 			targetNode =  bst.search(searchstring, &bst.getHead(), sheet);
 			if (targetNode == NULL) {
 				cout << "Target not found" << endl;
+				cin.ignore(1000, '\n');
+				system("pause");
 			}
 			else {
 				cout << "Target at:" << targetNode->getMeX() << ", " << targetNode->getMeY() << endl;
+				cin.ignore(1000, '\n');
+				system("pause");
 			}
 		}
 		else if (word1 == "setfilepath")
