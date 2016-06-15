@@ -2,18 +2,22 @@
 
 CommandLine::CommandLine(Sheet *sheet) : refresh(sheet)
 {
-	this->sheet = sheet;
+	//initializes all the variables
+	this->sheet = sheet; 
 	change = Change();
 	bst = BST();
 }
 
 void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 {
+	//called when the data ina node needs to be changed
 	sheet->setCellData(xCoord, yCoord, data);
 }
 void CommandLine::drawSheet(ostream& out)
 {
+
 	system("CLS");
+	//goes thorugh both x and y values and plots the sheet for the user to see
 	for (int y = 0; y < sheet->getYSize(); y++)
 	{
 		for (int x = 0; x < sheet->getXSize(); x++)
