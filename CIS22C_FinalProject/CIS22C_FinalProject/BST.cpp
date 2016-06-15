@@ -23,9 +23,9 @@ void BST::generateTree(Sheet &sheet)
 	{
 		for (int i = 0; i < sheet.getXSize(); i++)
 		{
-			Node temp = Node();
-			temp.setMe(sheet(i, j));
-			// addNode(temp, );
+			Node* temp = new Node();
+			temp->setMe(sheet(i, j));
+			addNode(temp, &headNode );
 		}
 	}
 }
@@ -33,7 +33,13 @@ void BST::generateTree(Sheet &sheet)
 void BST::clearTree()
 {
 	Node* target = &headNode;
-	target->clearTree();
+	if (target->getLeft() != NULL) {
+		clearTree(target->getLeft());
+	}
+	if (target->getRight() != NULL) {
+		clearTree(target->getRight());
+	}
+
 }
 
 void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
@@ -115,5 +121,16 @@ void BST::addNode(Node* newNode, Node* target) {
 		else {
 			target->setLeft(newNode);
 		}
+	}
+}
+void BST::clearTree(Node* target) {
+	if (target->getLeft() != NULL) {
+		clearTree(target->getLeft());
+	}
+	if (target->getRight() != NULL) {
+		clearTree(target->getRight());
+	}
+	if (target->getLeft() == NULL && target->getRight() == NULL) {
+		delete target;
 	}
 }

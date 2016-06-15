@@ -118,14 +118,5 @@ int Node::getMeX() {
 int Node::getMeY() {
 	return me->getYCoord();
 }
-void Node::clearTree() {
-	if (leftChild != NULL) {
-		leftChild->clearTree();
-		delete leftChild;
-	}
-	if (rightChild != NULL) {
-		rightChild->clearTree();
-		delete rightChild;
-	}
-}
+
 

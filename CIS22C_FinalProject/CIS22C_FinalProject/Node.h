@@ -36,7 +36,6 @@ public:
 	bool getImbalance();
 	int getMeX();
 	int getMeY();
-	void clearTree();
 };
 
 #endif
