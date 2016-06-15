@@ -2,8 +2,8 @@
 
 Sheet::Sheet(int xSize, int ySize)
 {
-	hashTableSizeMultiplier = 25;
-	maxResolutionAttempts = 3;
+	hashTableSizeMultiplier = 30;  // at this value we can have a max resolution of 1 at every combination of x and y size from 1-20 by 1-100
+	maxResolutionAttempts = 2;
 	initializeSheet(xSize, ySize);
 	generateHashTable();
 	filePath = "./spreadsheet.dat";
