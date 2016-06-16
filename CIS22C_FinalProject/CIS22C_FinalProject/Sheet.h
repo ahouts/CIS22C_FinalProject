@@ -5,6 +5,7 @@
 #include <fstream>
 #include <limits>
 #include <sstream>
+#include "Change.h"
 #include "Cell.h"
 using namespace std;
 
@@ -26,13 +27,13 @@ public:
 	Sheet(int xSize, int ySize);
 	~Sheet();
 	Cell* operator()(int x, int y);
-	void setCellData(int x, int y, string str);
+	void setCellData(int x, int y, string str, Change *change);
 	string getCellData(int x, int y);
 	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
 	void toFile();
 	void fromFile();
-	void swapRow(int y1, int y2);
-	void swapCol(int x1, int x2);
+	void swapRow(int y1, int y2, Change *change);
+	void swapCol(int x1, int x2, Change *change);
 	int getXSize();
 	int getYSize();
 	string getFilePath();

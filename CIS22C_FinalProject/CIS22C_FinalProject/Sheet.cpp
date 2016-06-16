@@ -119,8 +119,9 @@ Cell * Sheet::nonHashSearch(int x, int y)
 };
 
 
-void Sheet::setCellData(int x, int y, string str)
+void Sheet::setCellData(int x, int y, string str, Change *change)
 {
+	change->pushBack(x, y, operator()(x, y)->getData(), str);
 	operator()(x, y)->setData(str);
 };
 
@@ -226,7 +227,7 @@ void Sheet::fromFile()
 	generateHashTable();		// generate a hashTable of the correct size
 };
 
-void Sheet::swapRow(int y1, int y2)
+void Sheet::swapRow(int y1, int y2, Change *change)
 {
 	string *row = new string[xSize];	// create a temporary row
 
@@ -241,7 +242,7 @@ void Sheet::swapRow(int y1, int y2)
 	Cell *temp2 = operator()(0, y2);
 	for (int i = 0; i < xSize; i++)		// copy row y1 into y2
 	{
-		setCellData(temp2->getXCoord(), temp2->getYCoord(), temp->getData());
+		setCellData(temp2->getXCoord(), temp2->getYCoord(), temp->getData(), change);
 		temp = temp->getRight();
 		temp2 = temp2->getRight();
 	}
@@ -249,14 +250,14 @@ void Sheet::swapRow(int y1, int y2)
 	temp = operator()(0, y1);
 	for (int i = 0; i < xSize; i++)		// copy temp row into y1
 	{
-		setCellData(temp->getXCoord(), temp->getYCoord(), row[i]);
+		setCellData(temp->getXCoord(), temp->getYCoord(), row[i], change);
 		temp = temp->getRight();
 	}
 
 	delete[] row;
 };
 
-void Sheet::swapCol(int x1, int x2)
+void Sheet::swapCol(int x1, int x2, Change *change)
 {
 	string *col = new string[ySize];	// create a temporary col
 
@@ -271,7 +272,7 @@ void Sheet::swapCol(int x1, int x2)
 	Cell *temp2 = operator()(0, x2);
 	for (int i = 0; i < ySize; i++)		// copy col x1 into col x2
 	{
-		setCellData(temp2->getXCoord(), temp2->getYCoord(), temp->getData());
+		setCellData(temp2->getXCoord(), temp2->getYCoord(), temp->getData(), change);
 		temp = temp->getBelow();
 		temp2 = temp2->getBelow();
 	}
@@ -279,7 +280,7 @@ void Sheet::swapCol(int x1, int x2)
 	temp = operator()(0, x1);
 	for (int i = 0; i < ySize; i++)		// copy temp col into x1
 	{
-		setCellData(temp->getXCoord(), temp->getYCoord(), col[i]);
+		setCellData(temp->getXCoord(), temp->getYCoord(), col[i], change);
 		temp = temp->getBelow();
 	}
 
