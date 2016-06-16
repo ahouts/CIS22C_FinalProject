@@ -260,8 +260,8 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		}
 		else if (word1 == "printTree") {
 			bst.generateTree(*sheet);
-			if (bst.getHead()->getRight() != NULL) {
-				bst.getHead()->getRight()->printTree(0);
+			if (bst.getHead() != NULL) {
+				bst.getHead()->printTree(0);
 			}
 			else {
 				cout << "No Tree is present." << endl;
