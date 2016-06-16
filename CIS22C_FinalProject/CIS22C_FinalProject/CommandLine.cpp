@@ -153,7 +153,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 
 			cin >> searchstring;
 			bst.generateTree(*sheet);
-			targetNode = bst.search(searchstring, &bst.getHead(), sheet);
+			targetNode = bst.search(searchstring, bst.getHead(), sheet);
 			if (targetNode == NULL) {
 				cout << "Target not found" << endl;
 				cin.ignore(1000, '\n');
@@ -260,8 +260,8 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		}
 		else if (word1 == "printtree") {
 			bst.generateTree(*sheet);
-			if (bst.getHead().getRight() != NULL) {
-				bst.getHead().getRight()->printTree(0);
+			if (bst.getHead()->getRight() != NULL) {
+				bst.getHead()->getRight()->printTree(0);
 			}
 			else {
 				cout << "No Tree is present." << endl;
