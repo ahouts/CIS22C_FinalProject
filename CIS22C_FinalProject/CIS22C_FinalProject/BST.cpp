@@ -18,13 +18,14 @@ void BST::rotateRight(Node* target)
 
 void BST::generateTree(Sheet &sheet)
 {
+	Node* temp;
 	clearTree();
 	for (int j = 0; j < sheet.getYSize(); j++)
 	{
 		for (int i = 0; i < sheet.getXSize(); i++)
 		{
-			Node* temp = new Node();
-			temp->setMe(sheet(i, j));
+			temp = new Node();
+			temp->setMe(sheet.operator()(i,j));
 			addNode(temp, &headNode );
 		}
 	}
@@ -69,15 +70,15 @@ Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goa
 		}
 	}
 	
-	else if (target->getMe() == goal) {
+	if (target->getMe() == goal) {
 		return target;
 	}
-	else if (goal <= target->getMe()) {
+	if (goal <= target->getMe()) {
 		if (target->getLeft() != NULL) {
 			return search(goal, target->getLeft(), sht);
 		}
 	}
-	else if (goal > target->getMe()) {
+	if (goal > target->getMe()) {
 		if (target->getRight() != NULL) {
 			return search(goal, target->getRight(), sht);
 		}
@@ -116,7 +117,15 @@ void BST::addNode(Node* newNode, Node* target) {
 			target->setRight(newNode);
 		}
 	}
-	if (target->getLeft() ==NULL && target->getRight() ==NULL) {
+	if (target->getLeft() != NULL && target->getRight() != NULL) {
+		if (newNode->getMe() <= target->getMe()) {
+			addNode(newNode, target->getLeft());
+		}
+		else {
+			addNode(newNode, target->getRight());
+		}
+	}
+	if (target->getLeft() == NULL && target->getRight() == NULL) {
 		if (newNode->getMe() <= target->getMe()) {
 			target->setLeft(newNode);
 			newNode->setParent(target);
@@ -125,14 +134,8 @@ void BST::addNode(Node* newNode, Node* target) {
 			target->setRight(newNode);
 			newNode->setParent(target);
 		}
-	}else if (target->getLeft() !=NULL && target->getRight() !=NULL) {
-		if (newNode->getMe() <= target->getMe()) {
-			addNode(newNode, target->getLeft());
-		}
-		else {
-			addNode(newNode, target->getRight());
-		}
-	}else if (target->getLeft() !=NULL && target->getRight() ==NULL) {
+	}
+	if (target->getLeft() != NULL && target->getRight() ==NULL) {
 		if (newNode->getMe() <= target->getMe()) {
 			addNode(newNode, target->getLeft());
 		}
@@ -140,7 +143,8 @@ void BST::addNode(Node* newNode, Node* target) {
 			target->setRight(newNode);
 			newNode->setParent(target);
 		}
-	}else if (target->getRight() !=NULL && target->getRight() ==NULL) {
+	}
+	if (target->getRight() !=NULL && target->getLeft() ==NULL) {
 		if (newNode->getMe() > target->getMe()) {
 			addNode(newNode, target->getRight());
 		}
