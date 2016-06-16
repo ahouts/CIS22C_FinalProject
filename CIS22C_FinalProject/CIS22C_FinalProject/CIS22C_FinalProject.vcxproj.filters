@@ -39,6 +39,12 @@
     <ClInclude Include="Refresh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Node1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BST1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp">
@@ -63,6 +69,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Node1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BST1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -111,21 +111,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BST.h" />
+    <ClInclude Include="BST1.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Change.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Node1.h" />
     <ClInclude Include="Refresh.h" />
     <ClInclude Include="Sheet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BST.cpp" />
+    <ClCompile Include="BST1.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Change.cpp" />
     <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Node1.cpp" />
     <ClCompile Include="Refresh.cpp" />
     <ClCompile Include="Sheet.cpp" />
   </ItemGroup>

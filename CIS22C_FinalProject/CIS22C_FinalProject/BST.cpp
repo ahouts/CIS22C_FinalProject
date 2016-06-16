@@ -40,7 +40,6 @@ void BST::clearTree()
 	if (target->getRight() != NULL) {
 		clearTree(target->getRight());
 	}
-
 }
 
 void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
