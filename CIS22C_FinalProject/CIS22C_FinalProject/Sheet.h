@@ -2,6 +2,7 @@
 #define _SHEET_H
 
 #include <string>
+#include <iostream>
 #include <fstream>
 #include <limits>
 #include <sstream>
@@ -41,6 +42,7 @@ public:
 	void setFilePath(string filePath);
 	void changeOpenParen();
 	void changeCloseParen();
+	void printHashTable(ostream out);
 protected:
 	void generateHashTable();
 	Cell* nonHashSearch(int x, int y);
