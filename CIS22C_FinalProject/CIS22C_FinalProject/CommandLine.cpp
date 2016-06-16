@@ -1,10 +1,10 @@
 #include "CommandLine.h"
 
-CommandLine::CommandLine(Sheet *sheet) : refresh(sheet)
+CommandLine::CommandLine(Sheet *sheet, Change *change) : refresh(sheet)
 {
 	//initializes all the variables
 	this->sheet = sheet; 
-	change = Change();
+	this->change = change;
 	bst = BST();
 	CELL_WIDTH = 12;
 	COUNT_WIDTH = 4;
@@ -105,14 +105,13 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 
 
 
-							if (a >= sheet->getXSize() || b >= sheet->getYSize())
+							if (a >= sheet->getXSize() || b >= sheet->getYSize() || a < 0 || b < 0)
 							{
 								cout << "one or more values are out of bounds.";
 								system("pause");
 							}
 							else
 							{
-								change.pushBack(a, b, sheet->getCellData(a, b), string1);
 								sheet->setCellData(a, b, string1);
 							}
 
@@ -137,7 +136,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		{
 			try
 			{
-				change.undo(sheet);
+				change->undo(sheet);
 				// successfully undone
 			}
   			catch (char e[])
@@ -283,5 +282,5 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			system("pause");
 		}
 	}
-	change.deleteStack();
+	change->deleteStack();
 }

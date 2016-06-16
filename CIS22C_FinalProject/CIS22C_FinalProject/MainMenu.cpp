@@ -1,8 +1,9 @@
 #include "MainMenu.h"
 
-MainMenu::MainMenu(Sheet *sheet) : commandLine(sheet)
+MainMenu::MainMenu(Sheet *sheet, Change *change) : commandLine(sheet, change)
 {
 	this->sheet = sheet;
+	this->change = change;
 }
 
 void MainMenu::showMainMenu()
@@ -11,10 +12,16 @@ void MainMenu::showMainMenu()
 	while (!done)
 	{
 		system("CLS");
-		cout << "What would you like to do?\n";
-		cout << "1. create a new sheet.\n";
-		cout << "2. open an existing sheet.\n";
-		cout << "3. delete an existing sheet.\n";
+		cout << "__      __ _       _              _       \n"
+			<< "\\ \\    / /(_)     (_)            | |      \n"
+			<< " \\ \\  / /  _  ___  _   ___  __ _ | |  ___ \n"
+			<< "  \\ \\/ /  | |/ __|| | / __|/ _` || | / __|\n"
+			<< "   \\  /   | |\\__ \\| || (__| (_| || || (__ \n"
+			<< "    \\/    |_||___/|_| \\___|\\__,_||_| \\___|\n\n\n";
+		cout << "Main Menu:\n\n";
+		cout << "1. Create a New Sheet\n";
+		cout << "2. Open an Existing Sheet\n";
+		cout << "3. Delete an Existing Sheet.\n";
 		cout << "0. Exit\n";
 		cout << "=> ";
 		string response = "-1";
@@ -57,18 +64,26 @@ void MainMenu::createSheet()
 	unsigned int x, y;
 	cout << "X size, (1-20) => ";
 	cin >> x;
-	cout << "Y size, (1-100) => ";
+	cout << "Y size, (1-1000) => ";
 	cin >> y;
-	try
+	if (y < 1 || x < 1)
 	{
-		sheet->resizeSheet(x, y);
-		cout << "Sheet successfully created.\n";
-		commandLine.mainLoop(cout, cin);
-	}
-	catch (char e[])
-	{
-		cout << e << endl;
+		cout << "Invalid sheet size given." << endl;
 		system("pause");
+	}
+	else
+	{
+		try
+		{
+			sheet->resizeSheet(x, y);
+			cout << "Sheet successfully created.\n";
+			commandLine.mainLoop(cout, cin);
+		}
+		catch (char e[])
+		{
+			cout << e << endl;
+			system("pause");
+		}
 	}
 }
 
@@ -114,8 +129,9 @@ int main()
 {
 	HWND hwnd = GetConsoleWindow();
 	if (hwnd != NULL) { MoveWindow(hwnd, 0, 0, 1280, 800, TRUE); }
-	Sheet *sheet = new Sheet(1, 1);
-	MainMenu menu = MainMenu(sheet);
+	Change *change = new Change();
+	Sheet *sheet = new Sheet(1, 1, change);
+	MainMenu menu = MainMenu(sheet, change);
 	menu.showMainMenu();
 	delete sheet;
 	return 0;
