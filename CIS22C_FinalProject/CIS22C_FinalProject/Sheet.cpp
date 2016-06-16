@@ -1,12 +1,14 @@
+using namespace std;
 #include "Sheet.h"
 
-Sheet::Sheet(int xSize, int ySize)
+Sheet::Sheet(int xSize, int ySize, Change *change)
 {
 	hashTableSizeMultiplier = 30;  // at this value we can have a max resolution of 1 at every combination of x and y size from 1-20 by 1-100
 	maxResolutionAttempts = 5;
 	initializeSheet(xSize, ySize); // initalize all of the cells for a sheet of this size
 	generateHashTable();
 	filePath = "./spreadsheet.dat";
+	this->change = change;
 };
 
 Sheet::~Sheet()
@@ -121,6 +123,7 @@ Cell * Sheet::nonHashSearch(int x, int y)
 
 void Sheet::setCellData(int x, int y, string str)
 {
+	change->pushBack(x, y, operator()(x, y)->getData(), str);
 	operator()(x, y)->setData(str);
 };
 
@@ -254,6 +257,8 @@ void Sheet::swapRow(int y1, int y2)
 	}
 
 	delete[] row;
+	delete temp;
+	delete temp2;
 };
 
 void Sheet::swapCol(int x1, int x2)
@@ -284,6 +289,8 @@ void Sheet::swapCol(int x1, int x2)
 	}
 
 	delete[] col;
+	delete temp;
+	delete temp2;
 };
 
 int Sheet::getXSize()
@@ -435,6 +442,6 @@ int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int add
 
 int Sheet::quadraticResolution(int index, int hashTableSize)		// standard quadratic resolution
 {
-	double temp = abs((double)index * (double)index);		// use a double to prevent overflow (most of the time)
-	return ((int)temp) % hashTableSize;
+	int temp = abs((double)index * (double)index);		// use a double to prevent overflow (sometimes)
+	return temp % hashTableSize;
 };

@@ -16,7 +16,7 @@ class CommandLine
 {
 private:
 	Sheet *sheet;
-	Change change;
+	Change *change;
 	Refresh refresh;
 	BST bst;
 	// options for displaying sheet
@@ -25,7 +25,7 @@ private:
 	unsigned int CELLS_TO_DISPLAY_X;
 	unsigned int CELLS_TO_DISPLAY_Y;
 public:
-	CommandLine(Sheet *sheet);
+	CommandLine(Sheet *sheet, Change *change);
 	void modifyCell(int xCoord, int yCoord, string data);
 	void drawSheet(ostream& out);
 	void mainLoop(ostream& out, istream &in);
