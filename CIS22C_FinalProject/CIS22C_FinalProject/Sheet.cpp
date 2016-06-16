@@ -322,6 +322,36 @@ void Sheet::changeCloseParen()
 	change->pushBack(false, true);
 }
 
+void Sheet::printHashTable(ostream out)
+{
+	for (int i = 0; i < hashTableSize; i++)
+	{
+		if (hashTable[i]->getData() != "")
+		{
+			stringstream ssin(hashTable[i]->getData());
+
+			string answer[2];
+
+			for (int i = 0; i < 2; i++)
+			{
+				answer[i] = "";
+			}
+
+			int count = 0;
+			while (ssin.good() && count < 2)	// put the file data into an easier to work with format
+			{
+				ssin >> answer[count];
+				count++;
+			}
+
+			string line;
+			getline(ssin, line);
+
+			out << "(" << answer[0] << "," << answer[1] << ") = " << line << endl;
+		}
+	}
+}
+
 
 void Sheet::resizeSheet(int xSize, int ySize)
 {
