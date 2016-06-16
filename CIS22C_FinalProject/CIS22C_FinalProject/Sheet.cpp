@@ -255,6 +255,8 @@ void Sheet::swapRow(int y1, int y2)
 	}
 
 	delete[] row;
+	delete temp;
+	delete temp2;
 };
 
 void Sheet::swapCol(int x1, int x2)
@@ -285,6 +287,8 @@ void Sheet::swapCol(int x1, int x2)
 	}
 
 	delete[] col;
+	delete temp;
+	delete temp2;
 };
 
 int Sheet::getXSize()

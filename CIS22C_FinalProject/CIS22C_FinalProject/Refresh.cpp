@@ -130,22 +130,42 @@ void Refresh::findfunctions()
 				count++;
 			}
 			if (answer[0] == "add") {
-				sheet->setCellData(i, p, to_string(add(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) {
+					sheet->setCellData(i, p, "cheeky fuck");
+				}
+				else {
+					sheet->setCellData(i, p, to_string(add(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				}
 			}
 			if (answer[0] == "multiply") {
-				sheet->setCellData(i, p, to_string(multiply(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				else {
+					sheet->setCellData(i, p, to_string(multiply(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				}
 			}
 			if (answer[0] == "average") {
-				sheet->setCellData(i, p, to_string(average(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				else {
+					sheet->setCellData(i, p, to_string(average(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				}
 			}
 			if (answer[0] == "subtract") {
-				sheet->setCellData(i, p, to_string(subtract(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				else {
+					sheet->setCellData(i, p, to_string(subtract(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				}
 			}
 			if (answer[0] == "divide") {
-				sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				else {
+					sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				}
 			}
 			if (answer[0] == "sum") {
-				sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				else {
+					sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				}
 			}
 		}
 	}
