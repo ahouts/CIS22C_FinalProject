@@ -11,10 +11,16 @@ void MainMenu::showMainMenu()
 	while (!done)
 	{
 		system("CLS");
-		cout << "What would you like to do?\n";
-		cout << "1. create a new sheet.\n";
-		cout << "2. open an existing sheet.\n";
-		cout << "3. delete an existing sheet.\n";
+		cout << "__      __ _       _              _       \n"
+			<< "\\ \\    / /(_)     (_)            | |      \n"
+			<< " \\ \\  / /  _  ___  _   ___  __ _ | |  ___ \n"
+			<< "  \\ \\/ /  | |/ __|| | / __|/ _` || | / __|\n"
+			<< "   \\  /   | |\\__ \\| || (__| (_| || || (__ \n"
+			<< "    \\/    |_||___/|_| \\___|\\__,_||_| \\___|\n\n\n";
+		cout << "Main Menu:\n\n";
+		cout << "1. Create a New Sheet\n";
+		cout << "2. Open an Existing Sheet\n";
+		cout << "3. Delete an Existing Sheet.\n";
 		cout << "0. Exit\n";
 		cout << "=> ";
 		string response = "-1";
