@@ -82,6 +82,7 @@ Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goa
 	else {
 		return NULL;
 	}
+	return NULL;
 }
 
 void BST::balance(Node* target)//completely untested
