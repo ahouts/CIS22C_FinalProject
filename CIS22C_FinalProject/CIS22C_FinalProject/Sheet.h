@@ -39,6 +39,8 @@ public:
 	int getYSize();
 	string getFilePath();
 	void setFilePath(string filePath);
+	void changeOpenParen();
+	void changeCloseParen();
 protected:
 	void generateHashTable();
 	Cell* nonHashSearch(int x, int y);

@@ -1,6 +1,6 @@
 
 #include "Change.h"
-#include "Sheet.h"
+#include "Sheet.h"		// this is actually required
 
 // This creates the head Change that will be used in other classes
 Change::Change() {
