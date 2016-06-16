@@ -65,16 +65,24 @@ void MainMenu::createSheet()
 	cin >> x;
 	cout << "Y size, (1-1000) => ";
 	cin >> y;
-	try
+	if (y < 1 || x < 1)
 	{
-		sheet->resizeSheet(x, y);
-		cout << "Sheet successfully created.\n";
-		commandLine.mainLoop(cout, cin);
-	}
-	catch (char e[])
-	{
-		cout << e << endl;
+		cout << "Invalid sheet size given." << endl;
 		system("pause");
+	}
+	else
+	{
+		try
+		{
+			sheet->resizeSheet(x, y);
+			cout << "Sheet successfully created.\n";
+			commandLine.mainLoop(cout, cin);
+		}
+		catch (char e[])
+		{
+			cout << e << endl;
+			system("pause");
+		}
 	}
 }
 
