@@ -1,8 +1,10 @@
 #ifndef BST_H
 #define BST_H
 
+#include <string>
 #include "Sheet.h"
 #include "Node.h"
+
 
 using namespace std;
 

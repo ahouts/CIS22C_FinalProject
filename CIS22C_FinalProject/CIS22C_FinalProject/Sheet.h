@@ -5,6 +5,7 @@
 #include <fstream>
 #include <limits>
 #include <sstream>
+#include "Change.h"
 #include "Cell.h"
 using namespace std;
 
@@ -22,8 +23,9 @@ private:
 	int hashTableMultiplier;
 	int hashTableAddition;
 	Cell **hashTable;
+	Change *change;
 public:
-	Sheet(int xSize, int ySize);
+	Sheet(int xSize, int ySize, Change *change);
 	~Sheet();
 	Cell* operator()(int x, int y);
 	void setCellData(int x, int y, string str);
