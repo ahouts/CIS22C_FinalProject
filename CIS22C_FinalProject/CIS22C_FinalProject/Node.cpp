@@ -130,4 +130,17 @@ Node* Node::getParent() {
 void Node::setParent(Node* in) {
 	parent = in;
 }
-
+void Node::printTree(const int k) {
+	int i = 0;
+	while (i < k) {
+		cout << "\t";
+		i++;
+	}
+	cout << getMe() << endl;
+	if (getLeft() != NULL) {
+		getLeft()->printTree(k + 1);
+	}
+	if (getRight() != NULL) {
+		getRight()->printTree(k + 1);
+	}
+}
