@@ -435,6 +435,6 @@ int Sheet::getHashIndex(int cellXIndex, int cellYIndex , int multiplier, int add
 
 int Sheet::quadraticResolution(int index, int hashTableSize)		// standard quadratic resolution
 {
-	double temp = abs((double)index * (double)index);		// use a double to prevent overflow (most of the time)
-	return ((int)temp) % hashTableSize;
+	int temp = abs((double)index * (double)index);		// use a double to prevent overflow (sometimes)
+	return temp % hashTableSize;
 };

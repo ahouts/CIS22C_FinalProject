@@ -63,7 +63,7 @@ void MainMenu::createSheet()
 	unsigned int x, y;
 	cout << "X size, (1-20) => ";
 	cin >> x;
-	cout << "Y size, (1-100) => ";
+	cout << "Y size, (1-1000) => ";
 	cin >> y;
 	try
 	{
