@@ -5,7 +5,7 @@ Node Node::getNode()
 }
 bool Node::hasLeftChild()
 {
-	if (leftChild != nullptr) {
+	if (leftChild != NULL) {
 		return true;
 	}
 	return false;
@@ -13,7 +13,7 @@ bool Node::hasLeftChild()
 
 bool Node::hasRightChild()
 {
-	if (rightChild != nullptr) {
+	if (rightChild != NULL) {
 		return true;
 	}
 	return false;
@@ -112,3 +112,22 @@ bool Node::getImbalance()
 	}
 	return isItBigger;
 }
+int Node::getMeX() {
+	return me->getXCoord();
+}
+int Node::getMeY() {
+	return me->getYCoord();
+}
+Node::Node() {
+	me = NULL;
+	parent = NULL;
+	leftChild = NULL;
+	rightChild = NULL;
+}
+Node* Node::getParent() {
+	return parent;
+}
+void Node::setParent(Node* in) {
+	parent = in;
+}
+

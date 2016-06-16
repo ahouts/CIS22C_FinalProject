@@ -54,9 +54,11 @@ void MainMenu::createSheet()
 	cin >> response;
 	sheet->setFilePath(response);
 	cout << "What are the desired dimensions of the sheet?\n";
-	cout << "=> ";
 	unsigned int x, y;
-	cin >> x >> y;
+	cout << "X size, (1-20) => ";
+	cin >> x;
+	cout << "Y size, (1-100) => ";
+	cin >> y;
 	try
 	{
 		sheet->resizeSheet(x, y);

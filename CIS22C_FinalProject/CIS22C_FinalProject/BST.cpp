@@ -23,9 +23,9 @@ void BST::generateTree(Sheet &sheet)
 	{
 		for (int i = 0; i < sheet.getXSize(); i++)
 		{
-			Node temp = Node();
-			temp.setMe(sheet(i, j));
-			// addNode(temp, );
+			Node* temp = new Node();
+			temp->setMe(sheet(i, j));
+			addNode(temp, &headNode );
 		}
 	}
 }
@@ -33,44 +33,47 @@ void BST::generateTree(Sheet &sheet)
 void BST::clearTree()
 {
 	Node* target = &headNode;
-	while (target != NULL) {
-		removeNode(target);
+	if (target->getLeft() != NULL) {
+		clearTree(target->getLeft());
 	}
+	if (target->getRight() != NULL) {
+		clearTree(target->getRight());
+	}
+
 }
 
 void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
 {
 	Node* holder = targetNode;
-	addNode(targetNode->getRight(), targetNode->getLeft());
+	if (targetNode->getRight() != NULL) {
+		addNode(targetNode->getRight(), &headNode);
+	}
+	if (targetNode->getLeft() != NULL) {
+		addNode(targetNode->getLeft(), &headNode);
+	}
 	delete holder;
 }
 
 Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
 {
-	generateTree(*sht);
-	if (target->getMe() != goal) {
-		if (target->hasLeftChild() == true) {
-			if (target->getLeft()->getMe() == goal) {
-				return target->getLeft();
-			}
-			else {
-				if (search(goal, target->getLeft(), sht) != NULL) {
-					return search(goal, target->getLeft(), sht);
-				}
-			}
+	if (target == &headNode) {
+		if (headNode.getRight() != NULL) {
+			return search(goal, headNode.getRight(), sht);
 		}
-		if (target->hasRightChild() == true) {
-			if (target->getRight()->getMe() == goal) {
-				return target->getRight();
-			}
-			else {
-				if (search(goal, target->getRight(), sht) != NULL) {
-					return search(goal, target->getRight(), sht);
-				}
-			}
-		}
-		return NULL;
+	}else if (target->getMe() == goal) {
+		return target;
 	}
+	else if (goal <= target->getMe()) {
+		if (target->getLeft() != NULL) {
+			return search(goal, target->getLeft(), sht);
+		}
+	}
+	else if (goal > target->getMe()) {
+		if (target->getRight() != NULL) {
+			return search(goal, target->getRight(), sht);
+		}
+	}
+	return NULL;
 }
 
 void BST::balance(Node* target)//completely untested
@@ -95,28 +98,56 @@ Node BST::getHead()
 }
 
 void BST::addNode(Node* newNode, Node* target) {
-	if (target->hasLeftChild() == false && target->hasRightChild() == false) {
-		if (target->getMe() > newNode->getMe()) {
-			target->setRight(newNode);
+	if (target == &headNode) {
+		if (target->getRight() != NULL) {
+			addNode(newNode, target->getRight());
 		}
 		else {
-			target->setLeft(newNode);
+			target->setRight(newNode);
 		}
 	}
-	if (target->hasLeftChild() == true) {
-		if (newNode->getMe() < target->getMe()) {
+	if (target->getLeft() ==NULL && target->getRight() ==NULL) {
+		if (newNode->getMe() <= target->getMe()) {
+			target->setLeft(newNode);
+			newNode->setParent(target);
+		}
+		else {
+			target->setRight(newNode);
+			newNode->setParent(target);
+		}
+	}else if (target->getLeft() !=NULL && target->getRight() !=NULL) {
+		if (newNode->getMe() <= target->getMe()) {
+			addNode(newNode, target->getLeft());
+		}
+		else {
+			addNode(newNode, target->getRight());
+		}
+	}else if (target->getLeft() !=NULL && target->getRight() ==NULL) {
+		if (newNode->getMe() <= target->getMe()) {
 			addNode(newNode, target->getLeft());
 		}
 		else {
 			target->setRight(newNode);
+			newNode->setParent(target);
 		}
-	}
-	if (target->hasRightChild() == true) {
+	}else if (target->getRight() !=NULL && target->getRight() ==NULL) {
 		if (newNode->getMe() > target->getMe()) {
 			addNode(newNode, target->getRight());
 		}
 		else {
 			target->setLeft(newNode);
+			newNode->setParent(target);
 		}
+	}
+}
+void BST::clearTree(Node* target) {
+	if (target->getLeft() != NULL) {
+		clearTree(target->getLeft());
+	}
+	if (target->getRight() != NULL) {
+		clearTree(target->getRight());
+	}
+	if (target->getLeft() == NULL && target->getRight() == NULL) {
+		delete target;
 	}
 }
