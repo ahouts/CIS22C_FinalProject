@@ -258,6 +258,22 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			cin >> x1 >> x2 >> y;
 			refresh.sortCol(x1, x2, y);
 		}
+		else if (word1 == "printtree") {
+			bst.generateTree(*sheet);
+			if (bst.getHead().getRight() != NULL) {
+				bst.getHead().getRight()->printTree(0);
+			}
+			else {
+				cout << "No Tree is present." << endl;
+			}
+			system("pause");
+		}
+		else if (word1 == "displayhashtable")
+		{
+			system("cls");
+			sheet->printHashTable(cout);
+			system("pause");
+		}
 		else if (word1 == "help")
 		{
 			system("cls");
@@ -271,6 +287,8 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			cout << "cellstodisplayx [int]\n";
 			cout << "cellstodisplayy [int]\n";
 			cout << "charstodisplay [int]\n";
+			cout << "printTree\n";
+			cout << "displayhashtable\n";
 			cout << "save\n";
 			cout << "exit\n";
 			system("pause");

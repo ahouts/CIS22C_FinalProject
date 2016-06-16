@@ -42,7 +42,7 @@ public:
 	void setFilePath(string filePath);
 	void changeOpenParen();
 	void changeCloseParen();
-	void printHashTable(ostream out);
+	void printHashTable(ostream &out);
 protected:
 	void generateHashTable();
 	Cell* nonHashSearch(int x, int y);
