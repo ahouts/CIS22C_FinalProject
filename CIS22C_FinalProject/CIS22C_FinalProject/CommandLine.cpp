@@ -149,21 +149,30 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		else if (word1 == "search")
 		{
 			string searchstring;
-			Node* targetNode = NULL;
+			cin.ignore(1);
+			getline(cin, searchstring);
 
-			cin >> searchstring;
-			bst.generateTree(*sheet);
-			targetNode = bst.search(searchstring, bst.getHead(), sheet);
-			if (targetNode == NULL) {
-				cout << "Target not found" << endl;
-				cin.ignore(1000, '\n');
-				system("pause");
+			BST1 bst = BST1(sheet);
+			bst.loadFromSheet();
+
+			CellContainer *data = bst.search(searchstring);
+
+			if (data->numCells == 0)
+			{
+				cout << "String not Found.\n";
 			}
-			else {
-				cout << "Target at:" << targetNode->getMeX() << ", " << targetNode->getMeY() << endl;
-				cin.ignore(1000, '\n');
-				system("pause"); 
+			else
+			{
+				cout << "String Found at Indexes:\n\n";
+				for (int i = 0; i < data->numCells; i++)
+				{
+					Cell *cell = data->cells[i];
+					cout << "(" << cell->getXCoord() << "," << cell->getYCoord() << ")" << endl;
+				}
 			}
+			
+			delete data;
+			system("pause");
 		}
 		else if (word1 == "setfilepath")
 		{
@@ -258,14 +267,10 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			cin >> x1 >> x2 >> y;
 			refresh.sortCol(x1, x2, y);
 		}
-		else if (word1 == "printTree") {
-			bst.generateTree(*sheet);
-			if (bst.getHead() != NULL) {
-				bst.getHead()->printTree(0);
-			}
-			else {
-				cout << "No Tree is present." << endl;
-			}
+		else if (word1 == "printtree") {
+			BST1 bst = BST1(sheet);
+			bst.loadFromSheet();
+			bst.printTree(cout);
 			system("pause");
 		}
 		else if (word1 == "displayhashtable")
@@ -287,7 +292,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			cout << "cellstodisplayx [int]\n";
 			cout << "cellstodisplayy [int]\n";
 			cout << "charstodisplay [int]\n";
-			cout << "printTree\n";
+			cout << "printtree\n";
 			cout << "displayhashtable\n";
 			cout << "save\n";
 			cout << "exit\n";

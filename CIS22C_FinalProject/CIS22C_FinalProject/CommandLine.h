@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <iomanip>
+#include "BST1.h"
 #include "Change.h"
 #include "Sheet.h"
 #include "Refresh.h"
