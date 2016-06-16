@@ -1,4 +1,4 @@
-using namespace std;
+
 #include "Sheet.h"
 
 Sheet::Sheet(int xSize, int ySize, Change *change)
@@ -311,7 +311,17 @@ string Sheet::getFilePath()
 void Sheet::setFilePath(string filePath)
 {
 	this->filePath = filePath;
-};
+}
+void Sheet::changeOpenParen()
+{
+	change->pushBack(true, false);
+}
+
+void Sheet::changeCloseParen()
+{
+	change->pushBack(false, true);
+}
+
 
 void Sheet::resizeSheet(int xSize, int ySize)
 {

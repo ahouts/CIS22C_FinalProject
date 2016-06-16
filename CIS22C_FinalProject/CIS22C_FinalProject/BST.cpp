@@ -25,8 +25,8 @@ void BST::generateTree(Sheet &sheet)
 		for (int i = 0; i < sheet.getXSize(); i++)
 		{
 			temp = new Node();
-			temp->setMe(sheet.operator()(i,j));
-			addNode(temp, &headNode );
+			temp->setMe(sheet(i, j));
+			addNode(temp, &headNode);
 		}
 	}
 }

@@ -134,5 +134,6 @@ int main()
 	MainMenu menu = MainMenu(sheet, change);
 	menu.showMainMenu();
 	delete sheet;
+	delete change;
 	return 0;
 }
