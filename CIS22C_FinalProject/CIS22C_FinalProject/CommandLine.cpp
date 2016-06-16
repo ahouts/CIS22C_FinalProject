@@ -258,7 +258,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 			cin >> x1 >> x2 >> y;
 			refresh.sortCol(x1, x2, y);
 		}
-		else if (word1 == "printtree") {
+		else if (word1 == "printTree") {
 			bst.generateTree(*sheet);
 			if (bst.getHead()->getRight() != NULL) {
 				bst.getHead()->getRight()->printTree(0);
