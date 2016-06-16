@@ -45,13 +45,20 @@ void BST::clearTree()
 void BST::removeNode(Node *targetNode) //moves all branches from node to left, assigns value of leftChild to targetNode, balances tree
 {
 	Node* holder = targetNode;
+	Node *holder1 = NULL, *holder2 = NULL;
 	if (targetNode->getRight() != NULL) {
-		addNode(targetNode->getRight(), &headNode);
+		holder1= targetNode -> getRight();
 	}
 	if (targetNode->getLeft() != NULL) {
-		addNode(targetNode->getLeft(), &headNode);
+		holder2 = targetNode->getLeft();
 	}
 	delete holder;
+	if (holder1 != NULL) {
+		addNode(holder1, &headNode);
+	}
+	if(holder2 != NULL) {
+		addNode(holder2, &headNode);
+	}
 }
 
 Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goal to values in me and children, if not found, calls search recursively until no children found
@@ -60,7 +67,9 @@ Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goa
 		if (headNode.getRight() != NULL) {
 			return search(goal, headNode.getRight(), sht);
 		}
-	}else if (target->getMe() == goal) {
+	}
+	
+	else if (target->getMe() == goal) {
 		return target;
 	}
 	else if (goal <= target->getMe()) {
@@ -73,6 +82,7 @@ Node* BST::search(string goal, Node* target, Sheet *sht) //compares value of goa
 			return search(goal, target->getRight(), sht);
 		}
 	}
+	
 	return NULL;
 }
 
