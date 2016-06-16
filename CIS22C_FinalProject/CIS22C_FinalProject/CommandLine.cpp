@@ -14,7 +14,7 @@ CommandLine::CommandLine(Sheet *sheet, Change *change) : refresh(sheet)
 
 void CommandLine::modifyCell(int xCoord, int yCoord, string data)
 {
-	//called when the data ina node needs to be changed
+	//called when the data in a node needs to be changed
 	sheet->setCellData(xCoord, yCoord, data);
 }
 void CommandLine::drawSheet(ostream& out)
@@ -78,7 +78,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 	CELLS_TO_DISPLAY_Y = 40;
 
 	string word1, string1;
-	while (word1 != "exit")
+	while (word1 != "exit") // runs out of loop when the user enters "exit"
 	{
 		refresh.findfunctions();
 		drawSheet(cout);
@@ -94,7 +94,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 				if (stoi(word2) || stoi(word2) == 0)//if the second word is convertable to an int, do so, and continue, otherwise gve an error
 				{
 					int a = stoi(word2);
-					try
+					try	 //tries to run stoi and catches it if it doesnt work.
 					{
 						if (stoi(word3) || stoi(word3) == 0)    //if the third word is convertable to an int, do so, and continue, otherwise gve an error
 						{
