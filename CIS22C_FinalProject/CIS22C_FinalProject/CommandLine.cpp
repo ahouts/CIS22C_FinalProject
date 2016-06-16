@@ -149,6 +149,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 		else if (word1 == "search")
 		{
 			string searchstring;
+			cin.ignore(1);
 			getline(cin, searchstring);
 
 			BST1 bst = BST1(sheet);

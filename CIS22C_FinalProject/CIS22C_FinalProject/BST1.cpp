@@ -15,9 +15,16 @@ void BST1::addNode(Cell * cell)
 {
 	if (headerNode == nullptr)
 	{
-		Node1 *newNode = new Node1();
-		newNode->setCell(cell);
-		headerNode = newNode;
+		if (cell->getData() != "0")
+		{
+			Node1 *newNode = new Node1();
+			newNode->setCell(cell);
+			headerNode = newNode;
+		}
+	}
+	else if (cell->getData() == "0")
+	{
+		// do nothing
 	}
 	else if (headerNode->getCell()->getData() > cell->getData())
 	{
@@ -47,7 +54,6 @@ void BST1::addNode(Cell * cell)
 			addNode(cell, headerNode->getRightChild());
 		}
 	}
-	updateHeaderNode();
 }
 
 void BST1::loadFromSheet()
@@ -141,7 +147,11 @@ void BST1::updateHeaderNode()
 
 void BST1::addNode(Cell * cell, Node1 * target)
 {
-	if (target->getCell()->getData() > cell->getData())
+	if (cell->getData() == "0")
+	{
+		// do nothing
+	}
+	else if (target->getCell()->getData() > cell->getData())
 	{
 		if (target->getLeftChild() == nullptr)
 		{
@@ -149,47 +159,6 @@ void BST1::addNode(Cell * cell, Node1 * target)
 			newNode->setCell(cell);
 			newNode->setParent(target);
 			target->setLeftChild(newNode);
-			Node1 *tempNode = newNode;
-			while (tempNode->getParent() != nullptr)
-			{
-				if (tempNode->getImbalance() == -2)
-				{
-					tempNode->rotateRight();
-				}
-				else if (tempNode->getImbalance() == -1)
-				{
-					tempNode->getLeftChild()->rotateLeft();
-					tempNode->rotateRight();
-				}
-				else if (tempNode->getImbalance() == 1)
-				{
-					tempNode->getRightChild()->rotateRight();
-					tempNode->rotateLeft();
-				}
-				else if (tempNode->getImbalance() == 2)
-				{
-					tempNode->rotateLeft();
-				}
-				tempNode = tempNode->getParent();
-			}
-			if (tempNode->getImbalance() == -2)
-			{
-				tempNode->rotateRight();
-			}
-			else if (tempNode->getImbalance() == -1)
-			{
-				tempNode->getLeftChild()->rotateLeft();
-				tempNode->rotateRight();
-			}
-			else if (tempNode->getImbalance() == 1)
-			{
-				tempNode->getRightChild()->rotateRight();
-				tempNode->rotateLeft();
-			}
-			else if (tempNode->getImbalance() == 2)
-			{
-				tempNode->rotateLeft();
-			}
 		}
 		else
 		{
@@ -251,14 +220,12 @@ void BST1::destroyTree(Node1 * target)
 
 void BST1::printTree(ostream & out, int height, Node1 * target)
 {
-	if (target->getCell()->getData() != "0")
+	for (int i = 0; i < height; i++)
 	{
-		for (int i = 0; i < height; i++)
-		{
-			out << "-";
-		}
-		out << target->getCell()->getData() << endl;
+		out << "-";
 	}
+	out << target->getCell()->getData() << endl;
+
 	if (target->getLeftChild() != nullptr)
 	{
 		printTree(out, height + 1, target->getLeftChild());
