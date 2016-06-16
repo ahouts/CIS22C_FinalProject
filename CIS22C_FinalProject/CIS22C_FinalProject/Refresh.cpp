@@ -131,7 +131,7 @@ void Refresh::findfunctions()
 			}
 			if (answer[0] == "add") {
 				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) {
-					sheet->setCellData(i, p, "cheeky one");
+					sheet->setCellData(i, p, "recursive");
 				}
 				else {
 					sheet->setCellData(i, p, to_string(add(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
@@ -139,15 +139,16 @@ void Refresh::findfunctions()
 			}
 			if (answer[0] == "multiply") {
 				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
-					sheet->setCellData(i, p, "cheeky one"); 
+					sheet->setCellData(i, p, "recursive"); 
 				}
 				else {
 					sheet->setCellData(i, p, to_string(multiply(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
 			}
 			if (answer[0] == "average") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
-					sheet->setCellData(i, p, "cheeky one"); 
+				if (i >= stoi(answer[1]) && i <= stoi(answer[3]) || p >= stoi(answer[2]) && p <= stoi(answer[4]))
+				{
+					sheet->setCellData(i, p, "recursive"); 
 				}
 				else {
 					sheet->setCellData(i, p, to_string(average(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
@@ -155,7 +156,7 @@ void Refresh::findfunctions()
 			}
 			if (answer[0] == "subtract") {
 				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
-					sheet->setCellData(i, p, "cheeky one"); 
+					sheet->setCellData(i, p, "recursive"); 
 				}
 				else {
 					sheet->setCellData(i, p, to_string(subtract(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
@@ -163,15 +164,16 @@ void Refresh::findfunctions()
 			}
 			if (answer[0] == "divide") {
 				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
-					sheet->setCellData(i, p, "cheeky one"); 
+					sheet->setCellData(i, p, "recursive"); 
 				}
 				else {
 					sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
 			}
 			if (answer[0] == "sum") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) {
-					sheet->setCellData(i, p, "cheeky one"); 
+				if(i>=stoi(answer[1])&&i<=stoi(answer[3])||p>=stoi(answer[2])&&p<=stoi(answer[4]))
+				{
+					sheet->setCellData(i, p, "recursive"); 
 				}
 				else {
 					sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
