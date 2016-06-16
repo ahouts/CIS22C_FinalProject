@@ -23,17 +23,18 @@ private:
 	int hashTableMultiplier;
 	int hashTableAddition;
 	Cell **hashTable;
+	Change *change;
 public:
-	Sheet(int xSize, int ySize);
+	Sheet(int xSize, int ySize, Change *change);
 	~Sheet();
 	Cell* operator()(int x, int y);
-	void setCellData(int x, int y, string str, Change *change);
+	void setCellData(int x, int y, string str);
 	string getCellData(int x, int y);
 	void resizeSheet(int xSize, int ySize);			// WARNING!!! Deletes all elements in sheet
 	void toFile();
 	void fromFile();
-	void swapRow(int y1, int y2, Change *change);
-	void swapCol(int x1, int x2, Change *change);
+	void swapRow(int y1, int y2);
+	void swapCol(int x1, int x2);
 	int getXSize();
 	int getYSize();
 	string getFilePath();

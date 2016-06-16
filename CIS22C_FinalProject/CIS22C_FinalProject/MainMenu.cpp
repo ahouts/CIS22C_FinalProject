@@ -1,8 +1,9 @@
 #include "MainMenu.h"
 
-MainMenu::MainMenu(Sheet *sheet) : commandLine(sheet)
+MainMenu::MainMenu(Sheet *sheet, Change *change) : commandLine(sheet, change)
 {
 	this->sheet = sheet;
+	this->change = change;
 }
 
 void MainMenu::showMainMenu()
@@ -128,8 +129,9 @@ int main()
 {
 	HWND hwnd = GetConsoleWindow();
 	if (hwnd != NULL) { MoveWindow(hwnd, 0, 0, 1280, 800, TRUE); }
-	Sheet *sheet = new Sheet(1, 1);
-	MainMenu menu = MainMenu(sheet);
+	Change *change = new Change();
+	Sheet *sheet = new Sheet(1, 1, change);
+	MainMenu menu = MainMenu(sheet, change);
 	menu.showMainMenu();
 	delete sheet;
 	return 0;

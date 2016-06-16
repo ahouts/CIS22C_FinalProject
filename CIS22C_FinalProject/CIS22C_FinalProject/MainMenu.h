@@ -14,9 +14,10 @@ class MainMenu
 {
 private:
 	Sheet *sheet;
+	Change *change;
 	CommandLine commandLine;
 public:
-	MainMenu(Sheet *sheet);
+	MainMenu(Sheet *sheet, Change *change);
 	void showMainMenu();
 	void createSheet();
 	void openSheet();
