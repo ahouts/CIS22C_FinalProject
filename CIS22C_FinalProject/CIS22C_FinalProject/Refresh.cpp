@@ -2,6 +2,7 @@
 
 double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
+	sheet->changeOpenParen();
 	int itterations = 0;
 	double total = 0;
 	if (xCoord <= xCoord1 && yCoord <= yCoord1)
@@ -26,7 +27,7 @@ double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
-
+		sheet->changeCloseParen();
 		return (total / itterations);
 	}
 
@@ -52,6 +53,7 @@ double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
+		sheet->changeCloseParen();
 		return (total / itterations);
 	}
 
@@ -77,6 +79,7 @@ double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
+		sheet->changeCloseParen();
 		return (total / itterations);
 	}
 
@@ -102,6 +105,7 @@ double Refresh::average(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
+		sheet->changeCloseParen();
 		return (total / itterations);
 	}
 }
@@ -196,6 +200,7 @@ void Refresh::findfunctions()
 double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
 
 {
+	sheet->changeOpenParen();
 	int itterations = 0;
 	double total = 0;
 	if (xCoord <= xCoord1 && yCoord <= yCoord1)
@@ -220,7 +225,7 @@ double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
-
+		sheet->changeCloseParen();
 		return total;
 	}
 
@@ -246,6 +251,7 @@ double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
+		sheet->changeCloseParen();
 		return total;
 	}
 
@@ -271,6 +277,7 @@ double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
+		sheet->changeCloseParen();
 		return total;
 	}
 
@@ -296,6 +303,7 @@ double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
 				itterations++;
 			}
 		}
+		sheet->changeCloseParen();
 		return total;
 	}
 }
@@ -377,6 +385,7 @@ double Refresh::divide(int xCoord, int yCoord, int xCoord1, int yCoord1)
 }
 
 void Refresh::sortRow(int x1, int x2, int y) {
+	sheet->changeOpenParen();
 	for (int i = 0; i < x2 - x1; i++) {
 		for (int j = 0; j < x2 - x1; j++) {
 			if (sheet->getCellData(i, y) > sheet->getCellData(j, y)) {
@@ -384,9 +393,11 @@ void Refresh::sortRow(int x1, int x2, int y) {
 			}
 		}
 	}
+	sheet->changeCloseParen();
 }
 
 void Refresh::sortCol(int y1, int y2, int x) {
+	sheet->changeOpenParen();
 	for (int i = 0; i < y2 - y1; i++) {
 		for (int j = 0; j < y2 - y1; j++) {
 			if (sheet->getCellData(x, i) > sheet->getCellData(x, j)) {
@@ -394,4 +405,5 @@ void Refresh::sortCol(int y1, int y2, int x) {
 			}
 		}
 	}
+	sheet->changeCloseParen();
 }
