@@ -10,6 +10,7 @@
 #define NODE_H
 
 #include <string>
+#include <iostream>
 #include "Cell.h"
 using namespace std;
 
@@ -39,7 +40,7 @@ public:
 	int getMeX();
 	int getMeY();
 	Node();
-
+	void printTree(const int k);
 };
 
 #endif
