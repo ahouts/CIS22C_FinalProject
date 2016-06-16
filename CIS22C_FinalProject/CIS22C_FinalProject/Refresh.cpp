@@ -130,39 +130,49 @@ void Refresh::findfunctions()
 				count++;
 			}
 			if (answer[0] == "add") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) {
-					sheet->setCellData(i, p, "cheeky fuck");
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) {
+					sheet->setCellData(i, p, "cheeky one");
 				}
 				else {
 					sheet->setCellData(i, p, to_string(add(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
 			}
 			if (answer[0] == "multiply") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
+					sheet->setCellData(i, p, "cheeky one"); 
+				}
 				else {
 					sheet->setCellData(i, p, to_string(multiply(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
 			}
 			if (answer[0] == "average") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
+					sheet->setCellData(i, p, "cheeky one"); 
+				}
 				else {
 					sheet->setCellData(i, p, to_string(average(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
 			}
 			if (answer[0] == "subtract") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
+					sheet->setCellData(i, p, "cheeky one"); 
+				}
 				else {
 					sheet->setCellData(i, p, to_string(subtract(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
 			}
 			if (answer[0] == "divide") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
+					sheet->setCellData(i, p, "cheeky one"); 
+				}
 				else {
 					sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
 			}
 			if (answer[0] == "sum") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p) { sheet->setCellData(i, p, "cheeky fuck"); }
+				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) {
+					sheet->setCellData(i, p, "cheeky one"); 
+				}
 				else {
 					sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
 				}
@@ -172,70 +182,59 @@ void Refresh::findfunctions()
 }
 
 double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
+
 {
+	int itterations = 0;
 	double total = 0;
 	if (xCoord <= xCoord1 && yCoord <= yCoord1)
 	{
-		for (int m = yCoord; m <= yCoord1; m--)
+		for (int m = yCoord; m <= yCoord1; m++)
 		{
 			for (int i = xCoord; i <= xCoord1; i++)
 			{
-				try
+				if (stoi(sheet->getCellData(i, m)))
 				{
-					if (stoi(sheet->getCellData(i, m)))
+					try
 					{
-						try
-						{
-							int a = stoi(sheet->getCellData(i, m));
-							total += a;
-						}
-						catch (char e[])
-						{
-							//does nothing if it is out of bounds
-						}
-
+						int a = stoi(sheet->getCellData(i, m));
+						total += a;
+					}
+					catch (char e[])
+					{
+						//does nothing if it is out of bounds
 					}
 
 				}
-				catch (char e[])
-				{
-					//does nothing if it is out of bounds
-				}
+				itterations++;
 			}
-			return (total);
 		}
+
+		return total;
 	}
 
 	else if (xCoord >= xCoord1 && yCoord <= yCoord1)
 	{
-		for (int m = yCoord; m <= yCoord1; m--)
+		for (int m = yCoord; m <= yCoord1; m++)
 		{
-			for (int i = xCoord; i <= xCoord1; i++)
+			for (int i = xCoord; i <= xCoord1; i--)
 			{
-				try
+				if (stoi(sheet->getCellData(i, m)))
 				{
-					if (stoi(sheet->getCellData(i, m)))
+					try
 					{
-						try
-						{
-							int a = stoi(sheet->getCellData(i, m));
-							total += a;
-						}
-						catch (char e[])
-						{
-							//does nothing if it is out of bounds
-						}
-
+						int a = stoi(sheet->getCellData(i, m));
+						total += a;
+					}
+					catch (char e[])
+					{
+						//does nothing if it is out of bounds
 					}
 
 				}
-				catch (char e[])
-				{
-					//does nothing if it is out of bounds
-				}
+				itterations++;
 			}
-			return (total);
 		}
+		return total;
 	}
 
 	else if (xCoord <= xCoord1 && yCoord >= yCoord1)
@@ -244,62 +243,48 @@ double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
 		{
 			for (int i = xCoord; i <= xCoord1; i++)
 			{
-				try
+				if (stoi(sheet->getCellData(i, m)))
 				{
-					if (stoi(sheet->getCellData(i, m)))
+					try
 					{
-						try
-						{
-							int a = stoi(sheet->getCellData(i, m));
-							total += a;
-						}
-						catch (char e[])
-						{
-							//does nothing if it is out of bounds
-						}
-
+						int a = stoi(sheet->getCellData(i, m));
+						total += a;
+					}
+					catch (char e[])
+					{
+						//does nothing if it is out of bounds
 					}
 
 				}
-				catch (char e[])
-				{
-					//does nothing if it is out of bounds
-				}
+				itterations++;
 			}
-			return (total);
 		}
+		return total;
 	}
 
 	else if (xCoord >= xCoord1 && yCoord >= yCoord1)
 	{
 		for (int m = yCoord; m <= yCoord1; m--)
 		{
-			for (int i = xCoord; i <= xCoord1; i++)
+			for (int i = xCoord; i <= xCoord1; i--)
 			{
-				try
+				if (stoi(sheet->getCellData(i, m)))
 				{
-					if (stoi(sheet->getCellData(i, m)))
+					try
 					{
-						try
-						{
-							int a = stoi(sheet->getCellData(i, m));
-							total += a;
-						}
-						catch (char e[])
-						{
-							//does nothing if it is out of bounds
-						}
-
+						int a = stoi(sheet->getCellData(i, m));
+						total += a;
+					}
+					catch (char e[])
+					{
+						//does nothing if it is out of bounds
 					}
 
 				}
-				catch (char e[])
-				{
-					//does nothing if it is out of bounds
-				}
+				itterations++;
 			}
-			return (total);
 		}
+		return total;
 	}
 }
 
