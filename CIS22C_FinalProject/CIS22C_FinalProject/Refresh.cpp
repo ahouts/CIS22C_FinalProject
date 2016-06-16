@@ -133,55 +133,65 @@ void Refresh::findfunctions()
 				ssin >> answer[count];
 				count++;
 			}
-			if (answer[0] == "add") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) {
-					sheet->setCellData(i, p, "recursive");
+			bool condition, condition2;
+			try
+			{
+				condition = (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p);
+				condition2 = i >= stoi(answer[1]) && i <= stoi(answer[3]) || p >= stoi(answer[2]) && p <= stoi(answer[4]);
+				if (answer[0] == "add") {
+					if (condition) {
+						sheet->setCellData(i, p, "recursive");
+					}
+					else {
+						sheet->setCellData(i, p, to_string(add(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+					}
 				}
-				else {
-					sheet->setCellData(i, p, to_string(add(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+				if (answer[0] == "multiply") {
+					if (condition) {
+						sheet->setCellData(i, p, "recursive");
+					}
+					else {
+						sheet->setCellData(i, p, to_string(multiply(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+					}
+				}
+				if (answer[0] == "average") {
+					if (condition)
+					{
+						sheet->setCellData(i, p, "recursive");
+					}
+					else {
+						sheet->setCellData(i, p, to_string(average(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+					}
+				}
+				if (answer[0] == "subtract") {
+					if (condition) {
+						sheet->setCellData(i, p, "recursive");
+					}
+					else {
+						sheet->setCellData(i, p, to_string(subtract(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+					}
+				}
+				if (answer[0] == "divide") {
+					if (condition) {
+						sheet->setCellData(i, p, "recursive");
+					}
+					else {
+						sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+					}
+				}
+				if (answer[0] == "sum") {
+					if (condition2)
+					{
+						sheet->setCellData(i, p, "recursive");
+					}
+					else {
+						sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
+					}
 				}
 			}
-			if (answer[0] == "multiply") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
-					sheet->setCellData(i, p, "recursive"); 
-				}
-				else {
-					sheet->setCellData(i, p, to_string(multiply(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
-				}
-			}
-			if (answer[0] == "average") {
-				if (i >= stoi(answer[1]) && i <= stoi(answer[3]) || p >= stoi(answer[2]) && p <= stoi(answer[4]))
-				{
-					sheet->setCellData(i, p, "recursive"); 
-				}
-				else {
-					sheet->setCellData(i, p, to_string(average(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
-				}
-			}
-			if (answer[0] == "subtract") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
-					sheet->setCellData(i, p, "recursive"); 
-				}
-				else {
-					sheet->setCellData(i, p, to_string(subtract(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
-				}
-			}
-			if (answer[0] == "divide") {
-				if (stoi(answer[1]) == i&&stoi(answer[2]) == p || stoi(answer[3]) == i&&stoi(answer[4]) == p) { 
-					sheet->setCellData(i, p, "recursive"); 
-				}
-				else {
-					sheet->setCellData(i, p, to_string(divide(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
-				}
-			}
-			if (answer[0] == "sum") {
-				if(i>=stoi(answer[1])&&i<=stoi(answer[3])||p>=stoi(answer[2])&&p<=stoi(answer[4]))
-				{
-					sheet->setCellData(i, p, "recursive"); 
-				}
-				else {
-					sheet->setCellData(i, p, to_string(sum(stod(answer[1]), stod(answer[2]), stod(answer[3]), stod(answer[4]))));
-				}
+			catch (...)
+			{
+				
 			}
 		}
 	}
@@ -300,31 +310,76 @@ double Refresh::sum(int xCoord, int yCoord, int xCoord1, int yCoord1)
 
 double Refresh::add(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	double a = stod(sheet->getCellData(xCoord, yCoord));
-	double b = stod(sheet->getCellData(xCoord1, yCoord1));
+	double a, b;
+	try
+	{
+		a = stod(sheet->getCellData(xCoord, yCoord));
+		b = stod(sheet->getCellData(xCoord1, yCoord1));
+	}
+	catch (...)
+	{
+		return -1;
+	}
+
 	double c = a + b;
 	return c;
 }
 
 double Refresh::multiply(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	double a = stod(sheet->getCellData(xCoord, yCoord));
-	double b = stod(sheet->getCellData(xCoord1, yCoord1));
+	double a, b;
+
+	try
+	{
+		a = stod(sheet->getCellData(xCoord, yCoord));
+		b = stod(sheet->getCellData(xCoord1, yCoord1));
+	}
+	catch (...)
+	{
+		return -1;
+	}
 	double c = a * b;
 	return c;
 }
 
 double Refresh::subtract(int xCoord, int yCoord, int xCoord1, int yCoord1)
 {
-	double a = stod(sheet->getCellData(xCoord, yCoord));
-	double b = stod(sheet->getCellData(xCoord1, yCoord1));
+	double a, b;
+	
+	try
+	{
+		a = stod(sheet->getCellData(xCoord, yCoord));
+		b = stod(sheet->getCellData(xCoord1, yCoord1));
+	}
+	catch (std::invalid_argument)
+	{
+		return -1;
+	}
+	catch (std::out_of_range)
+	{
+		return -1;
+	}
 	double c = a - b;
 	return c;
 }
 
-double Refresh::divide(int xCoord, int yCoord, int xCoord1, int yCoord1) {
-	double a = stoi(sheet->getCellData(xCoord, yCoord));
-	double b = stoi(sheet->getCellData(xCoord1, yCoord1));
+double Refresh::divide(int xCoord, int yCoord, int xCoord1, int yCoord1) 
+{
+	double a, b;
+	
+	try
+	{
+		a = stod(sheet->getCellData(xCoord, yCoord));
+		b = stod(sheet->getCellData(xCoord1, yCoord1));
+	}
+	catch (std::invalid_argument)
+	{
+		return -1;
+	}
+	catch (std::out_of_range)
+	{
+		return -1;
+	}
 	double c = a / b;
 	return c;
 }
