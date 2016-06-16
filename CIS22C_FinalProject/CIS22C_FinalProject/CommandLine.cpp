@@ -105,7 +105,7 @@ void CommandLine::mainLoop(ostream &out, istream &in)
 
 
 
-							if (a >= sheet->getXSize() || b >= sheet->getYSize() || a < 1 || b < 1)
+							if (a >= sheet->getXSize() || b >= sheet->getYSize() || a < 0 || b < 0)
 							{
 								cout << "one or more values are out of bounds.";
 								system("pause");
