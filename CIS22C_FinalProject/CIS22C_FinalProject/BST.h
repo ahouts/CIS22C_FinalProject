@@ -11,9 +11,9 @@ using namespace std;
 class BST /*friend Node*/{
 
 protected:
-	Node headNode;
+	Node* headNode;
 public:
-	Node getHead();
+	Node* getHead();
 	void addNode(Node* newNode, Node* target);
 	void removeNode(Node *targetNode);
 	void balance(Node* target);
